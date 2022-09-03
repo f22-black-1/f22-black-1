@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <link rel="stylesheet" href="index.css">
     <title>Pest Patrol</title>
@@ -27,30 +28,30 @@
     <meta name="theme-color" content="#ffffff">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+    .w3-sidebar {
+      z-index: 3;
+      width: 250px;
+      top: 43px;
+      bottom: 0;
+      height: inherit;
+    }
+    .w3-column {
+      float: left;
+      width: 50%;
+   }
+   </style>
   </head>
 
-
-
-<style>
-html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
-.w3-sidebar {
-  z-index: 3;
-  width: 250px;
-  top: 43px;
-  bottom: 0;
-  height: inherit;
-}
-.w3-column {
-  float: left;
-  width: 50%;
-
-}
-</style>
 <body>
 
 <!-- Navbar -->
 <div class="w3-top">
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+    <!--I think the nav bar dropdown behaves differently if you swap these two lines and I am not sure why._-->
+    <!-- <div class="w3-bar w3-black"> -->
+
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     <a href="index.html" class="w3-bar-item w3-button w3-theme-l1">Home</a>
     <a href="the_team.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">The Team</a>
@@ -62,6 +63,16 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     <a href="glossary.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Glossary</a>
     <a href="references.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">References</a>
     <a href="links.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Links</a>
+    <!-- Dropdown work-in-progress-->
+    <!-- From: https://www.w3schools.com/w3css/w3css_dropdowns.asp
+    <div class="w3-dropdown-hover">
+    <button class="w3-bar-item w3-button w3-hide-small w3-hover-white">Deliverables</button>
+    <div class="w3-dropdown-content w3-bar-block w3-card-4">
+      <a href="problem.html" class="w3-bar-item w3-button">The Problem</a>
+      <a href="foo.html" class="w3-bar-item w3-button">Link 2</a>
+
+      </div> </div>
+    -- > 
 
     <!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Clients</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Partners</a> -->
@@ -91,6 +102,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 
 
 <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+
 <div class="w3-main" style="margin-left:250px">
   <div class="w3-row">
   </br>
@@ -98,25 +110,79 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
   <div class="header" id="banner">
 </div>
 
-<div class="w3-row w3-padding-small">
-  <div class="w3-twothird w3-container">
-    <h1 class="w3-text-black">Find them...</h1>
-  </div>
+<div class="w3-row w3-padding-64" >
+    <div class="w3-twothird w3-container" style="margin-left:20%">
+	
+<center><h2><b><u>Prototype Presentation</u></b></h2>
 </div>
 
-<!-- TODO: Make this image smaller and scale it to greater than 35/50 -->
 
-<div class="w3-row">
-  <center><img src="Pest_Patrol_Logo.png" alt="Pest Patrol Logo" height="47%" width="47%"/></center>
+  <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTH0WPKb-G8zi1ByabhdwI4dSybyYaHzrBlkWenRy9Ine6QNrsfpO7Ehogas6Lz94YBsLRaLiKgosVh/embed?start=false&loop=false&delayms=3000" frameborder="0" width="1280" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></center>
 </div>
 
-   
+ <div class="w3-row w3-padding-64" >
+    <div class="w3-twothird w3-container" style="margin-left:20%">
 
-  <div class="w3-row w3-padding-small">
-    <div class="w3-twothird w3-container">
-      <h1 class="w3-text-black">... before they find you!</h1>
-    </div>
-  </div>
+      <div> <center>
+      <a href="./Prototype_Presentation.pdf" >Prototype Presentation PDF </a>
+      </br>
+      </br>
+      </br>
+        </center>
+      </div>
+	
+<center><h2><b><u>Design Presentation</u></b></h2>
+</div>
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTvDH_EH9YMUtCkQgxlJ8Tfyz7l9fXHhTFn-6C3DQLFzmkD_0m7khnqstmrIOzSIaFU8B4sRvruKePo/embed?start=false&loop=false&delayms=30000" frameborder="0" width="1280" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></center>
+</div>
+
+ <div class="w3-row w3-padding-64" >
+    <div class="w3-twothird w3-container" style="margin-left:20%">
+
+      <div> <center>
+      <a href="./Design_Presentation.pdf" >Design Presentation PDF </a>
+      </br>
+      </br>
+      </br>
+        </center>
+      </div>      
+
+<center><h2><b><u>Feasibility Presentation</u></b></h2>
+</div>
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS2O-kH6gG3W9C7VkGG1YbWUJtFRROyI1gGTKoMohN8z403o-I4Diyvm7WGLJKlSa09MQk0fq8oEBkc/embed?start=false&loop=false&delayms=3000" frameborder="0" width="1280" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></center>
+</div>
+
+<div class="w3-row w3-padding-64" >
+  <div class="w3-twothird w3-container" style="margin-left:20%">
+
+    <div> <center>
+      <a href="./Feasibility Presentation_v2.pdf" >Feasibility Presentation PDF </a>
+      </br>
+      </br>
+      </br>
+        </center>
+      </div> 
+
+
+
+<center><h2><b><u>Original Presentation</u></b></h2>
+<!--- Add link to OG powerpoint -->
+</div>
+
+<!--- Add link to OG powerpoint -->
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRN5_zlAn-wlTaqrBR0zcuzWbmTkUOzWETrXiwHcQ7DF7wss8m8omAwjfAhdBTjBg/embed?start=false&loop=false&delayms=3000" frameborder="0" width="1280" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></center>
+</div>
+
+<div> <center>
+  <a href="./#" >Original Presentation PDF </a>
+  </br>
+  </br>
+  </br>
+    </center>
+  </div> 
+
 
   <footer id="myFooter">
     <div class="w3-container w3-theme-l2 w3-padding-32">
@@ -162,4 +228,3 @@ function w3_close() {
 
 </body>
 </html>
-

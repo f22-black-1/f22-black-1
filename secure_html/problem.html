@@ -1,8 +1,10 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
+
   <head>
     <link rel="stylesheet" href="index.css">
-    <title>Team Black</title>
+    <title>Pest Patrol</title>
     <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
@@ -17,98 +19,189 @@
     <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
     <link rel="manifest" href="favicon/manifest.json">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+    .w3-sidebar {
+      z-index: 3;
+      width: 250px;
+      top: 43px;
+      bottom: 0;
+      height: inherit;
+    }
+    .w3-column {
+      float: left;
+      width: 50%;
+   }
+   </style>
   </head>
 
-  <body>
-    <div class="header" id="banner">
-      <!--TODO: Use a Banner Image with Project Name <img src="images/banner.jpg" alt="Team Black Banner" style="height:150px;" onclick="location.href='index.html'"/> -->
-      <h1>Team Black (Project Name Loading . . .)</h1>
-    </div>
+<body>
 
-    <div class="navbar">
-      <a href="index.html">Home</a>
-      <a href="the_team.html">The Team</a>
-      <a href="references.html">References</a>
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+    <!--I think the nav bar dropdown behaves differently if you swap these two lines and I am not sure why._-->
+    <!-- <div class="w3-bar w3-black"> -->
 
-      <div class="dropdown">
-        <button class="drop-button" onclick="location.href='problem.html'">Deliverables<i class="deliv"></i></button>
-        <div class="dropdown-content">
-          <a href="problem.html">The Problem</a>
-        </div>
-      </div>
+    <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    <a href="index.html" class="w3-bar-item w3-button w3-theme-l1">Home</a>
+    <a href="the_team.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">The Team</a>
+    <a href="ProjectDescription.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Project Description</a>
+    <a href="problem.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Deliverables</a>
+    <a href="presentations.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Presentations</a>
+    <a href="userStories.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">User Stories</a>
+    <a href="labs.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Labs</a>
+    <a href="glossary.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Glossary</a>
+    <a href="references.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">References</a>
+    <a href="links.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Links</a>
+    <!-- Dropdown work-in-progress-->
+    <!-- From: https://www.w3schools.com/w3css/w3css_dropdowns.asp
+    <div class="w3-dropdown-hover">
+    <button class="w3-bar-item w3-button w3-hide-small w3-hover-white">Deliverables</button>
+    <div class="w3-dropdown-content w3-bar-block w3-card-4">
+      <a href="problem.html" class="w3-bar-item w3-button">The Problem</a>
+      <a href="foo.html" class="w3-bar-item w3-button">Link 2</a>
 
+      </div> </div>
+    -- > 
+
+    <!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Clients</a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Partners</a> -->
+  </div>
+</div>
+
+<!-- Sidebar -->
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4 class="w3-bar-item"><b>Menu</b></h4>
+  <a class="w3-bar-item w3-button w3-hover-black" href="index.html">Home</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="the_team.html">The Team</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="ProjectDescription.html">Project Description</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="problem.html">Deliverables</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="presentations.html">Presentations</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="userStories.html">User Stories</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="labs.html">Labs</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="glossary.html">Glossary</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="references.html">References</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="links.html">Links</a>
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+
+<!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+<div class="w3-main" style="margin-left:250px">
+  <div class="w3-row">
+  </br>
+  <img src="Banner.png" alt="Team Black Banner" height="150" width="100%" onclick="location.href='index.html'"/>
+  <div class="header" id="banner">
+</div>
+
+ <div class="w3-row w3-padding-64" >
+    <div class="w3-twothird w3-container" style="margin-left:20%">
+
+
+    <h2><b><u>Current Process Flow</u></b></h2>
+    <img src="current_process_flow.svg" alt="Current Process Flow" style="height:100%;width:100%">
     </br>
     </br>
-    <!-- -------------------------- -->
 
-    <!-- TODO: # Linking of source to list item -->
+    <h2><b><u>Solution Process Flow</u></b></h2>
+    <img src="solution_process_flow.svg" alt="Solution Process Flow" style="height:100%;width:100%">
     </br>
     </br>
 
-    <h3>Problem Statement</h3>
+    <h2><b><u>MFCD</u></b></h2>
+    <img src="MFCD.jpg" alt="MFCD" style="height:100%;width:100%">
+    </br>
+    </br>
 
-    <p>Every year in the United States, millions of Americans are negatively affected by pest-related interactions, and most lack the awareness and experience to prevent or effectively mitigate their impact.</p>
+    <h2><b><u>Technical Risk Matrix</u></b></h2>
+    <img src="TechnicalRiskMatrix.jpg" alt="TechnicalRiskMatrix" style="height:100%;width:100%">
+    <img src="TechnicalRiskMatrixDescription.jpg" alt="TechnicalRiskMatrixDescription" style="height:100%;width:100%">
+    </br>
+    </br>
+        
+    <h2><b><u>Customer Risk Matrix</u></b></h2>
+    <img src="CustomerRiskMatrix.jpg" alt="CustomerRiskMatrix" style="height:100%;width:100%">
+    <img src="CustomerRiskMatrixDescription.jpg" alt="CustomerRiskMatrixDescription" style="height:100%;width:100%">
+    </br>
+    </br>
 
+    <h2><b><u>Security Risk Matrix</u></b></h2>
+    <img src="SecurityRiskMatrix.jpg" alt="SecurityRiskMatrix" style="height:100%;width:100%">
+    <img src="SecurityRiskMatrixDescription.jpg" alt="SecurityRiskMatrixDescription" style="height:100%;width:100%">
     </br>
     </br>
     
-    <h3>Problem Characteristics</h3>
+    <h2><b><u>Prototype MFCD</u></b></h2>
+    <img src="PrototypeMFCD.jpg" alt ="Prototype MFCD" style="height:60%;width:60%">
+    </br>
+    </br>
+
     
-    <!-- TODO: Link the citations back to references page -->
-    <ul>
+    
+<!-- 	<h3><b><u>Feasibility Presentation</u></b></h3>
+    </br>
+    </br> -->
 
-      <li><h4>Pests pose physical danger to humans and pets</h4></li>
+</div>
 
-      <p>Like most pests, dangerous predators and scavengers like wolves, bears and coyotes will often cross paths with humans and their pets in search of food.  Wolves have become an increasing and ever-present threat to farmers and their cattle in the Midwest[12] while bears have gained more notoriety for breaking into homes, cars, and dumpsters as their numbers increase[11].  The coyote populations have also been on the rise -- especially in urban areas and pose a significant threat to pets of unwary owners[10].</p>
-      
-      <li><h4>Pests are vectors for disease</h4></li>
-      
-      <p>Many common pests are known to harbor debilitating and potentially fatal diseases.  Pests like ticks and mosquitoes are carriers of ailments like lyme disease, west nile virus, and malaria[6].  Even worse, raccoons and skunks are common carriers of the fatal disease rabies[7], and cases of bubonic plague can be spread by fleas and have been reported as recently as 2019[4][5].</p>
-      
-      <li><h4>Pest populations are rising</h4></li>
-           
-      <p>Most direct and indirect evidence suggests the prevalence of pests will only increase in the coming years.  Warmer winters result in greater pest populations in the spring and summer[2].  If the climate continues warming in the coming years as many scientists predict[3], pest populations will also continue to grow.  In the span of 11 years, the pest control industry has increased in value by $5.2 billion from $11.7 to $16.9 billion; by the end of 2022, it is projected to reach $17.4 billion[1].  The growth in the industry is a strong indicator there is (and will be) similar growth among pest populations as well.</p>
-      
-      <li><h4>Pests Inflict heavy financial costs</h4></li>
-      
-      <p>Damage to the production of goods and related services by invasive insect species in the United States is estimated to be $30.2 billion dollars per year[13].  And, in addition to that, insects like termites infest over 600,000 homes each year which results in $5 billion dollars of property damage[8].  Treatments for pest related diseases also carry a heavy cost burden.  According to one study conducted by John Hopkins University, treatments for lyme disease alone cost an annual estimated $1.3 billion[9].</p>
-       
-    </ul>
-
-    </br>
-    </br>
-
-    <h3>Current Process Flow</h3>
-    <img src="current_process_flow.jpg" alt="Current Process Flow">
-
-
-    </br>
-    </br>
-
-    <h3>Solution Process Flow</h3>
-    <img src="solution_process_flow.jpg" alt="Solution Process Flow">
-
-    </br>
-    </br>
-    <h3>Feasibility Presentation</h3>
-    <center><iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS2O-kH6gG3W9C7VkGG1YbWUJtFRROyI1gGTKoMohN8z403o-I4Diyvm7WGLJKlSa09MQk0fq8oEBkc/embed?start=false&loop=false&delayms=3000" frameborder="0" width="1280" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></center>
-
-    </br>
-    </br>
-    <!-- -------------------------- -->
-    </br>
-    </br>
-    </br>
-    </br>
-    <div class="bottom-nav">
-      <a href="https://odu.edu">Old Dominion University</a>
-      <a href="https://odu.edu/compsci">CS 410</a>
-      <a href="the_team.html">Team Black</a>
+<!-- <center><iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS2O-kH6gG3W9C7VkGG1YbWUJtFRROyI1gGTKoMohN8z403o-I4Diyvm7WGLJKlSa09MQk0fq8oEBkc/embed?start=false&loop=false&delayms=3000" frameborder="0" width="1280" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></center> -->
+</div>
+  <footer id="myFooter">
+    <div class="w3-container w3-theme-l2 w3-padding-32">
+      <h4>Pest Patrol</h4>
     </div>
 
-  </body>
+    <div class="w3-container w3-theme-l1">
+      <p>Powered By: 
+        <a href="https://odu.edu/" target="_blank">ODU</a>
+        <a href="https://odu.edu/compsci" target="_blank">CS 410</a>
+        <a href="https://www.cs.odu.edu/~410black/the_team.html" target="_blank">Team Black</a>
+      </p>
+    </div>
+  </footer>
+
+<!-- END MAIN -->
+
+
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+  if (mySidebar.style.display === 'block') {
+    mySidebar.style.display = 'none';
+    overlayBg.style.display = "none";
+  } else {
+    mySidebar.style.display = 'block';
+    overlayBg.style.display = "block";
+  }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+  mySidebar.style.display = "none";
+  overlayBg.style.display = "none";
+}
+</script>
+
+</body>
 </html>

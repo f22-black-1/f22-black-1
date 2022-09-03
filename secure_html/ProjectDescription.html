@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <link rel="stylesheet" href="index.css">
     <title>Pest Patrol</title>
@@ -27,30 +28,30 @@
     <meta name="theme-color" content="#ffffff">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+    .w3-sidebar {
+      z-index: 3;
+      width: 250px;
+      top: 43px;
+      bottom: 0;
+      height: inherit;
+    }
+    .w3-column {
+      float: left;
+      width: 50%;
+   }
+   </style>
   </head>
 
-
-
-<style>
-html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
-.w3-sidebar {
-  z-index: 3;
-  width: 250px;
-  top: 43px;
-  bottom: 0;
-  height: inherit;
-}
-.w3-column {
-  float: left;
-  width: 50%;
-
-}
-</style>
 <body>
 
 <!-- Navbar -->
 <div class="w3-top">
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+    <!--I think the nav bar dropdown behaves differently if you swap these two lines and I am not sure why._-->
+    <!-- <div class="w3-bar w3-black"> -->
+
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     <a href="index.html" class="w3-bar-item w3-button w3-theme-l1">Home</a>
     <a href="the_team.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">The Team</a>
@@ -62,6 +63,16 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     <a href="glossary.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Glossary</a>
     <a href="references.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">References</a>
     <a href="links.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Links</a>
+    <!-- Dropdown work-in-progress-->
+    <!-- From: https://www.w3schools.com/w3css/w3css_dropdowns.asp
+    <div class="w3-dropdown-hover">
+    <button class="w3-bar-item w3-button w3-hide-small w3-hover-white">Deliverables</button>
+    <div class="w3-dropdown-content w3-bar-block w3-card-4">
+      <a href="problem.html" class="w3-bar-item w3-button">The Problem</a>
+      <a href="foo.html" class="w3-bar-item w3-button">Link 2</a>
+
+      </div> </div>
+    -- > 
 
     <!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Clients</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Partners</a> -->
@@ -98,26 +109,71 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
   <div class="header" id="banner">
 </div>
 
-<div class="w3-row w3-padding-small">
-  <div class="w3-twothird w3-container">
-    <h1 class="w3-text-black">Find them...</h1>
-  </div>
+ <div class="w3-row w3-padding-64" >
+    <div class="w3-twothird w3-container" style="margin-left:20%">
+
+        <h2><b><u>Problem Statement</u></b></h2>
+
+        <p><h4>Pest encounters in communities are a common occurrence, but due to the isolated nature of these experiences and fragmented means of reporting, community awareness and an informed collective response rarely occurs.</h4></p>
+        
+            </br>
+            </br>
+            
+        <h3><b><u>Problem Characteristics</u></b></h3>
+            
+              <ul>
+        
+              <li><h4>Members in a community have no reliable way to stay informed on local pest encounters</h4></li>
+        
+              </br>
+              
+              <li><h4>Many preventable pest encounters still happen because there is no real-time awareness of their presence and location</h4></li>
+              
+              </br>  
+              
+              <li><h4>People with pest infestation problems cannot easily benefit from previous learning experiences and/or guidance of their community because it is either not available or not consolidated</h4> </li>
+                   
+              </br>
+              
+              <li><h4>When planning outdoor activities or trips to other locations, it is difficult to effectively prepare for active pest problems because the information does not exist</h4></li>
+              
+              </br>
+              </br>
+              
+               
+            </ul>
+        
+        <h2><b><u>Solution Statement</u></b></h2>
+        
+        <p><h4>Pest Patrol is an application that will allow individuals to report, monitor and communicate the overall pest activity in their community; as well as allow users to coordinate a community based solution to pest problems.</h4></p>
+        
+            </br>
+            </br>
+        
+        <h3><b><u>Solution Characteristics</u></b></h3>
+            
+            <ul>    
+        
+              <li><h4> Allow members in a community to stay informed on local pest encounters by setting their location and receiving alerts when incidents appear in their area </h4></li>
+              </br>
+              
+              <li><h4> Help prevent pest encounters by providing awareness of the presence and location of undesirable invaders through user reports </h4></li>
+              </br>
+        
+              <li><h4> Enable communities to track outbreaks by enabling heat mapping based on user-defined parameters </h4></li>
+              </br>
+        
+              <li><h4> Assist with aggregating knowledge of previous effective pest control strategies within a community </h4></li>
+              </br>
+        
+              <li><h4> Grant community members the ability to safely plan outdoor activities and trips by providing up-to-date information regarding pest problems at specific locations </h4></li>
+              </br>
+        
+        
+            </ul>
 </div>
 
-<!-- TODO: Make this image smaller and scale it to greater than 35/50 -->
-
-<div class="w3-row">
-  <center><img src="Pest_Patrol_Logo.png" alt="Pest Patrol Logo" height="47%" width="47%"/></center>
 </div>
-
-   
-
-  <div class="w3-row w3-padding-small">
-    <div class="w3-twothird w3-container">
-      <h1 class="w3-text-black">... before they find you!</h1>
-    </div>
-  </div>
-
   <footer id="myFooter">
     <div class="w3-container w3-theme-l2 w3-padding-32">
       <h4>Pest Patrol</h4>
@@ -162,4 +218,3 @@ function w3_close() {
 
 </body>
 </html>
-
