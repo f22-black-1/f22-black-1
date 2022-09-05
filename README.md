@@ -18,7 +18,7 @@ ______         _    ______     _             _
 - Tom Cooch - tcooc001@odu.edu
 - Trevor Hess - thess005@odu.edu
 - Heather Mallalieu - hmall001@odu.edu
-- Lukas Mckennedy - lmcke009@odu.edu
+- Lukas McKennedy - lmcke009@odu.edu
 - Anton Rasmussen - arasm002@odu.edu
 - Andrew Undercoffer - aunde001@odu.edu
 - Val Vega - vvega001@odu.edu
