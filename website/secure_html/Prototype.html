@@ -3,7 +3,7 @@
 
   <head>
     <link rel="stylesheet" href="index.css">
-    <title>Pest Patrol</title>
+    <title>Pest Patrol - Prototype</title>
     <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
@@ -28,17 +28,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
-    .w3-sidebar {
+    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+    hr{height:2px;border-width:0;color:gray;background-color:gray}
+   .w3-sidebar {
       z-index: 3;
       width: 250px;
       top: 43px;
       bottom: 0;
       height: inherit;
-    }
-    .w3-column {
+   }
+   .w3-column {
       float: left;
       width: 50%;
+   }
+   .w3-btn {
+    background-color: #2eb82e;
+    border: 2px solid black;
+    width: 200px;
+    font-weight: bold;
+    padding-top: 10px;
+   }
+   #Container_Main{
+    width:1200px;
+    height:auto;
+    border:1px solid #000;
+    border-style: none;
+   }
+   #Container_Main_Header{
+    width:1200px;
+    height:auto;
+
+   }
+   #Container_Subhead{
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    border-style: none;
+   }
+   #Container_Content{
+    
    }
    </style>
   </head>
@@ -94,9 +123,45 @@
   <div class="w3-row">
   </br>
   <img src="Banner.png" alt="Team Black Banner" height="150" width="100%" onclick="location.href='index.html'"/>
-  <div class="header" id="banner">
+  <!-- <div class="header" id="banner"> (probably can remove)-->
+  
 </div>
 
+<!-- <h3>Prototype</h3> -->
+<div id="Container_Main">
+  <div id="Container_Main_Header">
+    <center>
+      <h3 style="font-size: 30px; font-weight: bold; color: black;">Prototype</h3>
+    </center>
+  </div>
+  <hr></hr>
+  <div id="Container_Subhead">
+    <p>Weekly Reports</p>
+  </div>
+  <div id="Container_Content">
+    <center>
+      <a href="https://docs.google.com/document/d/e/2PACX-1vTrTjUVRzRqBrLAUaJSA8k5LM6gtiAs12nuSPwOt3rgBoYTG3MCBrNA2Hb-8-EVqA/pub" class="w3-btn">Report 1<br>08/27 - 09/05</br></a> &ensp;
+      <a href="" class="w3-btn">Report 2<br></br></a> &ensp;
+      <a href="" class="w3-btn">Report 3<br></br></a> &ensp;
+      <a href="" class="w3-btn">Report 4<br></br></a> &ensp;
+      <a href="" class="w3-btn">Report 5<br></br></a> &ensp;
+      <br></br>
+      <a href="" class="w3-btn">Report 6<br></br></a> &ensp;
+      <a href="" class="w3-btn">Report 7<br></br></a> &ensp;
+      <a href="" class="w3-btn">Report 8<br></br></a> &ensp;
+      <a href="" class="w3-btn">Report 9<br></br></a> &ensp;
+      <a href="" class="w3-btn">Report 10<br></br></a> &ensp;
+      <!--
+      <br></br>
+      <a href="" class="w3-btn">Week 11</a> &ensp;
+      <a href="" class="w3-btn">Week 12</a> &ensp;
+      <a href="" class="w3-btn">Week 13</a> &ensp;
+      <a href="" class="w3-btn">Week 14</a>
+      -->
+    </center>
+  </div>
+  <hr></hr>
+</div>
 
 <script>
 // Get the Sidebar
