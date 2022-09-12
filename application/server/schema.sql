@@ -10,6 +10,32 @@ DROP TABLE IF EXISTS Pest;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp"; -- For generating UUIDs; may require 'postgresql14-contrib' package
 
+CREATE TABLE IF NOT EXISTS Users(
+  UserID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+  LocID UUID REFERENCES Neighborhood(LocID),
+  UserName VARCHAR(50) UNIQUE,
+  Email VARCHAR(255) UNIQUE,
+  UserTypeID INT REFERENCES UserType(UserTypeID)
+);
+
+CREATE TABLE IF NOT EXISTS UserProfileSettings(
+  UserProfileID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+  FirstName VARCHAR(50),
+  LastName VARCHAR(50),
+  Password 
+  CustomViewAreaSet BOOLEAN,
+  CustomViewArea INT,
+  CustomeFilterSet BOOLEAN,
+  FilterPest VARCHAR(50),
+  FIlterIncidentAge VARCHAR(255),
+  FilterUser VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS UserType(
+  UserTypeID INT PRIMARY KEY,
+  UserType VARCHAR(50),
+);
+
 CREATE TABLE IF NOT EXISTS Neighborhood (
   LocID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
   LocName VARCHAR(255),
@@ -55,4 +81,14 @@ CREATE TABLE IF NOT EXISTS ThreadFeedback (
   Positive BOOLEAN,
   Inappropriate BOOLEAN,
   SubmitDate TIMESTAMP WITH TIME ZONE
+);
+
+CREATE TABLE IF NOT EXISTS Pest(
+  PestID
+  IncidentID
+  PestName
+  PestType
+  Severity
+  PestDescription
+  PestImage
 );
