@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS UserProfileSettings(
   UserProfileID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
   FirstName VARCHAR(50),
   LastName VARCHAR(50),
-  Password 
+  Password VARCHAR(200) NOT NULL,
   CustomViewAreaSet BOOLEAN,
   CustomViewArea INT,
   CustomeFilterSet BOOLEAN,
@@ -84,11 +84,11 @@ CREATE TABLE IF NOT EXISTS ThreadFeedback (
 );
 
 CREATE TABLE IF NOT EXISTS Pest(
-  PestID
-  IncidentID
-  PestName
-  PestType
-  Severity
-  PestDescription
-  PestImage
+  PestID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+  IncidentID UUID REFERENCES Incident(IncidentID),
+  PestName VARCHAR(50),
+  PestType VARCHAR(50),
+  Severity VARCHAR(50),
+  PestDescription TEXT,
+  PestImage BLOB,
 );
