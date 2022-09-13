@@ -36,6 +36,7 @@ scp -i $SSH_PRIVATE_KEY_FILE -r $HOME_DIR/repo_clone_tmp/f22-black-1/website/sec
 echo "Copying website to ODU CS Server complete!"
 
 ## Alert that Copy has been Completed
+bash /home/411black/website_sync_alert.sh
 
 ## Clean Up
 echo "Cleaning up..."
