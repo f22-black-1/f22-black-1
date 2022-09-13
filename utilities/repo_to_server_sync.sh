@@ -37,6 +37,7 @@ echo "Copying website to ODU CS Server complete!"
 
 ## Alert that Copy has been Completed
 bash /home/411black/website_sync_alert.sh
+echo "Sync alert script has been run and the team has been notified."
 
 ## Clean Up
 echo "Cleaning up..."
