@@ -16,7 +16,7 @@ echo "Let the syncing begin..."
 DATE=$(date "+%Y%m%d")
 HOME_DIR="/Users/ant0n" # Provide your own $HOME dir
 REPO_DIR="$HOME_DIR/Documents/Repos/f22-black-1/" # Provide your own repo directory
-SSH_PRIVATE_KEY_FILE="$HOME_DIR/.ssh/antonMac"  # Provide your own private key
+SSH_PRIVATE_KEY_FILE="$HOME_DIR/.ssh/antonMac"  # Provide your own private key (with no password)
 
 ## Create Backup on ODU CS Server
 echo "Creating backup..."
