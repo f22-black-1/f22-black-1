@@ -36,8 +36,13 @@ scp -i $SSH_PRIVATE_KEY_FILE -r $HOME_DIR/repo_clone_tmp/f22-black-1/website/sec
 echo "Copying website to ODU CS Server complete!"
 
 ## Alert that Copy has been Completed
-bash /home/411black/website_sync_alert.sh
-echo "Sync alert script has been run and the team has been notified."
+echo "Alert the team of sync via email..."
+TO_ADDRESS="lmcke009@odu.edu, arasm002@odu.edu, tcooc001@odu.edu, bburt007@odu.edu, thess005@odu.edu, hmall001@odu.edu, aunde001@odu.edu, vvega001@odu.edu" # Include email addresses of people that need to be notified
+FROM_ADDRESS="411black"
+SUBJECT="Sync completed"
+BODY="The sync and backup of the CS 411 Team Black website from Github has been completed."
+echo ${BODY} | mail -s ${SUBJECT} ${TO_ADDRESS} -- -r ${FROM_ADDRESS}
+echo "Team notification complete."
 
 ## Clean Up
 echo "Cleaning up..."
