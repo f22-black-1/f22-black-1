@@ -101,7 +101,9 @@ I always just save the file with the vim command `:x!` and hit [ENTER]
 
 At this point you can go to GitHub and see a message about opening a Pull Request.
 
-[TBD]
+#### Some possible error scenarios and how to recover
+
+![Alt text](relative/path/to/img.jpg?raw=true "Title")
 
 
 
