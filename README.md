@@ -103,7 +103,7 @@ At this point you can go to GitHub and see a message about opening a Pull Reques
 
 #### Some possible error scenarios and how to recover
 
-![Alt text](relative/path/to/img.jpg?raw=true "Title")
+[TBD]
 
 
 
