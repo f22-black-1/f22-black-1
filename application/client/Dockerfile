@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 # are copied where available (npm@5+)
 COPY package*.json .
 
-# Install any needed packages using npm install
+# Install any needed packages using npm install 
 RUN npm i
 
 # Bundle app source by copying everything in WORKDIR that is not in .dockerignore

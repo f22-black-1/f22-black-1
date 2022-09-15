@@ -1,0 +1,7 @@
+<h2>Top Pests</h2>
+<div class="pest-menu">
+  <a *ngFor="let pest of pests"
+    routerLink="/detail/{{pest.id}}">
+    {{pest.name}}
+  </a>
+</div>

@@ -1,0 +1,9 @@
+<div *ngIf="pest">
+    <h2>{{pest.name | uppercase}} Details</h2>
+    <div><span>id: </span>{{pest.id}}</div>
+    <div>
+      <label for="pest-name">Pest name: </label>
+      <input id="pest-name" [(ngModel)]="pest.name" placeholder="Pest name"/>
+    </div>
+    <button type="button" (click)="goBack()">Go Back</button>
+  </div>

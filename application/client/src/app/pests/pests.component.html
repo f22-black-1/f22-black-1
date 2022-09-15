@@ -1,0 +1,8 @@
+<h2>My Pests</h2>
+<ul class="pests">
+  <li *ngFor="let pest of pests">
+    <a routerLink="/detail/{{pest.id}}">
+      <span class="badge">{{pest.id}}</span> {{pest.name}}
+    </a>
+  </li>
+</ul>
