@@ -32,4 +32,11 @@ export class PestDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
+
+  save(): void {
+    if (this.pest) {
+      this.pestService.updatePest(this.pest)
+        .subscribe(() => this.goBack());
+    }
+  }
 }
