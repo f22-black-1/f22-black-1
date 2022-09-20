@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
-    <link rel="stylesheet" href="index.css">
-    <title>Pest Patrol</title>
+    <title>Pest Patrol - Labs</title>
     <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
@@ -22,37 +21,14 @@
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="labs.css">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-
-
-
-<style>
-html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
-.w3-sidebar {
-  z-index: 3;
-  width: 250px;
-  top: 43px;
-  bottom: 0;
-  height: inherit;
-}
-.w3-column {
-  float: left;
-  width: 50%;
-}
-
-.w3-btn {
-	background-color: #2eb82e;
-	border: 2px solid black;
-	width: 150px;
-	font-weight: bold;
-}
-</style>
-<body>
 
 <!-- Navbar -->
 <div class="w3-top">
@@ -103,39 +79,111 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
   <div class="w3-row">
   </br>
   <img src="Banner.png" alt="Team Black Banner" height="150" width="100%" onclick="location.href='index.html'"/>
-  <div class="header" id="banner">
-</div>
 
 
-<h3> Lab 1 - Collaborative Outline </h3>
-<center><iframe width="70%" height="500px" src="https://docs.google.com/document/d/e/2PACX-1vRw5a2g6Sgprr_EejoSHLiWz35qmzjtwhq4CALNb1dH_dtgg4RANfSycFZjmoQ3THod0477WQ7Gd9_v/pub?embedded=true"></iframe></center>
-</br>
-<h3> Lab 1 - Individual </h3>
-	<div class="w3-container">
-		<center>
-		  <h4>Bryan Burton</h4>
-			  <a href="Lab 1 Version 1 (Draft) - Bryan Burton.pdf" class="w3-btn">Lab 1 Draft</a>
-			  <a href="Lab 1 Draft Revision 1 - Bryan Burton.pdf" class="w3-btn">Lab 1 Revised</a>
-		  <h4>Tom Cooch</h4>
-			  <a href="./Lab_1_Version_1_(Draft)-Tom_Cooch.pdf" class="w3-btn">Lab 1 Draft</a>
-			  <a href="./Lab 1 Draft Revision 1 - Tom Cooch.pdf" class="w3-btn">Lab 1 Revised</a>
-		  <h4>Trevor Hess</h4>
-			  <a href="./Lab 1 Version 1 (Draft) - Trevor Hess.pdf" class="w3-btn">Lab 1 Draft</a>
-			  <a href="./Lab 1 Draft Revision 1 - Trevor Hess.pdf" class="w3-btn">Lab 1 Revised</a>
-		  <h4>Heather Mallalieu</h4>
-			  <a href="./Lab 1 Version 1 (Draft) Heather Mallalieu.pdf" class="w3-btn">Lab 1 Draft</a>
-			  <a href="./Lab 1 Draft Revision 1 - Heather Mallalieu.pdf" class="w3-btn">Lab 1 Revised</a>
-		  <h4>Anton Rasmussen</h4>
-			  <a href="./Lab+1+Version+1+(Draft)+-+Anton+Rasmussen.pdf" class="w3-btn">Lab 1 Draft</a>
-			  <a href="./Lab 1 Draft Revision 1 - Anton Rasmussen.pdf" class="w3-btn">Lab 1 Revised</a>
-		  <h4>Andrew Undercoffer</h4>
-			  <a href="./Lab 1 Version 1 (Draft) - Andrew Undercoffer.pdf" class="w3-btn">Lab 1 Draft</a>
-			  <a href="Lab 1 Draft Revision 1 - Andrew Undercoffer.pdf" class="w3-btn">Lab 1 Revised</a>
-		  <h4>Val Vega</h4>
-			  <a href="./Lab1 Version 1 (Draft) - Val Vega.pdf" class="w3-btn">Lab 1 Draft</a>
-			  <a href="./Lab 1 Draft Revision 1 - Val Vega.pdf" class="w3-btn">Lab 1 Revised</a>
-		</center>
-	</div>
+<div id="Container_Main">
+  <div id="Container_Main_Header">
+    <center>
+      <h3 style="font-size: 30px; font-weight: bold; color: black;">Labs</h3>
+    </center>
+  </div>
+  <hr></hr>
+
+  <!-- Menu Buttons -->
+  <div id="Container_Content">
+    <center>
+      <button onClick="DisplaySection('Lab_1')" class="menuButton"><b>Lab 1</b></button>
+      <button onClick="DisplaySection('Lab_2')" class="menuButton"><b>Lab 2</b></button>
+      <button onClick="DisplaySection('Lab_3')" class="menuButton"><b>Lab 3</b></button>
+      <button onClick="DisplaySection('Lab_4')" class="menuButton"><b>Lab 4</b></button>
+    </center>
+  </div>
+  <hr></hr>
+
+  <!-- LAB 1 -->
+  <section id="Lab_1">
+    <div id="Container_Subhead">
+      <p>Lab 1</p>
+    </div>
+    <hr></hr>
+    <center><h3> Lab 1 - Collaborative Outline </h3></center>
+    <center><iframe width="70%" height="500px" src="https://docs.google.com/document/d/e/2PACX-1vRw5a2g6Sgprr_EejoSHLiWz35qmzjtwhq4CALNb1dH_dtgg4RANfSycFZjmoQ3THod0477WQ7Gd9_v/pub?embedded=true"></iframe></center>
+    </br>
+    <center><h3> Lab 1 - Individual </h3></center>
+    <div class="w3-container">
+      <center>
+        <h4>Bryan Burton</h4>
+          <a href="./Lab 1 Version 1 (Draft) - Bryan Burton.pdf" class="w3-btn">Lab 1 Draft</a>
+          <a href="./Lab 1 Draft Revision 1 - Bryan Burton.pdf" class="w3-btn">Lab 1 Revised</a>
+          <a href="./Lab_1_V3/Lab 1 Version 3 (Draft) - Bryan Burton.pdf" class="w3-btn">Lab 1 Revised V2</a>
+          <a href="./Lab_1_Final/Lab 1 Final Version - Bryan Burton.pdf" class="w3-btn">Lab 1 V2 Final</a>
+        <h4>Tom Cooch</h4>
+          <a href="./Lab_1_Version_1_(Draft)-Tom_Cooch.pdf" class="w3-btn">Lab 1 Draft</a>
+          <a href="./Lab 1 Draft Revision 1 - Tom Cooch.pdf" class="w3-btn">Lab 1 Revised</a>
+          <a href="./Lab_1_V3/Lab 1 Version 3 (Draft) - Tom Cooch.pdf" class="w3-btn">Lab 1 Revised V2</a>
+          <a href="./Lab_1_Final/Lab 1 Final Version - Tom Cooch.pdf" class="w3-btn">Lab 1 V2 Final</a>
+        <h4>Trevor Hess</h4>
+          <a href="./Lab 1 Version 1 (Draft) - Trevor Hess.pdf" class="w3-btn">Lab 1 Draft</a>
+          <a href="./Lab 1 Draft Revision 1 - Trevor Hess.pdf" class="w3-btn">Lab 1 Revised</a>
+          <a href="./Lab_1_V3/Lab 1 Version 3 (Draft) - Trevor Hess.pdf" class="w3-btn">Lab 1 Revised V2</a>
+          <a href="./Lab_1_Final/Lab 1 Final Version - Trevor Hess.pdf" class="w3-btn">Lab 1 V2 Final</a>
+        <h4>Heather Mallalieu</h4>
+          <a href="./Lab 1 Version 1 (Draft) Heather Mallalieu.pdf" class="w3-btn">Lab 1 Draft</a>
+          <a href="./Lab 1 Draft Revision 1 - Heather Mallalieu.pdf" class="w3-btn">Lab 1 Revised</a>
+          <a href="./Lab_1_V3/Lab 1 Version 3 (Draft) - Heather Mallalieu.pdf" class="w3-btn">Lab 1 Revised V2</a>
+          <a href="./Lab_1_Final/Lab 1 Final Version - Heather Mallalieu.pdf" class="w3-btn">Lab 1 V2 Final</a>
+        <h4>Anton Rasmussen</h4>
+          <a href="./Lab+1+Version+1+(Draft)+-+Anton+Rasmussen.pdf" class="w3-btn">Lab 1 Draft</a>
+          <a href="./Lab 1 Draft Revision 1 - Anton Rasmussen.pdf" class="w3-btn">Lab 1 Revised</a>
+          <a href="./Lab_1_V3/Lab 1 Version 3 (Draft) - Anton Rasmussen.pdf" class="w3-btn">Lab 1 Revised V2</a>
+          <a href="./Lab_1_Final/Lab 1 Final Version - Anton Rasmussen.pdf" class="w3-btn">Lab 1 V2 Final</a>
+        <h4>Andrew Undercoffer</h4>
+          <a href="./Lab 1 Version 1 (Draft) - Andrew Undercoffer.pdf" class="w3-btn">Lab 1 Draft</a>
+          <a href="./Lab 1 Draft Revision 1 - Andrew Undercoffer.pdf" class="w3-btn">Lab 1 Revised</a>
+          <a href="./Lab_1_V3/Lab 1 Version 3 (Draft) - Andrew Undercoffer.pdf" class="w3-btn">Lab 1 Revised V2</a>
+          <a href="./Lab_1_Final/Lab 1 Final Version - Andrew Undercoffer.pdf" class="w3-btn">Lab 1 V2 Final</a>
+        <h4>Val Vega</h4>
+          <a href="./Lab1 Version 1 (Draft) - Val Vega.pdf" class="w3-btn">Lab 1 Draft</a>
+          <a href="./Lab 1 Draft Revision 1 - Val Vega.pdf" class="w3-btn">Lab 1 Revised</a>
+          <a href="./Lab_1_V3/Lab 1 Version 3 (Draft) - Val Vega.pdf" class="w3-btn">Lab 1 Revised V2</a>
+          <a href="./Lab_1_Final/Lab 1 Final Version - Val Vega.pdf" class="w3-btn">Lab 1 V2 Final</a>
+        <h4>Lukas McKennedy</h4>
+          <a href="" class="w3-btn">Lab 1 Draft</a>
+          <a href="" class="w3-btn">Lab 1 Revised</a>
+          <a href="./Lab_1_V3/Lab 1 Version 3 (Draft) - Lukas McKennedy.pdf" class="w3-btn">Lab 1 Revised V2</a>
+          <a href="./Lab_1_Final/Lab 1 Final Version - Lukas McKennedy.pdf" class="w3-btn">Lab 1 V2 Final</a>
+      </center>
+    </div>
+  </section>
+
+  <!-- LAB 2 -->
+  <section id="Lab_2">
+    <hr></hr>
+    <div id="Container_Subhead">
+      <p>Lab 2</p>
+    </div>
+    <hr></hr>
+  </section>
+
+  <!-- LAB 3 -->
+  <section id="Lab_3">
+    <hr></hr>
+    <div id="Container_Subhead">
+      <p>Lab 3</p>
+    </div>
+    <hr></hr>
+  </section>
+
+  <!-- LAB 4 -->
+  <section id="Lab_4">
+    <hr></hr>
+    <div id="Container_Subhead">
+      <p>Lab 4</p>
+    </div>
+    <hr></hr>
+  </section>
+
+
 	<br></br>
   <footer id="myFooter">
     <div class="w3-container w3-theme-l2 w3-padding-32">
@@ -144,12 +192,12 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     <div class="w3-container w3-theme-l1">
       <p>Powered By: 
         <a href="https://odu.edu/" target="_blank">ODU</a>
-        <a href="https://odu.edu/compsci" target="_blank">CS 410</a>
+        <a href="https://odu.edu/compsci" target="_blank">CS 411</a>
         <a href="https://www.cs.odu.edu/~410black/the_team.html" target="_blank">Team Black</a>
       </p>
     </div>
   </footer>
-
+</div>
 
 <!-- END MAIN -->
 
@@ -160,6 +208,37 @@ var mySidebar = document.getElementById("mySidebar");
 
 // Get the DIV with overlay effect
 var overlayBg = document.getElementById("myOverlay");
+
+//Hide Section
+function DisplaySection(sName)
+{
+  document.getElementById(sName).style.display = "block";
+
+  if(sName === "Lab_1")
+  {
+    document.getElementById("Lab_2").style.display = "none";
+    document.getElementById("Lab_3").style.display = "none";
+    document.getElementById("Lab_4").style.display = "none";
+  }
+  else if(sName === "Lab_2")
+  {
+    document.getElementById("Lab_1").style.display = "none";
+    document.getElementById("Lab_3").style.display = "none";
+    document.getElementById("Lab_4").style.display = "none";
+  }
+  else if(sName === "Lab_3")
+  {
+    document.getElementById("Lab_1").style.display = "none";
+    document.getElementById("Lab_2").style.display = "none";
+    document.getElementById("Lab_4").style.display = "none";
+  }
+  else if(sName === "Lab_4")
+  {
+    document.getElementById("Lab_1").style.display = "none";
+    document.getElementById("Lab_2").style.display = "none";
+    document.getElementById("Lab_3").style.display = "none";
+  }
+}
 
 // Toggle between showing and hiding the sidebar, and add overlay effect
 function w3_open() {
