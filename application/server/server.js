@@ -1,7 +1,51 @@
 const express = require('express');
 const config = require('./config');
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv')
+const { Pool, Client } = require('pg');
+
 const app = express();
+dotenv.config(); //Reads .env file and makes it accessible via process.env
+
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: parseInt(process.env.DB_PORT || "5432")
+});
+
+console.log(pool)
+
+const connectToDB = async () => {
+  try {
+    await pool.connect();
+    const now = await pool.query("SELECT NOW()");
+    console.log(now)
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+connectToDB();
+
+// clients will also use environment variables
+// for connection information
+const client = new Client()
+
+// callback
+client.query('SELECT NOW() as now', (err, res) => {
+  if (err) {
+    console.log(err.stack)
+  } else {
+    console.log(res.rows[0])
+  }
+})
+// promise
+client
+  .query('SELECT NOW() as now')
+  .then(res => console.log(res.rows[0]))
+  .catch(e => console.error(e.stack))
 
 
 // Parsers for POST data
@@ -26,7 +70,7 @@ let pestObj = {
 }
 
 // Add a new pest to db from the front end
-app.route('/api/create').post((req, res) => {
+app.route('/api/pest/create').post((req, res) => {
     
     pestToCreate = pestObj
 
@@ -36,7 +80,7 @@ app.route('/api/create').post((req, res) => {
     pestToCreate.pestLocation.yCoord=req.body.pestLocation.yCoord
 
     createQuery = `INSERT INTO pest_patrol_db.pest_table(pest_id, pest_type, pest_x_coord, pest_y_coord) 
-                   VALUES (${pestToCreate.id}, ${pestToCreate.pestType}, ${pestToCreate.pestLocation.xCoord}, ${pestToCreate.pestLocation.yCoord});`
+                   VALUES (${pestToCreate.id}, "${pestToCreate.pestType}", ${pestToCreate.pestLocation.xCoord}, ${pestToCreate.pestLocation.yCoord});`
 
 
     // TODO: add database logic
