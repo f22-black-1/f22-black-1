@@ -30,37 +30,55 @@ app.listen(config.port, () => console.log(`Example app listening on ${config.por
 
 // CRUD Operations for Pest Table
 let pestObj = {
-	"pestId": "",
-	"pestType": "",
-  "xCoord": "",
-  "yCoord": ""
+  pestId: 1,
+  pestType: "ants",
+  xCoord: 0,
+  yCoord: 0
 }
+
+// Get pestId
+app.route(`/api/pest/13`).get((req, res) => {    
+  let id = "13"
+
+  res.status(200).send({id: id});
+
+})
+
+// Post pestId
+app.route('/api/detail/:id').post((req, res) => {    
+  console.log(`Put pestId: ${JSON.stringify(req.body)}`)
+
+})
+
 
 // Add a new pest to db from the front end
 app.route('/api/pest/create').post((req, res) => {
     
-    pestToCreate = pestObj
 
-    pestToCreate.pestId = req.body.pestId
-    pestToCreate.pestType = req.body.pestType
-    pestToCreate.xCoord=req.body.xCoord
-    pestToCreate.yCoord=req.body.yCoord
+  console.log(req.body)
 
-    const query = `INSERT INTO pest(pest_id, pest_type, x_coord, y_coord) 
-                   VALUES (${pestToCreate.pestId}, '${pestToCreate.pestType}', ${pestToCreate.xCoord}, ${pestToCreate.yCoord});`
+  // pestToCreate = pestObj
 
-    const queryDB = async () => {
-      try {
-        await pool.connect();
-        const q = await pool.query(query);
-        console.log(q.command)
-        res.status(201).send()
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    
-    queryDB();
+  // pestToCreate.pestId = req.body.pestId
+  // pestToCreate.pestType = req.body.pestType
+  // pestToCreate.xCoord=req.body.xCoord
+  // pestToCreate.yCoord=req.body.yCoord
+
+  // const query = `INSERT INTO pest(pest_id, pest_type, x_coord, y_coord) 
+  //                 VALUES (${pestToCreate.pestId}, '${pestToCreate.pestType}', ${pestToCreate.xCoord}, ${pestToCreate.yCoord});`
+
+  // const queryDB = async () => {
+  //   try {
+  //     await pool.connect();
+  //     const q = await pool.query(query);
+  //     console.log(q.command)
+  //     res.status(201).send()
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  
+  // queryDB();
 
 })
 

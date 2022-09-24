@@ -5,14 +5,14 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Pest } from './pest';
 import { PESTS } from './mock-pests';
-import { MessageService } from './message.service';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { NONE_TYPE } from '@angular/compiler';
 
 @Injectable({ providedIn: 'root' })
 export class PestService {
 
-  constructor(private http: HttpClient, private messageService: MessageService) { }
+  constructor(private http: HttpClient) { }
 
   private pestsUrl = 'api/pests';  // URL to web 
   
@@ -20,11 +20,39 @@ export class PestService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
+  getPest(id: number | Number): Observable<Pest>{
+
+    let pestObj = {
+      pestId: 2,
+      pestType: "bees",
+      xCoord: 1,
+      yCoord: 1
+    }
+      console.log("Receiving Data from middleware")
+      return this.http.get<Pest>(`http://localhost:8080/api/pest/${id}`, )
+      
+      //.subscribe(data => {})
+      
+    //   this.subscribe(data => {
+        
+    //   // TODO: Figure out what this does
+    //   pestObj.pestId = data.id
+
+    // })
+      
+  }
+
+
   getPests(): Observable<Pest[]> {
     const pests = of(PESTS);
-    this.messageService.add('PestService: fetched pests');
+    this.log('fetched multiple pests');
 
-    // return pests;
+    return pests;
+  }
+
+  getPestsFromServer(): Observable<Pest[]> {
+
+    this.log('fetched pests from server');
 
     /** GET pests from the server */
     return this.http.get<Pest[]>(this.pestsUrl)
@@ -34,23 +62,9 @@ export class PestService {
     );
   }
 
-  getPest(id: number): Observable<Pest> {
-    // For now, assume that a pest with the specified `id` always exists.
-    // Error handling needs to be added.
-    // const pest = PESTS.find(h => h.id === id)!;
-    // this.messageService.add(`PestService: fetched pest id=${id}`);
-    // return of(pest);
-
-    const url = `${this.pestsUrl}/${id}`;
-    return this.http.get<Pest>(url).pipe(
-      tap(_ => this.log(`fetched pest id=${id}`)),
-      catchError(this.handleError<Pest>(`getPest id=${id}`))
-    );
-  }
-
   /** Log a PestService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`PestService: ${message}`);
+    console.log(`PestService: ${message}`);
   }
 
   /**
@@ -76,9 +90,22 @@ export class PestService {
 
   /** PUT: update the pest on the server */
   updatePest(pest: Pest): Observable<any> {
-    return this.http.put(this.pestsUrl, pest, this.httpOptions).pipe(
-      tap(_ => this.log(`updated pest id=${pest.id}`)),
-      catchError(this.handleError<any>('updatePest'))
-    );
+    // // Send the pestObj to the Middleware
+    // this.http.post<Pest>(`http://localhost:8080/api/pests/${id}`, {id: `${id}`}).subscribe(data => {
+    
+    // // TODO: Figure out what this does
+    // //id = data.id
+
+    // })
+    console.log(`PESTTTTTT: ${pest}`)
+
+    return this.http.post<Pest>('http://localhost:8080/api/pest/create', pest).pipe(
+        tap(_ => console.log(`updated pest id=${pest.id}`)),
+        catchError(this.handleError<any>('updatePest'))
+      );
+    // return this.http.put(`http://localhost:8080/api/pest/create`, pest, this.httpOptions).pipe(
+    //   tap(_ => this.log(`updated pest id=${pest.id}`)),
+    //   catchError(this.handleError<any>('updatePest'))
+    // );
   }
 }
