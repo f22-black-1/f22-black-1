@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'detail/:id', component: PestDetailComponent },
   { path: 'pests', component: PestsComponent },
   { path: 'pests/:id', component: PestsComponent },
-  { path: 'test', component: PostRequestTypedComponent }
+  //{ path: 'test', component: PostRequestTypedComponent }
 ];
 
 @NgModule({

@@ -30,19 +30,46 @@ app.listen(config.port, () => console.log(`Example app listening on ${config.por
 
 // CRUD Operations for Pest Table
 let pestObj = {
-  pestId: 1,
   pestType: "ants",
-  xCoord: 0,
-  yCoord: 0
+  pestId: 1,
+  xCoord: 123,
+  yCoord: 456,
+  id: 1,
+  name: "ants",
 }
 
-// Get pestId
-app.route(`/api/pest/13`).get((req, res) => {    
-  let id = "13"
+// Get all pests
+app.route(`/api/pests/`).get((req, res) => {
+  query = `SELECT * FROM pest`
 
-  res.status(200).send({id: id});
+
+    const queryDB = async () => {
+    try {
+      await pool.connect();
+      const q = await pool.query(query);
+      console.log(query)
+      console.log(q.rows)
+      res.status(200).send(q.rows)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+  queryDB();
+
+  
+  //res.status(200).send([pestObj]);
 
 })
+
+// Get pest by id
+// app.route(`/api/pest/id`).get((req, res) => {
+//   query = `SELECT * FROM pest WHERE pest_id = ${pestObj.pestId}`
+//   console.log(query)
+  
+//   res.status(200).send(pestObj);
+
+// })
 
 // Post pestId
 app.route('/api/detail/:id').post((req, res) => {    

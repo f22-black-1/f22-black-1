@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Pest } from '../pest';
 import { PestService } from '../pest.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pest-detail',
@@ -21,7 +22,7 @@ export class PestDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let id = this.getPestId();
+    let pest = this.getPest();
 
     // // Send the pestObj to the Middleware
     // this.http.post<Pest>(`http://localhost:8080/api/pests/${id}`, {id: `${id}`}).subscribe(data => {
@@ -32,13 +33,14 @@ export class PestDetailComponent implements OnInit {
     // })
   }
 
-  getPestId(): Number {
+  getPest(): Observable<Pest> {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     console.log(`ideeeeee: ${id}`)
-    this.pestService.getPest(id)
-      .subscribe(pest => this.pest = pest);
+    return this.pestService.getPest(id)
 
-    return id
+
+      //.subscribe(pest => this.pest = pest);
+
   }
 
   goBack(): void {

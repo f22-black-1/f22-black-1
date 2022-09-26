@@ -20,18 +20,11 @@ export class PestService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  getPest(id: number | Number): Observable<Pest>{
+  getPest(id: number): Observable<Pest>{
 
-    let pestObj = {
-      pestId: 2,
-      pestType: "bees",
-      xCoord: 1,
-      yCoord: 1
-    }
-      console.log("Receiving Data from middleware")
-      return this.http.get<Pest>(`http://localhost:8080/api/pest/${id}`, )
-      
-      //.subscribe(data => {})
+    console.log("Receiving Data from middleware")
+   
+     return this.http.get<Pest>(`http://localhost:8080/api/pest/`,)
       
     //   this.subscribe(data => {
         
@@ -44,22 +37,15 @@ export class PestService {
 
 
   getPests(): Observable<Pest[]> {
-    const pests = of(PESTS);
-    this.log('fetched multiple pests');
-
-    return pests;
-  }
-
-  getPestsFromServer(): Observable<Pest[]> {
 
     this.log('fetched pests from server');
 
     /** GET pests from the server */
-    return this.http.get<Pest[]>(this.pestsUrl)
+    return this.http.get<Pest[]>(`http://localhost:8080/api/pests/`)  
     .pipe(
-      tap(_ => this.log('fetched pests')),
-      catchError(this.handleError<Pest[]>('getPests', []))
-    );
+      tap(_ => this.log(`fetched pests`)),
+      catchError(this.handleError<Pest[]>('getPests', [])),
+      );
   }
 
   /** Log a PestService message with the MessageService */
@@ -100,9 +86,8 @@ export class PestService {
     console.log(`PESTTTTTT: ${pest}`)
 
     return this.http.post<Pest>('http://localhost:8080/api/pest/create', pest).pipe(
-        tap(_ => console.log(`updated pest id=${pest.id}`)),
-        catchError(this.handleError<any>('updatePest'))
-      );
+        tap(_ => this.log(`updated pest id=${pest.id}`)),
+        catchError(this.handleError<any>('updatePest')));
     // return this.http.put(`http://localhost:8080/api/pest/create`, pest, this.httpOptions).pipe(
     //   tap(_ => this.log(`updated pest id=${pest.id}`)),
     //   catchError(this.handleError<any>('updatePest'))
