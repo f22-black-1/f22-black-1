@@ -10,6 +10,19 @@ DROP TABLE IF EXISTS Pest;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp"; -- For generating UUIDs; may require 'postgresql14-contrib' package
 
+CREATE TABLE IF NOT EXISTS Neighborhood (
+  LocID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+  LocName VARCHAR(255),
+  ZipCode CHAR(5),
+  State VARCHAR(255),
+  City VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS UserType(
+  UserTypeID INT PRIMARY KEY,
+  UserType VARCHAR(50)
+);
+
 CREATE TABLE IF NOT EXISTS Users(
   UserID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
   LocID UUID REFERENCES Neighborhood(LocID),
@@ -31,17 +44,14 @@ CREATE TABLE IF NOT EXISTS UserProfileSettings(
   FilterUser VARCHAR(50)
 );
 
-CREATE TABLE IF NOT EXISTS UserType(
-  UserTypeID INT PRIMARY KEY,
-  UserType VARCHAR(50),
-);
-
-CREATE TABLE IF NOT EXISTS Neighborhood (
-  LocID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
-  LocName VARCHAR(255),
-  ZipCode CHAR(5),
-  State VARCHAR(255),
-  City VARCHAR(255)
+CREATE TABLE IF NOT EXISTS Pest (
+  PestID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+  IncidentID UUID, 
+  PestName VARCHAR(50),
+  PestType VARCHAR(50),
+  Severity VARCHAR(50),
+  PestDescription TEXT,
+  PestImage TEXT
 );
 
 CREATE TABLE IF NOT EXISTS Incident (
@@ -54,10 +64,13 @@ CREATE TABLE IF NOT EXISTS Incident (
   GeoCode TEXT
 );
 
+ALTER TABLE Pest
+ADD FOREIGN KEY (IncidentID) REFERENCES Incident(IncidentID);
+
 CREATE TABLE IF NOT EXISTS Thread (
   ThreadID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
   IncidentID UUID REFERENCES Incident(IncidentID),
-  LocID UUID REFERENCES Incident(LocID),
+  LocID UUID REFERENCES Neighborhood(LocID),
   CreatorID UUID REFERENCES Users(UserID),
   CreateDate TIMESTAMP WITH TIME ZONE,
   Subject TEXT,
@@ -83,12 +96,3 @@ CREATE TABLE IF NOT EXISTS ThreadFeedback (
   SubmitDate TIMESTAMP WITH TIME ZONE
 );
 
-CREATE TABLE IF NOT EXISTS Pest(
-  PestID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
-  IncidentID UUID REFERENCES Incident(IncidentID),
-  PestName VARCHAR(50),
-  PestType VARCHAR(50),
-  Severity VARCHAR(50),
-  PestDescription TEXT,
-  PestImage BLOB,
-);
