@@ -14,6 +14,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+
 
 @NgModule({
   imports: [
@@ -21,7 +24,7 @@ import { InMemoryDataService } from './in-memory-data.service';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+        // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
@@ -33,6 +36,9 @@ import { InMemoryDataService } from './in-memory-data.service';
     DashboardComponent,
     PestsComponent,
     PestDetailComponent,
+    LoginComponent,
+    RegisterComponent,
+    
     // MessagesComponent
   ],
   bootstrap: [ AppComponent ]
