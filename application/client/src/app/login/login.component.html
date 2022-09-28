@@ -1,0 +1,41 @@
+<div class="container">
+<div [hidden]="submitted">
+<h1>Login</h1>
+
+<form (ngSubmit)="onSubmit()" #LoginForm="ngForm"> 
+
+    <div class="form-group">
+        <label for="Username">Username: </label>
+        <input type="text" class="form-control" id="Username" 
+            required
+                [(ngModel)]="model.Username" name="Username"
+                #UsernameField ="ngModel">
+        <div [hidden]="UsernameField.valid || UsernameField.pristine"
+            class="alert alert-danger">
+        Username is required
+        </div>
+        <!--Next: Bind input controls to actual database -->              
+    </div>
+
+    <div class="form-group">
+        <label for="Password">Password: </label>
+        <input type="text" class="form-control" id="Password"
+            required
+                [(ngModel)]="model.Password" name="Password"  
+                #PasswordField ="ngModel"> 
+        <div [hidden]="PasswordField.valid || PasswordField.pristine"
+            class="alert alert-danger">
+        Password is required
+        </div>
+        <!-- //Next: Bind input controls to data properties -->
+    </div>
+
+<button type="submit" class="btn btn-success" [disabled]="!LoginForm.form.valid">Submit</button>
+<button type="button" class="btn btn-default" [routerLink]="['/register']">Register</button>
+
+<!-- <button type="button" class="btn btn-default" (click)="Register()"]>Register</button> -->
+
+</form>
+</div>
+</div>
+
