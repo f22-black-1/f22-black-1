@@ -1,10 +1,24 @@
-<google-map height="800px"
-            width="1250px"
-            [center]="center"
-            [zoom]="zoom"
-            (mapClick)="moveMap($event)"
-            (mapMousemove)="move($event)">
+<!-- <div *ngIf="apiLoaded | async"> -->
+
+<google-map 
+    height="800px"
+    width="1250px"
+    [center]="center"
+    [zoom]="zoom"
+    (mapClick)="addMarker($event)"
+    
+    (mapMousemove)="move($event)">
+
+<map-marker #marker="mapMarker"
+    *ngFor="let markerPosition of markerPositions"
+    [position]="markerPosition"
+    [options]="markerOptions"
+    (mapClick)="openInfoWindow(marker)"></map-marker>
+<map-info-window>Info Window content</map-info-window>
 </google-map>
+<!-- </div> -->
 
 <div>Latitude: {{display?.lat}}</div>
 <div>Longitude: {{display?.lng}}</div>
+
+<!-- (mapClick)="moveMap($event)" -->
