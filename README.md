@@ -27,27 +27,22 @@ ______         _    ______     _             _
 - James Brunelle - jabrunel@odu.edu
 
 ### Repository Organization
-We should refactor the repo into (at least) two main directories [with actual directory names TBD]:
+
+The meat of our application. The `client` directory is home to our front end and the `server` directory is home to our middleware/back end.
 ```
 application
-website
-```
-[TBD] Under app directory we might expect a structure similar the following:
-```
-application/
-|----front_end/
+|----client/
 |    |----src
-|    |----tests
-|----back_end/
-|    |----src
-|    |----tests
-...
+|----server/
 ```
-Under `website` directory we include our website's files (as hosted on ODU CS Department's Linux Server):
+Some helpful scripts and what not can be found here:
 ```
-website/
-|----secure_html/
-...
+utilities
+```
+
+Our website's files (as hosted on ODU CS Department's Linux Server) can be found here:
+```
+website/secure_html
 ```
 
 ### How to Use this Repository
@@ -101,9 +96,20 @@ I always just save the file with the vim command `:x!` and hit [ENTER]
 
 At this point you can go to GitHub and see a message about opening a Pull Request.
 
-#### Some possible error scenarios and how to recover
+#### Story/Issue Tracking and Sub-Task Burndown
 
-[TBD]
+Navigation here will take you to our user stories (aka "issues"): https://github.com/f22-black-1/f22-black-1/issues
 
+This page is pretty much only useful for quickly adding issues.
 
+In order to see a better view of our stories it is better to navigate to our project's Kanban board here: https://github.com/orgs/f22-black-1/projects/1
 
+1) Story/Issue is created on Kanban board
+2) Story/Issue is claimed/assigned.
+3) Story/Issue is broken up into smaller "sub tasks" (these can just be comments in the story or whatever and don't need to be tickets (yet!... see below))
+4) Each sub task's work is done in a dev/feature branch
+5) As each sub task is completed incremental changes should be committed to its corresponding dev/feature branch until that sub task is complete.
+6) Next a PR is opened when the subtask is complete... this PR can be put on the Kanban to be tracked, and can be considered a "Sub task ticket". Each Sub task ticket moves to Done lane in Kanban when the PR is merged to master. (Though we do not yet move the Story/Issue ticket if there are still more subtasks)
+7) When the PR is merged the process starts over at _Bullet-4_ until there are no more subtasks. Once the last PR for that issue is merged the issue itself can be closed and a new issue taken up.
+8) ...
+9) Profit
