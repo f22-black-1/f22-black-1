@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+// https://timdeschryver.dev/blog/google-maps-as-an-angular-component
 @Component({
   selector: 'app-googlemap',
   templateUrl: './map.component.html',
@@ -8,6 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class MapComponent implements OnInit {
 
   constructor() { }
+
+  // marker = new google.maps.Marker({
+  //   position: odu,
+  //   map: map,
+  // });
 
   ngOnInit(): void {
   }
@@ -24,4 +29,7 @@ export class MapComponent implements OnInit {
     if(event.latLng != null)
     this.display = event.latLng.toJSON();
   }
+
+
+  
 }

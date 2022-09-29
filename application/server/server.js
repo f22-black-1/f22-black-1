@@ -26,6 +26,7 @@ app.use(function(req, res, next) {
  next()
 })
 
+
 app.listen(config.port, () => console.log(`Example app listening on ${config.port}!`))
 
 // CRUD Operations for Pest Table
@@ -45,15 +46,17 @@ app.route(`/api/pests/`).get((req, res) => {
 
     const queryDB = async () => {
     try {
-      await pool.connect();
-      const q = await pool.query(query);
-      console.log(query)
-      console.log(q.rows)
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
       res.status(200).send(q.rows)
+      
     } catch (err) {
       console.log(err);
+      //res.status(500).send()
     }
   };
+  
   
   queryDB();
 
