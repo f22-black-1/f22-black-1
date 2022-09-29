@@ -26,41 +26,89 @@ app.use(function(req, res, next) {
  next()
 })
 
+
 app.listen(config.port, () => console.log(`Example app listening on ${config.port}!`))
 
 // CRUD Operations for Pest Table
 let pestObj = {
-	"pestId": "",
-	"pestType": "",
-  "xCoord": "",
-  "yCoord": ""
+  pestType: "ants",
+  pestId: 1,
+  xCoord: 123,
+  yCoord: 456,
+  id: 1,
+  name: "ants",
 }
+
+// Get all pests
+app.route(`/api/pests/`).get((req, res) => {
+  query = `SELECT * FROM pest`
+
+
+    const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      //res.status(500).send()
+    }
+  };
+  
+  
+  queryDB();
+
+  
+  //res.status(200).send([pestObj]);
+
+})
+
+// Get pest by id
+// app.route(`/api/pest/id`).get((req, res) => {
+//   query = `SELECT * FROM pest WHERE pest_id = ${pestObj.pestId}`
+//   console.log(query)
+  
+//   res.status(200).send(pestObj);
+
+// })
+
+// Post pestId
+app.route('/api/detail/:id').post((req, res) => {    
+  console.log(`Put pestId: ${JSON.stringify(req.body)}`)
+
+})
+
 
 // Add a new pest to db from the front end
 app.route('/api/pest/create').post((req, res) => {
     
-    pestToCreate = pestObj
 
-    pestToCreate.pestId = req.body.pestId
-    pestToCreate.pestType = req.body.pestType
-    pestToCreate.xCoord=req.body.xCoord
-    pestToCreate.yCoord=req.body.yCoord
+  console.log(req.body)
 
-    const query = `INSERT INTO pest(pest_id, pest_type, x_coord, y_coord) 
-                   VALUES (${pestToCreate.pestId}, '${pestToCreate.pestType}', ${pestToCreate.xCoord}, ${pestToCreate.yCoord});`
+  // pestToCreate = pestObj
 
-    const queryDB = async () => {
-      try {
-        await pool.connect();
-        const q = await pool.query(query);
-        console.log(q.command)
-        res.status(201).send()
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    
-    queryDB();
+  // pestToCreate.pestId = req.body.pestId
+  // pestToCreate.pestType = req.body.pestType
+  // pestToCreate.xCoord=req.body.xCoord
+  // pestToCreate.yCoord=req.body.yCoord
+
+  // const query = `INSERT INTO pest(pest_id, pest_type, x_coord, y_coord) 
+  //                 VALUES (${pestToCreate.pestId}, '${pestToCreate.pestType}', ${pestToCreate.xCoord}, ${pestToCreate.yCoord});`
+
+  // const queryDB = async () => {
+  //   try {
+  //     await pool.connect();
+  //     const q = await pool.query(query);
+  //     console.log(q.command)
+  //     res.status(201).send()
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  
+  // queryDB();
 
 })
 

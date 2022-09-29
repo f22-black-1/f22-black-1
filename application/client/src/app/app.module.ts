@@ -1,19 +1,21 @@
+
 import { NgModule } from '@angular/core';
+import { GoogleMapsModule } from '@angular/google-maps'
+import { CommonModule } from '@angular/common';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PestDetailComponent } from './pest-detail/pest-detail.component';
+import { MapComponent } from './map/map.component';
 import { PestsComponent } from './pests/pests.component';
-// import { MessagesComponent } from './messages/messages.component';
+import { PestDetailComponent } from './pest-detail/pest-detail.component';
+import { ForumComponent } from './forum/forum.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
-import { AppRoutingModule } from './app-routing.module';
-
-import { HttpClientModule } from '@angular/common/http';
-
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
 
 @NgModule({
   imports: [
@@ -21,19 +23,20 @@ import { InMemoryDataService } from './in-memory-data.service';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-)
+    GoogleMapsModule
   ],
   declarations: [
     AppComponent,
     DashboardComponent,
     PestsComponent,
     PestDetailComponent,
-    // MessagesComponent
+    MapComponent,
+    LoginComponent,
+    RegisterComponent,
+    ForumComponent,
+  ],
+  exports: [
+    //GoogleMapsModule
   ],
   bootstrap: [ AppComponent ]
 })
