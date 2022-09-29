@@ -1,9 +1,13 @@
 #!/usr/bin/bash
 
+
+REPO_ROOT="/Users/ant0n/Documents/Repos/f22-black-1"
+
 # Clean Up
 docker container prune --force
 docker image prune --force
 old_cont=$(docker container ls | cut -c1-12 | tail -n1)
+rm -rf "$REPO_ROOT/application/server/data"
 
 if [ "$old_cont" = "CONTAINER ID" ];
 then
@@ -13,7 +17,7 @@ else
     docker rm -f $old_cont
 fi
 
-REPO_ROOT="/Users/ant0n/Documents/Repos/f22-black-1"
+
 
 # Spin up Front End
 
