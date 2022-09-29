@@ -5,10 +5,3 @@ export class Login {
   ) {}
   
 }
-
-
-// export interface Login {
-//     Username: string;
-//     Password: string;
-    
-//   }

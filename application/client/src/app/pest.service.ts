@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Pest } from './pest';
-import { PESTS } from './mock-pests';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NONE_TYPE } from '@angular/compiler';

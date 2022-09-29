@@ -13,8 +13,8 @@ import { MapComponent } from './map/map.component';
 import { PestsComponent } from './pests/pests.component';
 import { PestDetailComponent } from './pest-detail/pest-detail.component';
 import { ForumComponent } from './forum/forum.component';
-// import { LoginComponent } from './login/login.component';
-// import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -23,9 +23,7 @@ import { ForumComponent } from './forum/forum.component';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    GoogleMapsModule,
-    // LoginComponent,
-    // RegisterComponent,
+    GoogleMapsModule
   ],
   declarations: [
     AppComponent,
@@ -33,6 +31,8 @@ import { ForumComponent } from './forum/forum.component';
     PestsComponent,
     PestDetailComponent,
     MapComponent,
+    LoginComponent,
+    RegisterComponent,
     ForumComponent,
   ],
   exports: [
