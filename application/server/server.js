@@ -60,7 +60,7 @@ app.route(`/api/pests/`).get((req, res) => {
   
   queryDB();
 
-  
+
   //res.status(200).send([pestObj]);
 
 })
