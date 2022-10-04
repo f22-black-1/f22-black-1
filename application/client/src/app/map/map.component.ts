@@ -20,10 +20,12 @@ export class MapComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) infoWindow!: MapInfoWindow;
 
+  ret = false
   mapHeight = "700px";
   mapWidth = "1800px"
   mapZoom = 15;
   mapCenter!: google.maps.LatLng;
+  markerPositions: google.maps.LatLngLiteral[] = [];
   mapOptions: google.maps.MapOptions = {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     zoomControl: true,
@@ -35,7 +37,7 @@ export class MapComponent implements OnInit {
     styles: mapStyle
   };
 
-  iconBase = 'https://cs.odu.edu/~411black/application/client/src/assets/';
+  iconBase = 'https://cs.odu.edu/~411black/assets/';
 
   markerInfoContent = '';
   markerOptions: google.maps.MarkerOptions = {
@@ -43,10 +45,14 @@ export class MapComponent implements OnInit {
     animation: google.maps.Animation.DROP,
   };
 
+
   ngOnInit() {
 
-    let locAllowed = this.getCurrentLocation();
-    if (!locAllowed) {
+    // TODO: figure out what is going on with the callback... we should be able to place a 
+    // different marker based on the location permissions
+    this.getCurrentLocation()
+    // console.log(this.markerPositions)
+    if (true) {
       // Default Position is ODU
       const point: google.maps.LatLngLiteral = {
         lat: 36.8862699,
@@ -54,8 +60,11 @@ export class MapComponent implements OnInit {
       };
       this.mapCenter = new google.maps.LatLng(point);
       this.markerOptions.visible = true
-      
       this.markerOptions.icon = this.iconBase + 'donatello.png'
+    }
+    else {
+      this.markerOptions.icon = this.iconBase + 'raphael.png'   
+      this.markerOptions.visible = true
     }
   }
   
@@ -65,37 +74,26 @@ export class MapComponent implements OnInit {
     this.infoWindow.open(marker);
   }
 
-  getCurrentLocation(): boolean {
+  
+  getCurrentLocation() {
+
     if (!navigator.geolocation) {
-      console.log('Your browser does not support the geolocation feature');
-      return false
+      console.log('Your browser does not support the geolocation feature');     
     }
+    
     navigator.geolocation.getCurrentPosition(
       
-
       (position: GeolocationPosition) => { 
-  
         const point: google.maps.LatLngLiteral = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
-  
         this.mapCenter = new google.maps.LatLng(point);
         this.map.panTo(point);
-        this.markerOptions.visible = true
-
-        this.markerOptions.icon = this.iconBase + 'raphael.png'
-  
-  
-        // this.markerOptions = {
-        //   draggable: false,
-        //   animation: google.maps.Animation.DROP,
-        // };
-        return true
+        this.markerPositions.push(point)
       },
-
+       
     );
-    return false
   }
 
   //@ViewChild('mapContainer', { static: false })
@@ -115,10 +113,13 @@ export class MapComponent implements OnInit {
   // }
 
 
-  // addMarker(event: google.maps.MapMouseEvent) {
-  //   this.markerPositions.push(event.latLng!.toJSON());
-  //   console.log(`Added marker to ${event.latLng!}` )
-  // }
+  addMarker(event: google.maps.MapMouseEvent, markerOptions: google.maps.MarkerOptions) {
+    this.markerOptions.visible = markerOptions.visible
+    this.markerOptions.icon = markerOptions.icon
+    
+    this.markerPositions.push(event.latLng!.toJSON());
+    console.log(`Added marker to ${event.latLng!}` )
+  }
 
   // moveMap(event: google.maps.MapMouseEvent) {
   //   if(event.latLng!= null)
