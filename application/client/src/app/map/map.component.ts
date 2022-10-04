@@ -50,22 +50,22 @@ export class MapComponent implements OnInit {
 
     // TODO: figure out what is going on with the callback... we should be able to place a 
     // different marker based on the location permissions
-    this.getCurrentLocation()
-    console.log(this.markerPositions)
-    // if (true) {
-    //   // Default Position is ODU
-    //   const point: google.maps.LatLngLiteral = {
-    //     lat: 36.8862699,
-    //     lng: -76.3097248,
-    //   };
-    //   this.mapCenter = new google.maps.LatLng(point);
-    //   this.markerOptions.visible = true
-    //   this.markerOptions.icon = this.iconBase + 'donatello.png'
-    // }
-    // else {
-    //   this.markerOptions.icon = this.iconBase + 'raphael.png'   
-    //   this.markerOptions.visible = true
-    // }
+    // this.getCurrentLocation()
+    // console.log(this.markerPositions)
+    if (true) {
+      // Default Position is ODU
+      const point: google.maps.LatLngLiteral = {
+        lat: 36.8862699,
+        lng: -76.3097248,
+      };
+      this.mapCenter = new google.maps.LatLng(point);
+      this.markerOptions.visible = true
+      this.markerOptions.icon = this.iconBase + 'donatello.png'
+    }
+    else {
+      this.markerOptions.icon = this.iconBase + 'raphael.png'   
+      this.markerOptions.visible = true
+    }
   }
   
   openInfoWindow(marker: MapMarker) { 
