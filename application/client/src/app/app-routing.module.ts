@@ -5,6 +5,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PestsComponent } from './pests/pests.component';
 import { PestDetailComponent } from './pest-detail/pest-detail.component';
 import { LoginComponent } from './login/login.component';
+<<<<<<< Updated upstream
+=======
+import { RegisterComponent } from './register/register.component';
+import { NavComponent } from './nav/nav.component';
+>>>>>>> Stashed changes
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

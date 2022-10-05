@@ -5,8 +5,21 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PestDetailComponent } from './pest-detail/pest-detail.component';
+<<<<<<< Updated upstream
 import { PestsComponent } from './pests/pests.component';
 // import { MessagesComponent } from './messages/messages.component';
+=======
+import { ForumComponent } from './forum/forum.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { NavComponent } from './nav/nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+>>>>>>> Stashed changes
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -22,12 +35,22 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+<<<<<<< Updated upstream
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
 )
+=======
+    GoogleMapsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
+>>>>>>> Stashed changes
   ],
   declarations: [
     AppComponent,
@@ -35,7 +58,16 @@ import { LoginComponent } from './login/login.component';
     PestsComponent,
     PestDetailComponent,
     LoginComponent,
+<<<<<<< Updated upstream
     // MessagesComponent
+=======
+    RegisterComponent,
+    ForumComponent,
+    NavComponent,
+  ],
+  exports: [
+    //GoogleMapsModule
+>>>>>>> Stashed changes
   ],
   bootstrap: [ AppComponent ]
 })
