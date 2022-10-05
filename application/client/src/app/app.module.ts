@@ -1,9 +1,15 @@
+
 import { NgModule } from '@angular/core';
+import { GoogleMapsModule } from '@angular/google-maps'
+import { CommonModule } from '@angular/common';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+<<<<<<< HEAD
 import { PestDetailComponent } from './pest-detail/pest-detail.component';
 <<<<<<< Updated upstream
 import { PestsComponent } from './pests/pests.component';
@@ -28,6 +34,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { LoginComponent } from './login/login.component';
+=======
+import { MapComponent } from './map/map.component';
+import { PestsComponent } from './pests/pests.component';
+import { PestDetailComponent } from './pest-detail/pest-detail.component';
+import { ForumComponent } from './forum/forum.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+
+>>>>>>> main
 
 @NgModule({
   imports: [
@@ -35,6 +50,7 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
@@ -51,12 +67,16 @@ import { LoginComponent } from './login/login.component';
     MatIconModule,
     MatListModule
 >>>>>>> Stashed changes
+=======
+    GoogleMapsModule
+>>>>>>> main
   ],
   declarations: [
     AppComponent,
     DashboardComponent,
     PestsComponent,
     PestDetailComponent,
+<<<<<<< HEAD
     LoginComponent,
 <<<<<<< Updated upstream
     // MessagesComponent
@@ -68,6 +88,15 @@ import { LoginComponent } from './login/login.component';
   exports: [
     //GoogleMapsModule
 >>>>>>> Stashed changes
+=======
+    MapComponent,
+    LoginComponent,
+    RegisterComponent,
+    ForumComponent,
+  ],
+  exports: [
+    //GoogleMapsModule
+>>>>>>> main
   ],
   bootstrap: [ AppComponent ]
 })
