@@ -21,7 +21,7 @@ export class MapComponent implements OnInit {
   @ViewChild(MapInfoWindow, { static: false }) infoWindow!: MapInfoWindow;
 
   ret = false
-  mapHeight = "700px";
+  mapHeight = "874px";
   mapWidth = "1800px"
   mapZoom = 15;
   mapCenter!: google.maps.LatLng;
