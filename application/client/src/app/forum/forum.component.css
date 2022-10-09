@@ -1,6 +1,6 @@
 .summaryThreadContainer {
-    height: 800px;
-    width: 1100px;
+    height: 1000px;
+    width: 1200px;
     /*border-color: black;*/
     border-style: solid;
     border-width: 1px;
@@ -11,21 +11,65 @@
 }
 
 .summaryThread {
-    height: 200px;
-    width: 1095px;
+    height: 175px;
+    width: 1198px;
+    border-style: solid;
     border-color: black;
     border-width: thin;
-    background-color: #80ffaa;
+    background-color: #8fc7a2;
     float: center;
+    position: relative;
+    font-size: 15px;
 }
 
+.stIncidentIcon {
+    height:173px;
+    width:100px;
+    float:left;
+    align-items: center;
+    text-align: center;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+}
 
-.vertical-center {
-    margin: 0;
-    top: 50%;
-   /* -ms-transform: translateY(-50%);
-    transform: translateY(-50%); */
-  }
+.stPestImage {
+    height:173px;
+    width:250px;
+    float:left;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+}
+
+.stTitle {
+    font: cambria;
+    float:left;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    height: 41px;
+    width: 846px;
+}
+
+.stTitleLink {
+    font-size:16px;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.stDescription {
+    font: cambria;
+    font-size:16px;
+    color: black;
+    float:left;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    height: 41px;
+    width: 846px;
+    padding: 5px;
+}
 
 .menuButton {
     border:2px solid #000000;
@@ -47,6 +91,27 @@
     transition:0.5s;
     color:#3AE83A;
 }
+
+ .stImageFormats {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    width:90px;
+    height:144px;
+} 
+
+.stPestImageFormats {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height:160px;
+    width:235px;
+    margin-top:2%;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+} 
 
 
 /* * {
