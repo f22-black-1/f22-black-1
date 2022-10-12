@@ -21,11 +21,14 @@ export class MapComponent implements OnInit {
   @ViewChild(MapInfoWindow, { static: false }) infoWindow!: MapInfoWindow;
 
   ret = false
-  mapHeight = "874px";
-  mapWidth = "1800px"
-  mapZoom = 15;
+  mapHeight = "900px";
+  mapWidth = "1720px"
+  // mapZoom = 15;
   mapCenter!: google.maps.LatLng;
   markerPositions: google.maps.LatLngLiteral[] = [];
+  center: google.maps.LatLngLiteral = {lat: 24, lng: 12};
+  zoom = 15;
+  
   mapOptions: google.maps.MapOptions = {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     zoomControl: true,
@@ -48,24 +51,26 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
 
+    this.markerOptions.visible = false
+
     // TODO: figure out what is going on with the callback... we should be able to place a 
     // different marker based on the location permissions
     this.getCurrentLocation()
     // console.log(this.markerPositions)
-    if (true) {
-      // Default Position is ODU
-      const point: google.maps.LatLngLiteral = {
-        lat: 36.8862699,
-        lng: -76.3097248,
-      };
-      this.mapCenter = new google.maps.LatLng(point);
-      this.markerOptions.visible = true
-      this.markerOptions.icon = this.iconBase + 'donatello.png'
-    }
-    else {
-      this.markerOptions.icon = this.iconBase + 'raphael.png'   
-      this.markerOptions.visible = true
-    }
+    // if (true) {
+    //   // Default Position is ODU
+    //   const point: google.maps.LatLngLiteral = {
+    //     lat: 36.8862699,
+    //     lng: -76.3097248,
+    //   };
+    //   this.mapCenter = new google.maps.LatLng(point);
+    
+    this.markerOptions.icon = this.iconBase + 'donatello.png'
+    // }
+    // else {
+    //   this.markerOptions.icon = this.iconBase + 'raphael.png'   
+    //   this.markerOptions.visible = true
+    // }
   }
   
   openInfoWindow(marker: MapMarker) { 
@@ -113,13 +118,13 @@ export class MapComponent implements OnInit {
   // }
 
 
-  addMarker(event: google.maps.MapMouseEvent, markerOptions: google.maps.MarkerOptions) {
-    this.markerOptions.visible = markerOptions.visible
-    this.markerOptions.icon = markerOptions.icon
+  // addMarker(event: google.maps.MapMouseEvent, markerOptions: google.maps.MarkerOptions) {
+  //   this.markerOptions.visible = markerOptions.visible
+  //   this.markerOptions.icon = markerOptions.icon
     
-    this.markerPositions.push(event.latLng!.toJSON());
-    console.log(`Added marker to ${event.latLng!}` )
-  }
+  //   this.markerPositions.push(event.latLng!.toJSON());
+  //   console.log(`Added marker to ${event.latLng!}` )
+  // }
 
   // moveMap(event: google.maps.MapMouseEvent) {
   //   if(event.latLng!= null)
@@ -137,5 +142,15 @@ export class MapComponent implements OnInit {
   // }
 
 
+  addMarker(event: google.maps.MapMouseEvent, markerOptions: google.maps.MarkerOptions) {
+    this.markerOptions.visible = true
+
+    this.markerOptions.icon = markerOptions.icon
+    
+    if (event.latLng) {
+      this.markerPositions.push(event.latLng.toJSON());
+    }
+    console.log(`Added marker to ${event.latLng!}` )
+  }
   
 }

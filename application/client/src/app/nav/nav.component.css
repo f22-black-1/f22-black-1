@@ -1,22 +1,36 @@
-.sidenav-container {
-  height: 100%;
-  background: black;
+.mat-toolbar {
+  background: green;
+  /* color: black; */
+}
+
+.activity-box {
+  font-size: medium;
+  height:600px;
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.activity-item {
+  margin-top: 10px;
+  text-align: left;
+  font-size: small;
 }
 
 .sidenav {
   width: 200px;
-  background: gray;
+  background: rgb(73, 105, 63);
 }
 
-.sidenav .mat-toolbar {
-  background: green;
-  
+.side-button {
+  width: 200px;
+
 }
 
-.mat-toolbar.mat-primary {
-  position: sticky;
-  color:black;
-  background: green;
-  top: 0;
-  z-index: 1;
+.top-buttons {
+  text-align: center;
+  display: inline-block;
+  position:fixed;
+  right: 0;
+
 }
