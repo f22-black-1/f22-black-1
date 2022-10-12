@@ -22,7 +22,7 @@ export class MapComponent implements OnInit {
 
   ret = false
   mapHeight = "874px";
-  mapWidth = "1800px"
+  mapWidth = "1720px"
   mapZoom = 15;
   mapCenter!: google.maps.LatLng;
   markerPositions: google.maps.LatLngLiteral[] = [];

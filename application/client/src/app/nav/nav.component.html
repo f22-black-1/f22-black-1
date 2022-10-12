@@ -5,11 +5,11 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <li><button routerLink ="/map">Map</button></li>
-      <li><button routerLink="/dashboard">Dashboard</button></li>
-      <li><button routerLink="/pests">Pests</button></li>
-      <li><button routerLink="/login">Login</button></li>
-      <li><button routerLink="/register">Register</button></li>
+        <mat-list-item><button mat-flat-button routerLink ="/map">Map</button></mat-list-item>
+        <mat-list-item><button  mat-flat-button routerLink="/dashboard">Dashboard</button></mat-list-item>
+        <mat-list-item><button mat-flat-button routerLink="/pests">Pests</button></mat-list-item>
+        <div></div>
+        <span>Test</span>
     </mat-nav-list>
     
   </mat-sidenav>
@@ -24,7 +24,12 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Application</span>
-    </mat-toolbar>
-   <router-outlet></router-outlet>
+      <span class="example-spacer"></span>
+      <button mat-icon-button routerLink="/login">
+        <mat-icon>menu</mat-icon>
+      </button>
+      
+  </mat-toolbar>
+  <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
