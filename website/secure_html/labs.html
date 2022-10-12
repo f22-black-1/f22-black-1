@@ -33,7 +33,7 @@
 <!-- Navbar -->
 <div class="w3-top">
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
-    <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    <a class="w3-bar-item w3-button w3-right w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     <a href="index.html" class="w3-bar-item w3-button w3-theme-l1">Home</a>
     <a href="the_team.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">The Team</a>
     <a href="ProjectDescription.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Project Description</a>
@@ -52,8 +52,8 @@
 </div>
 
 <!-- Sidebar -->
-<nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+<nav class="w3-sidebar w3-bar-block w3-large w3-theme-l5 w3-animate-left" style="display:none" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black" title="Close Menu">
     <i class="fa fa-remove"></i>
   </a>
   <h4 class="w3-bar-item"><b>Menu</b></h4>
@@ -71,16 +71,15 @@
 </nav>
 
 <!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<div class="w3-overlay" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 
 <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
-<div class="w3-main" style="margin-left:250px">
+<div class="w3-main">
   <div class="w3-row">
   </br>
-  <img src="Banner.png" alt="Team Black Banner" height="150" width="100%" onclick="location.href='index.html'"/>
-
-
+  <center><img src="Banner2.png" alt="Team Black Banner" height="150" width="50%" onclick="location.href='index.html'"/></center>
+<center>
 <div id="Container_Main">
   <div id="Container_Main_Header">
     <center>
@@ -158,16 +157,46 @@
 
   <!-- LAB 2 -->
   <section id="Lab_2">
-    <hr></hr>
     <div id="Container_Subhead">
       <p>Lab 2</p>
     </div>
     <hr></hr>
+    <center><h3> Lab 2 - Collaborative Outline </h3></center>
+    <center><iframe width="70%" height="500px" src="https://docs.google.com/document/d/e/2PACX-1vRoTLBGuMAs-xrO1Ach9SST5ABSFNpvUSCLb5uAfeDP5rWl9TscAdK3OYHnw1EB1g/pub?embedded=true"></iframe></center>
+    </br>
+    <center><h3> Lab 2 - Individual </h3></center>
+    <div class="w3-container">
+      <center>
+        <h4>Bryan Burton</h4>
+          <a href="" class="w3-btn">Lab 2 Draft</a>
+          <a href="" class="w3-btn">Lab 2 Final</a>
+        <h4>Tom Cooch</h4>
+          <a href="" class="w3-btn">Lab 2 Draft</a>
+          <a href="" class="w3-btn">Lab 2 Final</a>
+        <h4>Trevor Hess</h4>
+          <a href="" class="w3-btn">Lab 2 Draft</a>
+          <a href="" class="w3-btn">Lab 2 Final</a>
+        <h4>Heather Mallalieu</h4>
+          <a href="" class="w3-btn">Lab 2 Draft</a>
+          <a href="" class="w3-btn">Lab 2 Final</a>
+        <h4>Anton Rasmussen</h4>
+          <a href="" class="w3-btn">Lab 2 Draft</a>
+          <a href="" class="w3-btn">Lab 2 Final</a>
+        <h4>Andrew Undercoffer</h4>
+          <a href="" class="w3-btn">Lab 2 Draft</a>
+          <a href="" class="w3-btn">Lab 2 Final</a>
+        <h4>Val Vega</h4>
+          <a href="" class="w3-btn">Lab 2 Draft</a>
+          <a href="" class="w3-btn">Lab 2 Final</a>
+        <h4>Lukas McKennedy</h4>
+          <a href="" class="w3-btn">Lab 2 Draft</a>
+          <a href="" class="w3-btn">Lab 2 Final</a>
+      </center>
+    </div>
   </section>
 
   <!-- LAB 3 -->
   <section id="Lab_3">
-    <hr></hr>
     <div id="Container_Subhead">
       <p>Lab 3</p>
     </div>
@@ -176,7 +205,6 @@
 
   <!-- LAB 4 -->
   <section id="Lab_4">
-    <hr></hr>
     <div id="Container_Subhead">
       <p>Lab 4</p>
     </div>
@@ -197,6 +225,7 @@
       </p>
     </div>
   </footer>
+</center>
 </div>
 
 <!-- END MAIN -->

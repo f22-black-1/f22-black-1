@@ -1,0 +1,36 @@
+.mat-toolbar {
+  background: green;
+  /* color: black; */
+}
+
+.activity-box {
+  font-size: medium;
+  height:600px;
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.activity-item {
+  margin-top: 10px;
+  text-align: left;
+  font-size: small;
+}
+
+.sidenav {
+  width: 200px;
+  background: rgb(73, 105, 63);
+}
+
+.side-button {
+  width: 200px;
+
+}
+
+.top-buttons {
+  text-align: center;
+  display: inline-block;
+  position:fixed;
+  right: 0;
+
+}
