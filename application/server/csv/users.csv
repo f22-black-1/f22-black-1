@@ -1,0 +1,5 @@
+UserID,LocID,Username,Email,UserType,FirstName,LastName,Password,CustomViewAreaSet,CustomViewArea,CustomFilterSet,FilterPest,FilterIncidentArea,FilterUser
+a50736c6-6860-471a-adb2-45d7e28e93c8,5c1978c3-121e-4d6c-a13e-851377e0739b,User1,user1@gmail.com,user,User,One,123456,FALSE,0,FALSE,"","",""
+4e830b51-e8c0-448d-9d29-48e28194fef1,b1a24390-1f6e-4983-b373-9da4b2b1a5e0,User2,user2@yahoo.com,user,User,Two,password,FALSE,0,FALSE,"","",""
+224e4fa8-ac03-4bfe-8616-e7226f0c11f7,41bce8dd-f51c-4bda-b559-4d3d16ddfb5d,User3,user3@aol.com,admin,User,Three,qwerty,FALSE,0,FALSE,"","",""
+90cbf781-7b2a-40fd-92cb-2a82764494fc,0956d31d-cc57-4684-98fd-066f429c1ce7,User4,user4@outlook.com,user,User,Four,111111,FALSE,0,FALSE,"","",""
