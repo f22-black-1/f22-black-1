@@ -1,6 +1,4 @@
 DROP TABLE IF EXISTS Users;
-DROP TABLE IF EXISTS UserProfileSettings;
-DROP TABLE IF EXISTS UserType;
 DROP TABLE IF EXISTS Neighborhood;
 DROP TABLE IF EXISTS Incident;
 DROP TABLE IF EXISTS Thread;
@@ -18,21 +16,12 @@ CREATE TABLE IF NOT EXISTS Neighborhood (
   City VARCHAR(255)
 );
 
-CREATE TABLE IF NOT EXISTS UserType(
-  UserTypeID INT PRIMARY KEY,
-  UserType VARCHAR(50)
-);
-
 CREATE TABLE IF NOT EXISTS Users(
   UserID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
   LocID UUID REFERENCES Neighborhood(LocID),
   UserName VARCHAR(50) UNIQUE,
   Email VARCHAR(255) UNIQUE,
-  UserTypeID INT REFERENCES UserType(UserTypeID)
-);
-
-CREATE TABLE IF NOT EXISTS UserProfileSettings(
-  UserProfileID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+  UserType VARCHAR(50),
   FirstName VARCHAR(50),
   LastName VARCHAR(50),
   Password VARCHAR(200) NOT NULL,
@@ -110,9 +99,7 @@ CREATE TABLE IF NOT EXISTS ThreadFeedback (
 );
 
 COPY Neighborhood FROM '/docker-entrypoint-initdb.d/csv/neighborhood.csv' CSV HEADER;
-COPY UserType FROM '/docker-entrypoint-initdb.d/csv/usertype.csv' CSV HEADER;
 COPY Users FROM '/docker-entrypoint-initdb.d/csv/users.csv' CSV HEADER;
-COPY UserProfileSettings FROM '/docker-entrypoint-initdb.d/csv/userprofilesettings.csv' CSV HEADER;
 COPY Pest FROM '/docker-entrypoint-initdb.d/csv/pests.csv' CSV HEADER;
 COPY Incident FROM '/docker-entrypoint-initdb.d/csv/incident.csv' CSV HEADER;
 COPY Thread FROM '/docker-entrypoint-initdb.d/csv/thread.csv' CSV HEADER;
