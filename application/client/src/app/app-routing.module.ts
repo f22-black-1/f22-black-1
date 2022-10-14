@@ -16,10 +16,12 @@ const routes: Routes = [
   { path: 'pests', component: PestsComponent },
   { path: 'pests/:id', component: PestsComponent },
   { path: 'map', component: MapComponent },
-  //New
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'forum', component: ForumComponent }
+  { path: 'forum', component: ForumComponent },
+
+  // This route is for testing CRUD operations on the PEST Object (See Video Demo from 14 Oct 2022)
+  { path: 'pest_crud_test', component: PestsComponent }
 
 ];
 

@@ -31,12 +31,12 @@ app.listen(config.port, () => console.log(`Example app listening on ${config.por
 
 // CRUD Operations for Pest Table
 let pestObj = {
-  pestType: "ants",
-  pestId: 1,
-  xCoord: 123,
-  yCoord: 456,
-  id: 1,
-  name: "ants",
+  pestType: String,
+  pestId: Number,
+  xCoord: Number,
+  yCoord: Number,
+  id: Number,
+  name: String,
 }
 
 // Get all pests
@@ -53,89 +53,164 @@ app.route(`/api/pests/`).get((req, res) => {
       
     } catch (err) {
       console.log(err);
-      //res.status(500).send()
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
+
+// Add a new pest
+app.route('/api/pest/create').post((req, res) => {
+    
+  console.log(req.body);
+
+  pestToCreate = pestObj;
+
+  pestToCreate.pestId = req.body.pest_id;
+  pestToCreate.pestType = req.body.pest_type;
+  pestToCreate.xCoord = req.body.x_coord;
+  pestToCreate.yCoord = req.body.y_coord;
+  pestToCreate.id = req.body.id;
+  pestToCreate.name = req.body.name;
+
+  console.log(pestToCreate)
+
+
+  const query = `INSERT INTO pest(pest_id, pest_type, x_coord, y_coord, id, name) 
+                  VALUES (${pestToCreate.pestId}, 
+                         '${pestToCreate.pestType}', 
+                          ${pestToCreate.xCoord}, 
+                          ${pestToCreate.yCoord}, 
+                          ${pestToCreate.id}, 
+                        '${pestToCreate.name}');`
+
+  const queryDB = async () => {
+    try {
+      await pool.connect();
+      const q = await pool.query(query);
+      console.log(q.command)
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
     }
   };
   
+  queryDB();
+
+})
+
+
+// Delete a Pest
+app.route('/api/pest/delete').delete((req, res) => {
+  console.log(req.body);
+
+  pestToDelete = pestObj;
+
+  pestToDelete.pestId = req.body.pest_id;
+
+  console.log(pestToDelete)
+
+
+  const query = `DELETE FROM pest WHERE pest_id = ${pestToDelete.pestId};`
+
+  const queryDB = async () => {
+    try {
+      await pool.connect();
+      const q = await pool.query(query);
+      console.log(q.command)
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
   
   queryDB();
 
+})
 
-  //res.status(200).send([pestObj]);
+
+// Update a whole Pest object (except the key)
+app.route('/api/pest/update').put((req, res) => {
+  console.log(req.body);
+
+  pestToUpdate = pestObj;
+
+  pestToUpdate.pestId = req.body.pest_id;
+  pestToUpdate.pestType = req.body.pest_type;
+  pestToUpdate.xCoord = req.body.x_coord;
+  pestToUpdate.yCoord = req.body.y_coord;
+  pestToUpdate.id = req.body.id;
+  pestToUpdate.name = req.body.name;
+
+  console.log(pestToUpdate)
+
+  const query = `UPDATE pest 
+                 SET pest_type = '${pestToUpdate.pestType}', 
+                     x_coord = ${pestToUpdate.xCoord}, 
+                     y_coord = ${pestToUpdate.yCoord}, 
+                     id = ${pestToUpdate.id}, 
+                     name =  '${pestToUpdate.name}' 
+                 WHERE pest_id = ${pestToUpdate.pestId} ;` 
+                 
+  const queryDB = async () => {
+    try {
+      await pool.connect();
+      const q = await pool.query(query);
+      console.log(q.command)
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+  
+  queryDB();
 
 })
 
-// Get pest by id
-// app.route(`/api/pest/id`).get((req, res) => {
-//   query = `SELECT * FROM pest WHERE pest_id = ${pestObj.pestId}`
-//   console.log(query)
+
+
+// // Get pest by id
+// // app.route(`/api/pest/id`).get((req, res) => {
+// //   query = `SELECT * FROM pest WHERE pest_id = ${pestObj.pestId}`
+// //   console.log(query)
   
-//   res.status(200).send(pestObj);
+// //   res.status(200).send(pestObj);
+
+// // })
+
+// // Post pestId
+// app.route('/api/detail/:id').post((req, res) => {    
+//   console.log(`Put pestId: ${JSON.stringify(req.body)}`)
 
 // })
 
-// Post pestId
-app.route('/api/detail/:id').post((req, res) => {    
-  console.log(`Put pestId: ${JSON.stringify(req.body)}`)
-
-})
-
-
-// Add a new pest to db from the front end
-app.route('/api/pest/create').post((req, res) => {
-    
-
-  console.log(req.body)
-
-  // pestToCreate = pestObj
-
-  // pestToCreate.pestId = req.body.pestId
-  // pestToCreate.pestType = req.body.pestType
-  // pestToCreate.xCoord=req.body.xCoord
-  // pestToCreate.yCoord=req.body.yCoord
-
-  // const query = `INSERT INTO pest(pest_id, pest_type, x_coord, y_coord) 
-  //                 VALUES (${pestToCreate.pestId}, '${pestToCreate.pestType}', ${pestToCreate.xCoord}, ${pestToCreate.yCoord});`
-
-  // const queryDB = async () => {
-  //   try {
-  //     await pool.connect();
-  //     const q = await pool.query(query);
-  //     console.log(q.command)
-  //     res.status(201).send()
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  
-  // queryDB();
-
-})
 
 // Retrieve all pests of a certain type
-app.route('/api/pests/:type').get((req, res) => {
+// app.route('/api/pests/:type').get((req, res) => {
 
-    const requestedPestType = req.params['type']
+//     const requestedPestType = req.params['type']
 
-    // TODO: add logic for splicing multiple params and inserting them as " + param + " to an array
-    quotedStringArray = `"ants", "spiders"`
+//     // TODO: add logic for splicing multiple params and inserting them as " + param + " to an array
+//     quotedStringArray = `"ants", "spiders"`
 
-    getQuery = `SELECT * FROM pest_patrol_db.pest_table WHERE pest_type IN (${quotedStringArray});`
+//     getQuery = `SELECT * FROM pest_patrol_db.pest_table WHERE pest_type IN (${quotedStringArray});`
 
-    console.log(getQuery)
+//     console.log(getQuery)
 
-    // TODO: modify res.send to send to database
-    res.send({ type: requestedPestType })
+//     // TODO: modify res.send to send to database
+//     res.send({ type: requestedPestType })
 
-  })
+//   })
 
 
 // Update a Pest's Location 
-app.route('/api/pests/:location').put((req, res) => {
-    res.status(200).send(req.body)
-  })
+// app.route('/api/pests/update/:location').put((req, res) => {
+//     res.status(200).send(req.body)
+//   })
 
-// Delete an object
-app.route('/api/pests/:type').delete((req, res) => {
-res.sendStatus(204)
-})
