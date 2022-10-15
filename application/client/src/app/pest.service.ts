@@ -19,34 +19,6 @@ export class PestService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  getPest(id: number): Observable<Pest>{
-
-    console.log("Receiving Data from middleware")
-   
-     return this.http.get<Pest>(`http://localhost:8080/api/pest/`,)
-      
-    //   this.subscribe(data => {
-        
-    //   // TODO: Figure out what this does
-    //   pestObj.pestId = data.id
-
-    // })
-      
-  }
-
-
-  getPests(): Observable<Pest[]> {
-
-    this.log('fetched pests from server');
-
-    /** GET pests from the server */
-    return this.http.get<Pest[]>(`http://localhost:8080/api/pests/`)  
-    .pipe(
-      tap(_ => this.log(`fetched pests`)),
-      catchError(this.handleError<Pest[]>('getPests', [])),
-      );
-  }
-
   /** Log a PestService message with the MessageService */
   private log(message: string) {
     console.log(`PestService: ${message}`);
@@ -59,7 +31,7 @@ export class PestService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T) {
+   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
@@ -73,23 +45,55 @@ export class PestService {
     };
   }
 
-  /** PUT: update the pest on the server */
-  updatePest(pest: Pest): Observable<any> {
-    // // Send the pestObj to the Middleware
-    // this.http.post<Pest>(`http://localhost:8080/api/pests/${id}`, {id: `${id}`}).subscribe(data => {
+  /** GET ALL pests from the DB */
+  getPests(): Observable<Pest[]> {
+
+    this.log('fetched pests from DB');
+
+    return this.http.get<Pest[]>(`http://localhost:8080/api/pests/`)  
+    .pipe(
+      tap(_ => this.log(`fetched all pests`)),
+      catchError(this.handleError<Pest[]>('getPests', [])));
+  }
+
+  /** POST NEW pest to the DB */
+  createPest(pest: Pest): Observable<any> {
     
-    // // TODO: Figure out what this does
-    // //id = data.id
+    // This log will bew useful when adding front-end code
+    console.log(`Creating PEST: ${pest}`)
 
-    // })
-    console.log(`PESTTTTTT: ${pest}`)
+    return this.http.post<Pest>('http://localhost:8080/api/pest/create', pest)
+    .pipe(
+      tap(_ => this.log(`created new pest with pest_id=${pest.id}`)), // TODO: determine which id this returns
+      catchError(this.handleError<Pest>('createPest')));
 
-    return this.http.post<Pest>('http://localhost:8080/api/pest/create', pest).pipe(
+  }
+
+  /** DELETE an entire pest object in the DB */
+  deletePest(pest: Pest): Observable<any> {
+    console.log(`Deleting PEST: ${pest}`)
+
+    return this.http.delete<Pest>('http://localhost:8080/api/pest/delete')
+    .pipe(
+      tap(_ => this.log(`Deleted PEST`)),
+      catchError(this.handleError<Pest>('deltePest')),
+      );
+  }
+
+  /** PUT (update) a pest in the DB with a given id */
+  updatePest(pest: Pest): Observable<any> {
+
+    console.log(`Updating PEST: ${pest}`)
+
+    return this.http.post<Pest>('http://localhost:8080/api/pest/update', pest).pipe(
         tap(_ => this.log(`updated pest id=${pest.id}`)),
-        catchError(this.handleError<any>('updatePest')));
-    // return this.http.put(`http://localhost:8080/api/pest/create`, pest, this.httpOptions).pipe(
-    //   tap(_ => this.log(`updated pest id=${pest.id}`)),
-    //   catchError(this.handleError<any>('updatePest'))
-    // );
+        catchError(this.handleError<Pest>('updatePest')));
+  }
+
+
+  //TODO: This is here so things don't break but otherwise plays no current role
+  getPest(id: number): Observable<Pest>{
+    console.log("Receiving Data from middleware")  
+    return this.http.get<Pest>(`http://localhost:8080/api/pest/`,)  
   }
 }
