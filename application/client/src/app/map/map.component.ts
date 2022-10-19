@@ -26,8 +26,9 @@ export class MapComponent implements OnInit {
   // mapZoom = 15;
   mapCenter!: google.maps.LatLng;
   markerPositions: google.maps.LatLngLiteral[] = [];
-  center: google.maps.LatLngLiteral = {lat: 24, lng: 12};
+  center: google.maps.LatLngLiteral = {lat: 36.87583441244073, lng: -76.2905416411255};
   zoom = 15;
+
   
   mapOptions: google.maps.MapOptions = {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -35,7 +36,7 @@ export class MapComponent implements OnInit {
     scrollwheel: true,
     disableDoubleClickZoom: true,
     maxZoom: 20,
-    minZoom: 4,
+    minZoom: 12,
     //gestureHandling: "none",
     styles: mapStyle
   };
