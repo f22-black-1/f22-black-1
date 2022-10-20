@@ -64,7 +64,7 @@ export class PestService {
 
     return this.http.post<Pest>('http://localhost:8080/api/pest/create', pest)
     .pipe(
-      tap(_ => this.log(`created new pest with pest_id=${pest.id}`)), // TODO: determine which id this returns
+      tap(_ => this.log(`created new pest with pest_id=${pest.pestid}`)), // TODO: determine which id this returns
       catchError(this.handleError<Pest>('createPest')));
 
   }
@@ -86,7 +86,7 @@ export class PestService {
     console.log(`Updating PEST: ${pest}`)
 
     return this.http.post<Pest>('http://localhost:8080/api/pest/update', pest).pipe(
-        tap(_ => this.log(`updated pest id=${pest.id}`)),
+        tap(_ => this.log(`updated pest id=${pest.pestid}`)),
         catchError(this.handleError<Pest>('updatePest')));
   }
 

@@ -33,7 +33,7 @@ export class PestsComponent implements OnInit {
 
   createPest(pest: Pest): Array<Pest> {
     this.pestService.createPest(pest)
-    .subscribe(id => this.pest.id = id);
+    .subscribe(pestid => this.pest.pestid = pestid);
 
     console.log(this.pests)
 
@@ -49,7 +49,7 @@ export class PestsComponent implements OnInit {
 
   updatePest(pest: Pest): Array<Pest> {
     this.pestService.updatePest(pest)
-    .subscribe(id => this.pest.id = id);
+    .subscribe(pestid => this.pest.pestid = pestid);
 
     console.log(this.pests)
 

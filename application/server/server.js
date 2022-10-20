@@ -31,12 +31,12 @@ app.listen(config.port, () => console.log(`Example app listening on ${config.por
 
 // CRUD Operations for Pest Table
 let pestObj = {
-  pestType: String,
-  pestId: Number,
-  xCoord: Number,
-  yCoord: Number,
-  id: Number,
-  name: String,
+  PestID: String,
+  PestName: String,
+  PestType: String,
+  Severity: String,
+  PestDescription: String,
+  PestImage: String,
 }
 
 // Get all pests
@@ -69,23 +69,24 @@ app.route('/api/pest/create').post((req, res) => {
 
   pestToCreate = pestObj;
 
-  pestToCreate.pestId = req.body.pest_id;
-  pestToCreate.pestType = req.body.pest_type;
-  pestToCreate.xCoord = req.body.x_coord;
-  pestToCreate.yCoord = req.body.y_coord;
-  pestToCreate.id = req.body.id;
-  pestToCreate.name = req.body.name;
+  pestToCreate.PestID = req.body.pestid;
+  pestToCreate.PestName = req.body.pestname;
+  pestToCreate.pestType = req.body.pesttype;
+  pestToCreate.Severity = req.body.severity;
+  pestToCreate.PestDescription = req.body.pestdescription;
+  pestToCreate.PestImage = req.body.pestimage;
 
   console.log(pestToCreate)
 
 
-  const query = `INSERT INTO pest(pest_id, pest_type, x_coord, y_coord, id, name) 
-                  VALUES (${pestToCreate.pestId}, 
-                         '${pestToCreate.pestType}', 
-                          ${pestToCreate.xCoord}, 
-                          ${pestToCreate.yCoord}, 
-                          ${pestToCreate.id}, 
-                        '${pestToCreate.name}');`
+  const query = `INSERT INTO Pest(PestName,PestType, Severity, PestDescription, PestImage) 
+                  VALUES (
+                        '${pestToCreate.PestName}',
+                         '${pestToCreate.PestType}',
+                         '${pestToCreate.Severity}',
+                          '${pestToCreate.PestDescription}',
+                          '${pestToCreate.PestImage}'
+                         );`
 
   const queryDB = async () => {
     try {
@@ -110,12 +111,12 @@ app.route('/api/pest/delete').delete((req, res) => {
 
   pestToDelete = pestObj;
 
-  pestToDelete.pestId = req.body.pest_id;
+  pestToDelete.pestId = req.body.pestid;
 
   console.log(pestToDelete)
 
 
-  const query = `DELETE FROM pest WHERE pest_id = ${pestToDelete.pestId};`
+  const query = `DELETE FROM pest WHERE pestid = '${pestToDelete.pestId}';`
 
   const queryDB = async () => {
     try {
