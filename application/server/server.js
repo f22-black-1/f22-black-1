@@ -71,7 +71,7 @@ app.route('/api/pest/create').post((req, res) => {
 
   pestToCreate.PestID = req.body.pestid;
   pestToCreate.PestName = req.body.pestname;
-  pestToCreate.pestType = req.body.pesttype;
+  pestToCreate.PestType = req.body.pesttype;
   pestToCreate.Severity = req.body.severity;
   pestToCreate.PestDescription = req.body.pestdescription;
   pestToCreate.PestImage = req.body.pestimage;
