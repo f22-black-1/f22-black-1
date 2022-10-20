@@ -3,7 +3,7 @@
   margin: 0 0 2em 0;
   list-style-type: none;
   padding: 0;
-  width: 15em;
+  width: 750px;
 }
 .pests li {
   position: relative;
@@ -17,7 +17,7 @@
 .pests a {
   color: #333;
   text-decoration: none;
-  background-color: #EEE;
+  background-color: rgb(226, 204, 204);
   margin: .5em;
   padding: .3em 0;
   height: 1.6em;
@@ -47,7 +47,7 @@
   left: -1px;
   top: -4px;
   height: 1.8em;
-  min-width: 16px;
+  width: 300px;
   text-align: right;
   margin-right: .8em;
   border-radius: 4px 0 0 4px;

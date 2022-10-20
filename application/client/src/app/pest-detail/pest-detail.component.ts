@@ -34,9 +34,9 @@ export class PestDetailComponent implements OnInit {
   }
 
   getPest(): Observable<Pest> {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    console.log(`ideeeeee: ${id}`)
-    return this.pestService.getPest(id)
+    const PestID = Number(this.route.snapshot.paramMap.get('PestID'));
+    console.log(`ideeeeee: ${PestID}`)
+    return this.pestService.getPest(PestID)
 
 
       //.subscribe(pest => this.pest = pest);

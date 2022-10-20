@@ -31,12 +31,12 @@ app.listen(config.port, () => console.log(`Example app listening on ${config.por
 
 // CRUD Operations for Pest Table
 let pestObj = {
-  pestType: String,
-  pestId: Number,
-  xCoord: Number,
-  yCoord: Number,
-  id: Number,
-  name: String,
+  PestID: String,
+  PestName: String,
+  PestType: String,
+  Severity: String,
+  PestDescription: String,
+  PestImage: String,
 }
 
 // Get all pests
@@ -69,23 +69,22 @@ app.route('/api/pest/create').post((req, res) => {
 
   pestToCreate = pestObj;
 
-  pestToCreate.pestId = req.body.pest_id;
+  pestToCreate.PestID = req.body.pest_id;
   pestToCreate.pestType = req.body.pest_type;
-  pestToCreate.xCoord = req.body.x_coord;
-  pestToCreate.yCoord = req.body.y_coord;
-  pestToCreate.id = req.body.id;
-  pestToCreate.name = req.body.name;
+  pestToCreate.Severity = req.body.severity;
+  pestToCreate.PestDescription = req.body.pest_description;
+  pestToCreate.PestImage = req.body.pest_image;
 
   console.log(pestToCreate)
 
 
-  const query = `INSERT INTO pest(pest_id, pest_type, x_coord, y_coord, id, name) 
-                  VALUES (${pestToCreate.pestId}, 
-                         '${pestToCreate.pestType}', 
-                          ${pestToCreate.xCoord}, 
-                          ${pestToCreate.yCoord}, 
-                          ${pestToCreate.id}, 
-                        '${pestToCreate.name}');`
+  const query = `INSERT INTO Pest(PestID, PestType, Severity, PestDescription, PestImage) 
+                  VALUES (${pestToCreate.PestID},
+                          ${pestToCreate.PestType},
+                          ${pestToCreate.Severity},
+                          ${pestToCreate.PestDescription},
+                          ${pestToCreate.PestImage}
+                         );`
 
   const queryDB = async () => {
     try {

@@ -57,8 +57,6 @@ CREATE TABLE IF NOT EXISTS Pest (
 -- INSERT INTO pest VALUES (4, 'Dragonflies', -100, -100, 1004, 'Anisoptera');
 
 
--- SELECT * FROM pest;
-
 CREATE TABLE IF NOT EXISTS Incident (
   IncidentID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
   LocID UUID REFERENCES Neighborhood(LocID),
