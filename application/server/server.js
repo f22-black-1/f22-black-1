@@ -174,7 +174,70 @@ app.route('/api/pest/update').put((req, res) => {
 
 })
 
+// Get names of all pest with same pest type
+app.route(`/api/pests/type`).get((req, res) => {
+  console.log(req.body);
 
+  pestNameFromType = pestObj;
+
+  pestNameFromType.pestName = req.body.pesttype;
+
+  console.log(pestNameFromType)
+
+
+
+  query = `SELECT pestname FROM pest WHERE pesttype = '${pestNameFromType.pestName}';`
+  
+
+    const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
+// Get names of all pest with same severity
+app.route(`/api/pests/severity`).get((req, res) => {
+  console.log(req.body);
+
+  pestNameFromSeverity = pestObj;
+
+  pestNameFromSeverity.pestName = req.body.severity;
+
+  console.log(pestNameFromSeverity)
+
+
+
+  query = `SELECT pestname FROM pest WHERE severity = '${pestNameFromSeverity.pestName}';`
+  
+  
+
+    const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
 
 // // Get pest by id
 // // app.route(`/api/pest/id`).get((req, res) => {
