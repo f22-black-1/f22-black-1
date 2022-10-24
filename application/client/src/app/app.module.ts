@@ -23,6 +23,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ExpandedDiscussionViewComponent } from './expanded-discussion-view/expanded-discussion-view.component';
 
 
 
@@ -52,6 +53,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RegisterComponent,
     ForumComponent,
     NavComponent,
+    ExpandedDiscussionViewComponent,
   ],
   exports: [
     //GoogleMapsModule
