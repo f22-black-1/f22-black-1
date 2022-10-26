@@ -43,12 +43,11 @@ let pestObj = {
 app.route(`/api/pests/`).get((req, res) => {
   query = `SELECT * FROM pest`
 
-
     const queryDB = async () => {
     try {
       const client = await pool.connect();
       const q = await client.query(query);
-      console.log(q.rows);
+      console.log(q.rowCount);
       res.status(200).send(q.rows)
       
     } catch (err) {

@@ -24,7 +24,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExpandedDiscussionViewComponent } from './expanded-discussion-view/expanded-discussion-view.component';
-
+import { PestReportComponent } from './pest-report/pest-report.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule} from '@angular/material/input'
+import { MatSelectModule } from '@angular/material/select'
 
 
 @NgModule({
@@ -40,7 +44,11 @@ import { ExpandedDiscussionViewComponent } from './expanded-discussion-view/expa
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
     
   ],
   declarations: [
@@ -54,6 +62,7 @@ import { ExpandedDiscussionViewComponent } from './expanded-discussion-view/expa
     ForumComponent,
     NavComponent,
     ExpandedDiscussionViewComponent,
+    PestReportComponent,
   ],
   exports: [
     //GoogleMapsModule
