@@ -14,4 +14,12 @@ export interface SummaryThread {
     createdate: Date;
     subject: string;
     comment: string;
+    imagePath: string;
+    iconPath: string;
+    views: number;
+    responses: number;
+    positiveFeedback: number;
+    negativeFeedback: number;
+    locVerified: boolean;
+    imgVerified: boolean;
 }
