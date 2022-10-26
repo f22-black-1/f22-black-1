@@ -1,19 +1,32 @@
 <div class="summaryThreadContainer">
-    <div class="summaryThread">
+    <div *ngFor="let summaryThread of stl2" class="summaryThread shadow">
         <div class="stIncidentIcon">
-            <img src="../../assets/Incident_Report_Images/Incident_Coyote.png"  alt="Icon Image" class="stImageFormats">
+            <img src={{summaryThread.iconPath}}  alt="Icon Image" class="stImageFormats">
         </div>
         <div class="stPestImage">
-            <img src="../../assets/Incident_Report_Images/PestImage_Coyote.PNG"  alt="Icon Image" class="stPestImageFormats">
+            <img src={{summaryThread.imagePath}}  alt="Icon Image" class="stPestImageFormats">
         </div>
         <div class="stTitle">
-            <a routerLink="/expanded-discussion-view" class="stTitleLink">Thread title goes here...</a>
+            <a routerLink="/expanded-discussion-view" class="stTitleLink">{{summaryThread.subject}}</a>
         </div>
         <div class="stDescription">
-            Issue description goes here...
+            <span>{{summaryThread.comment.substring(0,90)}} ... </span>
+        </div>
+        <div class="stActivity">
+            <span>Views: {{summaryThread.views}} / Responses: {{summaryThread.responses}}</span>
+        </div>
+        <div class="stRating">
+            <span>Positive Feedback: {{summaryThread.positiveFeedback}} <span class="tab4"></span>Quality Rating: 
+                {{(summaryThread.positiveFeedback / (summaryThread.positiveFeedback + summaryThread.negativeFeedback)) * 100 | number:'1.0-0'}}%</span>
+        </div>
+        <div class="stVerification">
+
+        </div>
+        <div class="stUserInfo">
+            <span>Submitted by: {{summaryThread.creatorid}} on {{summaryThread.createdate}}</span>
         </div>
     </div>
-    <button (click)="printItem(1)">Test It!</button>
+    <!-- <button (click)="printItem(1)">Test It!</button> -->
 </div>
 
 
