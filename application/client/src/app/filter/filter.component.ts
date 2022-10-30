@@ -14,7 +14,7 @@ export class FilterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  radioSelected:string="";
+  radioSelected:string="ALL";
   pestOptionArray:string[] = ["ALL", "Ant", "Bee", "Canine", "Feline", "Racoon", "Snake", "Wasp", "Unknown"];
 
 }

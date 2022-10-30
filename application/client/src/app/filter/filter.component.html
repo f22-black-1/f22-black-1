@@ -1,6 +1,6 @@
-<div *ngFor="let pest of pestOptionArray; let first = first;">
+<div *ngFor="let pest of pestOptionArray">
     <label for="{{pest}}">
-      <input type="radio" name="filter" [value]="pest" id="{{pest}}" [checked]="first" [(ngModel)]="radioSelected">
+      <input type="radio" name="filter" [value]="pest" id="{{pest}}" [(ngModel)]="radioSelected">
       {{pest}}
     </label>
 </div>
