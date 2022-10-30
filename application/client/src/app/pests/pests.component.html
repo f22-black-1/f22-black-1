@@ -2,7 +2,7 @@
 <ul class="pests">
   <li *ngFor="let pest of pests">
     <a routerLink="/detail/{{pest.pestid}}">
-      <span class="badge">{{pest.pestid}} </span> <span>{{pest.pestname}}</span>
+      <span class="badge">{{pest.pesttype}} </span> <span>{{pest.pestname}}</span>
     </a>
   </li>
 </ul>

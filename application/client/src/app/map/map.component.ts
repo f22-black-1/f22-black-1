@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { JsonPipe } from '@angular/common';
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { PestReportComponent } from '../pest-report/pest-report.component';
 
 import * as mapStyle from "./map.component.style.json";
 import examplePestIcon from "./pest.png";
@@ -16,7 +18,7 @@ import examplePestIcon from "./pest.png";
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  constructor() {}
+  constructor(private  dialogRef : MatDialog) {}
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) infoWindow!: MapInfoWindow;
 
@@ -143,15 +145,23 @@ export class MapComponent implements OnInit {
   // }
 
 
-  addMarker(event: google.maps.MapMouseEvent, markerOptions: google.maps.MarkerOptions) {
-    this.markerOptions.visible = true
+  addInvisibleMarker(event: google.maps.MapMouseEvent, markerOptions: google.maps.MarkerOptions) {
+    this.markerOptions.visible = false
 
     this.markerOptions.icon = markerOptions.icon
-    
     if (event.latLng) {
       this.markerPositions.push(event.latLng.toJSON());
     }
-    console.log(`Added marker to ${event.latLng!}` )
+    console.log(`Getting report for ${event.latLng!}` )
+
+    this.getReport()
+    
+  }
+
+  getReport(){
+    console.log('Getting report')
+    this.dialogRef.open(PestReportComponent);
+
   }
   
 }

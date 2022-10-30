@@ -1,11 +1,12 @@
-.summaryThreadContainer {
+.Container_Main {
     height: 1000px;
-    width: 1215px;
+    width: 1200px;
     /*border-color: black;*/
     border-style: solid;
     border-width: 1px;
     border-color: #000000;
     background-color: #009933;
+
     float: left;
 }
 
@@ -19,13 +20,6 @@
     float: center;
     position: relative;
     font-size: 15px;
-    margin-bottom: 6px;
-    margin-left: 5px;
-    margin-top: 5px;
-}
-
-.shadow {
-    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
 }
 
 .stIncidentIcon {
@@ -54,10 +48,14 @@
     border-style: solid;
     border-color: black;
     border-width: thin;
-    /* height: 41px; */
-    height: 25%;
+    height: 41px;
     width: 846px;
-    padding-top: 4px;
+}
+
+.stTitleLink {
+    font-size:16px;
+    font-weight: bold;
+    padding: 5px;
 }
 
 .stDescription {
@@ -68,72 +66,8 @@
     border-style: solid;
     border-color: black;
     border-width: thin;
-    /* height: 41px; */
-    height: 25%;
+    height: 41px;
     width: 846px;
-    padding: 5px;
-}
-
-.stActivity {
-    font: cambria;
-    color: black;
-    float:left;
-    border-style: solid;
-    border-color: black;
-    border-width: thin;
-    /* height: 41px; */
-    height: 25%;
-    width: 423px;
-    padding-top: 4px;
-    text-align: left;
-    padding: 5px;
-}
-
-.stRating {
-    font: cambria;
-    float:left;
-    color: black;
-    border-style: solid;
-    border-color: black;
-    border-width: thin;
-    /* height: 41px; */
-    height: 25%;
-    width: 423px;
-    padding-top: 4px;
-    text-align: right;
-    padding-right: 5px;
-}
-
-.stVerification {
-    font: cambria;
-    float:left;
-    border-style: solid;
-    border-color: black;
-    border-width: thin;
-    /* height: 41px; */
-    height: 25%;
-    width: 169px;
-    padding-top: 4px;
-}
-
-.stUserInfo {
-    font: cambria;
-    float:left;
-    color: black;
-    text-align: right;
-    padding-right: 5px;
-    border-style: solid;
-    border-color: black;
-    border-width: thin;
-    /* height: 41px; */
-    height: 25%;
-    width: 677px;
-    padding-top: 4px;
-}
-
-.stTitleLink {
-    font-size:16px;
-    font-weight: bold;
     padding: 5px;
 }
 
@@ -178,13 +112,3 @@
     border-color: black;
     border-width: thin;
 } 
-
-.tab4 {
-    tab-size: 4;
-    display: inline-block;
-    margin-left: 20px;
-}
-/* * {
-    margin: 0;
-    padding: 0;
-} */

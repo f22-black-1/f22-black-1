@@ -67,6 +67,18 @@ CREATE TABLE IF NOT EXISTS Incident (
   GeoCode TEXT
 );
 
+
+CREATE TABLE IF NOT EXISTS Activity (
+  ActvivityID,
+  ActivityType, -- IncidentReport, ThreadCreate, ThreadResponse, ThreedFeedback, etc.
+  ActivityTS, -- Incident.ReportDate
+  IncidentID NULL, --Incident.IncidentID
+  ThreadID NULL, --TreadID
+  ResponseID NULL, 
+  FeedbackID NULL
+);
+
+
 CREATE TABLE IF NOT EXISTS Thread (
   ThreadID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
   IncidentID UUID REFERENCES Incident(IncidentID),

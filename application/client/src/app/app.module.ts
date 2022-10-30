@@ -24,8 +24,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+<<<<<<< HEAD
 import { FilterComponent } from './filter/filter.component';
 
+=======
+import { ExpandedDiscussionViewComponent } from './expanded-discussion-view/expanded-discussion-view.component';
+import { PestReportComponent } from './pest-report/pest-report.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule} from '@angular/material/input'
+import { MatSelectModule } from '@angular/material/select'
+>>>>>>> 01505779abaf1faca88e6f9e52282497dcf81551
 
 
 @NgModule({
@@ -42,7 +51,11 @@ import { FilterComponent } from './filter/filter.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
     
   ],
   declarations: [
@@ -55,7 +68,12 @@ import { FilterComponent } from './filter/filter.component';
     RegisterComponent,
     ForumComponent,
     NavComponent,
+<<<<<<< HEAD
     FilterComponent,
+=======
+    ExpandedDiscussionViewComponent,
+    PestReportComponent,
+>>>>>>> 01505779abaf1faca88e6f9e52282497dcf81551
   ],
   exports: [
     //GoogleMapsModule
