@@ -8,9 +8,13 @@ import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { PestReportComponent } from '../pest-report/pest-report.component';
 
 import * as mapStyle from "./map.component.style.json";
-import examplePestIcon from "./pest.png";
+//import { PestLocation } from '../pest';
 
 // See: https://github.com/angular/components/blob/main/src/google-maps/README.md
+
+class Incident {
+  pestLoc!: String;
+}
 
 @Component({
   selector: 'map',
@@ -18,7 +22,11 @@ import examplePestIcon from "./pest.png";
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  constructor(private  dialogRef : MatDialog) {}
+
+
+  constructor(
+    private  dialogRef : MatDialog
+    ) {}
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) infoWindow!: MapInfoWindow;
 
@@ -30,8 +38,7 @@ export class MapComponent implements OnInit {
   markerPositions: google.maps.LatLngLiteral[] = [];
   center: google.maps.LatLngLiteral = {lat: 36.87583441244073, lng: -76.2905416411255};
   zoom = 15;
-
-  
+   
   mapOptions: google.maps.MapOptions = {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     zoomControl: true,
@@ -45,12 +52,16 @@ export class MapComponent implements OnInit {
 
   iconBase = 'https://cs.odu.edu/~411black/assets/';
 
+
   markerInfoContent = '';
   markerOptions: google.maps.MarkerOptions = {
     draggable: false,
     animation: google.maps.Animation.DROP,
   };
 
+
+  incident = new Incident;
+  
 
   ngOnInit() {
 
@@ -144,23 +155,55 @@ export class MapComponent implements OnInit {
   //   console.log("Opening an info window...")
   // }
 
+  addMarker($event: Event) {
+    console.log(`Adding marker ...`)
+    // Somehow this needs to be able to get data from the marker object
+  }
+
+  
+
+  addVisibleMarker(event: google.maps.MapMouseEvent, markerOptions: google.maps.MarkerOptions) {
+     this.markerOptions.visible = markerOptions.visible
+     this.markerOptions.icon = markerOptions.icon
+    
+     this.markerPositions.push(event.latLng!.toJSON());
+     console.log(`Added marker to ${event.latLng!}` )
+
+     //return event.latLng
+    
+  }
 
   addInvisibleMarker(event: google.maps.MapMouseEvent, markerOptions: google.maps.MarkerOptions) {
     this.markerOptions.visible = false
-
     this.markerOptions.icon = markerOptions.icon
     if (event.latLng) {
       this.markerPositions.push(event.latLng.toJSON());
     }
-    console.log(`Getting report for ${event.latLng!}` )
+    
+    let location = String(event.latLng!);
 
-    this.getReport()
+    this.getReportAndSetMarker(location)
     
   }
 
-  getReport(){
-    console.log('Getting report')
+  setMarker(location: String) {
+    console.log(`Set Marker: ${location}`)
+    this.incident.pestLoc = location;
+
+  }
+
+  getMarker() {
+    console.log(`currentLocation: ${this.incident.pestLoc}`)
+    return this.incident.pestLoc
+  }
+
+  getReportAndSetMarker(location: string) {
+    console.log(`Getting report for location: ${location}`)
+    this.setMarker(location) 
+
     this.dialogRef.open(PestReportComponent);
+    
+    this.getMarker()
 
   }
   

@@ -6,3 +6,7 @@ export interface Pest {
     pestdescription: string;
     pestimage: string;
   }
+
+export interface PestLocation {
+  location: String;
+}

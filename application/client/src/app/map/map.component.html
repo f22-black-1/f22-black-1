@@ -24,7 +24,8 @@
             [center]="center"
             [zoom]="zoom"
             [options]="mapOptions"
-            (mapClick)="addInvisibleMarker($event, markerOptions)">
+            (mapClick)="addInvisibleMarker($event, markerOptions)"
+            >
   <map-marker #marker="mapMarker"
               *ngFor="let markerPosition of markerPositions"
   
@@ -34,7 +35,14 @@
   </map-marker>
 
               <map-info-window>{{ markerInfoContent }}</map-info-window>
+              
+              
 </google-map>
+
+
+
+
+    
 
 
 <!-- <mat-list-item><button  class="btn btn-primary" (click)="openDialog()">Report</button></mat-list-item> -->
