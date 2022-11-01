@@ -195,22 +195,22 @@ app.route('/api/pest/update').put((req, res) => {
 
   pestToUpdate = pestObj;
 
-  pestToUpdate.pestId = req.body.pest_id;
-  pestToUpdate.pestType = req.body.pest_type;
-  pestToUpdate.xCoord = req.body.x_coord;
-  pestToUpdate.yCoord = req.body.y_coord;
-  pestToUpdate.id = req.body.id;
-  pestToUpdate.name = req.body.name;
+  pestToUpdate.PestID = req.body.pestid;
+  pestToUpdate.PestName = req.body.pestname;
+  pestToUpdate.PestType = req.body.pesttype;
+  pestToUpdate.Severity = req.body.severity;
+  pestToUpdate.PestDescription = req.body.pestdescription;
+  pestToUpdate.PestImage = req.body.pestimage;
 
   console.log(pestToUpdate)
 
   const query = `UPDATE pest 
-                 SET pest_type = '${pestToUpdate.pestType}', 
-                     x_coord = ${pestToUpdate.xCoord}, 
-                     y_coord = ${pestToUpdate.yCoord}, 
-                     id = ${pestToUpdate.id}, 
-                     name =  '${pestToUpdate.name}' 
-                 WHERE pest_id = ${pestToUpdate.pestId} ;` 
+                SET pestname = '${pestToUpdate.PestName}', 
+                    pesttype = '${pestToUpdate.PestType}', 
+                    severity = '${pestToUpdate.Severity}', 
+                    pestdescription = '${pestToUpdate.PestDescription}', 
+                    pestimage =  '${pestToUpdate.PestImage}' 
+                    WHERE pestid = '${pestToUpdate.PestID}';`
                  
   const queryDB = async () => {
     try {
