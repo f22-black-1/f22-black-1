@@ -293,6 +293,32 @@ app.route(`/api/pests/severity`).get((req, res) => {
 
 })
 
+// Get a pest by Pest ID
+app.route(`/api/pest/apest`).get((req, res) => {
+  console.log(req.body);
+
+  pestToGet = pestObj;
+  pestToGet.PestID = req.body.pestid;
+
+  console.log(pestToGet.PestID);
+
+   query = `SELECT * FROM pest WHERE pestid = '${pestToGet.PestID}'`
+
+  const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+  queryDB();
+})
+
 // // Get pest by id
 // // app.route(`/api/pest/id`).get((req, res) => {
 // //   query = `SELECT * FROM pest WHERE pest_id = ${pestObj.pestId}`
