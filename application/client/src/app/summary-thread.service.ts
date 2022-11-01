@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { SummaryThread } from './summary-thread';
+import { SummaryThread, SummaryThread_Prev } from './summary-thread';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -47,14 +47,14 @@ export class SummaryThreadService {
     }
 
     /** GET all threads from the DB */
-    getThreads(): Observable<SummaryThread[]> {
+    getThreads(): Observable<SummaryThread_Prev[]> {
 
       this.log('fetched threads from DB');
       
-      return this.http.get<SummaryThread[]>(`http://localhost:8080/api/thread/`)
+      return this.http.get<SummaryThread_Prev[]>(`http://localhost:8080/api/summaryThreadList/`)
        .pipe(
          tap(_ => this.log(`fetched all threads`)),
-         catchError(this.handleError<SummaryThread[]>('getThreads', [])));
+         catchError(this.handleError<SummaryThread_Prev[]>('getThreads', [])));
     }
 
 

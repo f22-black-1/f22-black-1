@@ -39,6 +39,16 @@ let pestObj = {
   PestImage: String,
 }
 
+// let threadObject = {
+//   threadid: number,
+//   incidentid: number,
+//   locid: number,
+//   creatorid: string,
+//   createdate: Date,
+//   subject: string,
+//   comment: string
+// }
+
 // Get all pests
 app.route(`/api/pests/`).get((req, res) => {
   query = `SELECT * FROM pest`
@@ -60,6 +70,51 @@ app.route(`/api/pests/`).get((req, res) => {
 
 })
 
+//get threads
+app.route(`/api/Thread/`).get((req, res) => {
+  query = `SELECT * FROM Thread`
+
+
+    const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
+//get summary thread list
+app.route(`/api/summaryThreadList/`).get((req, res) => {
+  query = `select  thread.*, '../../assets/Incident_Report_Images/PestImage_Coyote.PNG' as imagePath, '../../assets/Incident_Report_Images/Incident_Coyote.png' as iconPath,
+  Count(threadfeedback.feedbackid) as Record_Count, coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive
+  from thread left join threadfeedback on thread.threadid = threadfeedback.threadid
+  group by thread.threadid;`
+
+    const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
 
 // Add a new pest
 app.route('/api/pest/create').post((req, res) => {
