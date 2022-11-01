@@ -4,32 +4,35 @@
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-        <mat-list-item><button mat-flat-button routerLink ="/map">Map</button></mat-list-item>
-        <mat-list-item><button  mat-flat-button routerLink="/dashboard">Dashboard</button></mat-list-item>
-        <mat-list-item><button mat-flat-button routerLink="/pests">Pests</button></mat-list-item>
-        <div></div>
-        <span>Test</span>
+    <mat-nav-list class="activity-box">
+      Activity:
+      <mat-list-item class="activity-item">Welcome to Pest Patrol user!</mat-list-item>
     </mat-nav-list>
-    
+    <mat-nav-list>
+      
+      <mat-list-item><button class="side-button" routerLink ="/map">Map</button></mat-list-item>
+      <!-- <mat-list-item><button class="side-button" routerLink="/dashboard">Dashboard</button></mat-list-item> -->
+      <mat-list-item><button class="side-button" routerLink="/forum">Forum</button></mat-list-item>
+      <mat-list-item><button class="side-button" routerLink="/filter">Map Filter</button></mat-list-item>
+    </mat-nav-list>  
   </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
+
+  <mat-toolbar color="primary">
+      <!-- <button
         type="button"
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>Application</span>
-      <span class="example-spacer"></span>
-      <button mat-icon-button routerLink="/login">
-        <mat-icon>menu</mat-icon>
-      </button>
-      
-  </mat-toolbar>
-  <router-outlet></router-outlet>
-  </mat-sidenav-content>
+      </button> -->
+      <span>Pest Patrol</span>
+      <div class="top-buttons">
+      <mat-list-item><button routerLink="/login">Login</button></mat-list-item>
+      <mat-list-item><button routerLink="/register">Register</button></mat-list-item>
+      </div>
+    </mat-toolbar>
+    
+   <!-- The map -->
+   <router-outlet></router-outlet>
 </mat-sidenav-container>

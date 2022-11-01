@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { JsonPipe } from '@angular/common';
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { PestReportComponent } from '../pest-report/pest-report.component';
 
 import * as mapStyle from "./map.component.style.json";
 import examplePestIcon from "./pest.png";
@@ -16,23 +18,27 @@ import examplePestIcon from "./pest.png";
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  constructor() {}
+  constructor(private  dialogRef : MatDialog) {}
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) infoWindow!: MapInfoWindow;
 
   ret = false
-  mapHeight = "874px";
+  mapHeight = "900px";
   mapWidth = "1720px"
-  mapZoom = 15;
+  // mapZoom = 15;
   mapCenter!: google.maps.LatLng;
   markerPositions: google.maps.LatLngLiteral[] = [];
+  center: google.maps.LatLngLiteral = {lat: 36.87583441244073, lng: -76.2905416411255};
+  zoom = 15;
+
+  
   mapOptions: google.maps.MapOptions = {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     zoomControl: true,
     scrollwheel: true,
     disableDoubleClickZoom: true,
     maxZoom: 20,
-    minZoom: 4,
+    minZoom: 12,
     //gestureHandling: "none",
     styles: mapStyle
   };
@@ -48,24 +54,26 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
 
+    this.markerOptions.visible = false
+
     // TODO: figure out what is going on with the callback... we should be able to place a 
     // different marker based on the location permissions
     this.getCurrentLocation()
     // console.log(this.markerPositions)
-    if (true) {
-      // Default Position is ODU
-      const point: google.maps.LatLngLiteral = {
-        lat: 36.8862699,
-        lng: -76.3097248,
-      };
-      this.mapCenter = new google.maps.LatLng(point);
-      this.markerOptions.visible = true
-      this.markerOptions.icon = this.iconBase + 'donatello.png'
-    }
-    else {
-      this.markerOptions.icon = this.iconBase + 'raphael.png'   
-      this.markerOptions.visible = true
-    }
+    // if (true) {
+    //   // Default Position is ODU
+    //   const point: google.maps.LatLngLiteral = {
+    //     lat: 36.8862699,
+    //     lng: -76.3097248,
+    //   };
+    //   this.mapCenter = new google.maps.LatLng(point);
+    
+    this.markerOptions.icon = this.iconBase + 'donatello.png'
+    // }
+    // else {
+    //   this.markerOptions.icon = this.iconBase + 'raphael.png'   
+    //   this.markerOptions.visible = true
+    // }
   }
   
   openInfoWindow(marker: MapMarker) { 
@@ -113,13 +121,13 @@ export class MapComponent implements OnInit {
   // }
 
 
-  addMarker(event: google.maps.MapMouseEvent, markerOptions: google.maps.MarkerOptions) {
-    this.markerOptions.visible = markerOptions.visible
-    this.markerOptions.icon = markerOptions.icon
+  // addMarker(event: google.maps.MapMouseEvent, markerOptions: google.maps.MarkerOptions) {
+  //   this.markerOptions.visible = markerOptions.visible
+  //   this.markerOptions.icon = markerOptions.icon
     
-    this.markerPositions.push(event.latLng!.toJSON());
-    console.log(`Added marker to ${event.latLng!}` )
-  }
+  //   this.markerPositions.push(event.latLng!.toJSON());
+  //   console.log(`Added marker to ${event.latLng!}` )
+  // }
 
   // moveMap(event: google.maps.MapMouseEvent) {
   //   if(event.latLng!= null)
@@ -137,5 +145,23 @@ export class MapComponent implements OnInit {
   // }
 
 
+  addInvisibleMarker(event: google.maps.MapMouseEvent, markerOptions: google.maps.MarkerOptions) {
+    this.markerOptions.visible = false
+
+    this.markerOptions.icon = markerOptions.icon
+    if (event.latLng) {
+      this.markerPositions.push(event.latLng.toJSON());
+    }
+    console.log(`Getting report for ${event.latLng!}` )
+
+    this.getReport()
+    
+  }
+
+  getReport(){
+    console.log('Getting report')
+    this.dialogRef.open(PestReportComponent);
+
+  }
   
 }

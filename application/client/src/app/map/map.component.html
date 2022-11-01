@@ -1,4 +1,4 @@
-<div class="google_map_container">
+<!-- <div class="google_map_container">
     <google-map 
         [height]="mapHeight" 
         [width]="mapWidth" 
@@ -17,4 +17,24 @@
         </map-marker>
         <map-info-window>{{ markerInfoContent }}</map-info-window>
     </google-map>
-</div>
+</div> -->
+
+<google-map [height]="mapHeight"
+            [width]="mapWidth"
+            [center]="center"
+            [zoom]="zoom"
+            [options]="mapOptions"
+            (mapClick)="addInvisibleMarker($event, markerOptions)">
+  <map-marker #marker="mapMarker"
+              *ngFor="let markerPosition of markerPositions"
+  
+              [position]="markerPosition"
+              [options]="markerOptions"
+              (mapClick)="openInfoWindow(marker)">
+  </map-marker>
+
+              <map-info-window>{{ markerInfoContent }}</map-info-window>
+</google-map>
+
+
+<!-- <mat-list-item><button  class="btn btn-primary" (click)="openDialog()">Report</button></mat-list-item> -->

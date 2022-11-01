@@ -3,7 +3,10 @@
 # If you're using windows, please use git bash instead of Powershell
 
 # Please change REPO_ROOT to your ROOT
-REPO_ROOT="/Users/ant0n/Documents/Repos/f22-black-1"
+#REPO_ROOT="/Users/ant0n/Documents/Repos/f22-black-1"
+REPO_ROOT="G:/School/CS411_Semester_Project/F22_Black_Main/f22-black-1"
+
+echo $REPO_ROOT
 
 # In order to build the front-end we need to do docker login
 docker login

@@ -1,24 +1,25 @@
 version: "2"
 services:
-  api:
-    container_name: api
-    restart: always
-    build: .
-    ports:
-      - ${PORT}:${PORT}
-    depends_on:
-      - db
-    volumes:
-    - .:/usr/src/app
+  # api:
+  #   container_name: api
+  #   restart: always
+  #   build: .
+  #   ports:
+  #     - ${PORT}:${PORT}
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #   - .:/usr/src/app
 
   db:
     container_name: postgres
-    image: postgres
+    image: postgres:14
     ports:
       - '5432:${DB_PORT}'
     volumes:
       - ./data:/var/lib/postgresql/data
       - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./csv:/docker-entrypoint-initdb.d/csv
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}

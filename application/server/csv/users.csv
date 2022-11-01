@@ -1,0 +1,16 @@
+UserID,LocID,Username,Email,UserType,FirstName,LastName,Password,CustomViewAreaSet,CustomViewArea,CustomFilterSet,FilterPest,FilterIncidentArea,FilterUser
+a50736c6-6860-471a-adb2-45d7e28e93c8,5c1978c3-121e-4d6c-a13e-851377e0739b,User1,user1@gmail.com,user,User,One,123456,FALSE,0,FALSE,"","",""
+4e830b51-e8c0-448d-9d29-48e28194fef1,b1a24390-1f6e-4983-b373-9da4b2b1a5e0,User2,user2@yahoo.com,user,User,Two,password,FALSE,0,FALSE,"","",""
+224e4fa8-ac03-4bfe-8616-e7226f0c11f7,41bce8dd-f51c-4bda-b559-4d3d16ddfb5d,User3,user3@aol.com,admin,User,Three,qwerty,FALSE,0,FALSE,"","",""
+90cbf781-7b2a-40fd-92cb-2a82764494fc,0956d31d-cc57-4684-98fd-066f429c1ce7,User4,user4@outlook.com,user,User,Four,111111,FALSE,0,FALSE,"","",""
+1d27d77d-0328-4be9-9b18-99b2b8efd06b,5c1978c3-121e-4d6c-a13e-851377e0739b,MBauer,MBauer@email.com,user,Matilda,Bauer,password,FALSE,0,FALSE,,,
+723ee85b-4f89-479c-bc7c-2a0e8cfe2d36,5c1978c3-121e-4d6c-a13e-851377e0739b,BLeach,BLeach@email.com,user,Brennen,Leach,password,FALSE,0,FALSE,,,
+966c9e04-b2ff-4e29-930d-01804ea092dc,5c1978c3-121e-4d6c-a13e-851377e0739b,DMueller,DMueller@email.com,user,Darwin,Mueller,password,FALSE,0,FALSE,,,
+a08da458-a3b6-4771-8c79-8e52391cfc3c,5c1978c3-121e-4d6c-a13e-851377e0739b,JClay,JClay@email.com,user,Jaylene,Clay,password,FALSE,0,FALSE,,,
+c043079d-30f2-4fbb-ab87-1e2b10bef234,5c1978c3-121e-4d6c-a13e-851377e0739b,IAnderson,IAnderson@email.com,user,Issac,Anderson,password,FALSE,0,FALSE,,,
+12d09e49-2368-44d8-b21c-1b8e10c7cb2e,5c1978c3-121e-4d6c-a13e-851377e0739b,KDecker,KDecker@email.com,user,Kamron,Decker,password,FALSE,0,FALSE,,,
+0f987ea6-6a42-4a69-9bdd-626139d1ad55,5c1978c3-121e-4d6c-a13e-851377e0739b,ESnow,ESnow@email.com,user,Elsie,Snow,password,FALSE,0,FALSE,,,
+9d8d194b-2279-44de-b13e-f9f8d842b0b9,5c1978c3-121e-4d6c-a13e-851377e0739b,CClark,CClark@email.com,user,Chace,Clark,password,FALSE,0,FALSE,,,
+7dd8ad5e-b291-4cbd-9c59-6df17ef06719,5c1978c3-121e-4d6c-a13e-851377e0739b,LOrtega,LOrtega@email.com,user,Lorelei,Ortega,password,FALSE,0,FALSE,,,
+aa3056c0-0806-4a57-b3b3-f8b292f6c17b,5c1978c3-121e-4d6c-a13e-851377e0739b,IGilbert,IGilbert@email.com,user,Immanuel,Gilbert,password,FALSE,0,FALSE,,,
+646eb605-7ce0-4bc3-9782-060a58e8df0a,5c1978c3-121e-4d6c-a13e-851377e0739b,EPollard,EPollard@email.com,user,Elaine,Pollard,password,FALSE,0,FALSE,,,

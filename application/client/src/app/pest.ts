@@ -1,8 +1,8 @@
 export interface Pest {
-    pestType: string;
-    pestId: number;
-    xCoord: number;
-    yCoord: number;
-    id: number;
-    name: string;
+    pestid: string;
+    pestname: string;
+    pesttype: string;
+    severity: string;
+    pestdescription: string;
+    pestimage: string;
   }

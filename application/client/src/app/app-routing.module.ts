@@ -7,6 +7,9 @@ import { PestDetailComponent } from './pest-detail/pest-detail.component';
 import { MapComponent } from './map/map.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ForumComponent } from './forum/forum.component';
+import { ExpandedDiscussionViewComponent } from './expanded-discussion-view/expanded-discussion-view.component';
+import { PestReportComponent } from './pest-report/pest-report.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'map', pathMatch: 'full' },
@@ -15,9 +18,14 @@ const routes: Routes = [
   { path: 'pests', component: PestsComponent },
   { path: 'pests/:id', component: PestsComponent },
   { path: 'map', component: MapComponent },
-  //New
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: 'forum', component: ForumComponent },
+  { path: 'expanded-discussion-view', component: ExpandedDiscussionViewComponent},
+  { path: 'report', component: PestReportComponent },
+
+  // This route is for testing CRUD operations on the PEST Object (See Video Demo from 14 Oct 2022)
+  { path: 'pest_crud_test', component: PestsComponent }
 
 ];
 

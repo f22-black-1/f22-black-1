@@ -12,6 +12,8 @@ import { PestService } from '../pest.service';
 })
 export class PestsComponent implements OnInit {
   pests: Pest[] = [];
+  pest!: Pest;
+
 
   constructor(private pestService: PestService) { }
 
@@ -22,6 +24,31 @@ export class PestsComponent implements OnInit {
   getPests(): Array<Pest> {
     this.pestService.getPests()
     .subscribe(pests => this.pests = pests);
+
+    console.log(this.pests)
+
+    return this.pests
+    
+  }
+
+  createPest(pest: Pest): Array<Pest> {
+    this.pestService.createPest(pest)
+
+    console.log(this.pests)
+
+    return this.pests
+    
+  }
+
+  deletePest(pest: Pest): Array<Pest> {
+    this.pestService.deletePest(pest)
+    return this.pests
+    
+  }
+
+  updatePest(pest: Pest): Array<Pest> {
+    this.pestService.updatePest(pest)
+    .subscribe(pestid => this.pest.pestid = pestid);
 
     console.log(this.pests)
 

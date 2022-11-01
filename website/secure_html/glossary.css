@@ -1,0 +1,19 @@
+.Container_Main {
+    width:1200px;
+    height:auto;
+    border:1px solid #000;
+    border-style: none;
+}
+    
+.Container_Main_Header {
+width:1200px;
+height:auto;
+}
+
+.Container_Subhead {
+    font-size: 20px;
+    /* text-align: center; */
+    font-weight: bold;
+    color: black;
+    border-style: none;
+}
