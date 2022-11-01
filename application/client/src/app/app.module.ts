@@ -28,7 +28,8 @@ import { PestReportComponent } from './pest-report/pest-report.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input'
-import { MatSelectModule } from '@angular/material/select'
+import { MatSelectModule } from '@angular/material/select';
+import { PestUpdateComponent } from './pest-update/pest-update.component'
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { MatSelectModule } from '@angular/material/select'
     NavComponent,
     ExpandedDiscussionViewComponent,
     PestReportComponent,
+    PestUpdateComponent,
   ],
   exports: [
     //GoogleMapsModule
