@@ -1,6 +1,6 @@
 import { TemplateBindingParseResult } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { SummaryThread } from '../summary-thread';
+import { SummaryThread, SummaryThread_Prev } from '../summary-thread';
 
 import { SummaryThreadService } from '../summary-thread.service';
 
@@ -10,7 +10,9 @@ import { SummaryThreadService } from '../summary-thread.service';
   styleUrls: ['./forum.component.css']
 })
 export class ForumComponent implements OnInit {
-  summaryThreadList: SummaryThread[] = [];
+  summaryThreadList: SummaryThread_Prev[] = [];
+  summaryThread_Prev!: SummaryThread_Prev;
+
   stl2: SummaryThread[] = [];
   summaryThread!: SummaryThread;
   testVar!: number;
@@ -24,11 +26,11 @@ export class ForumComponent implements OnInit {
     this.getThreads();
   }
 
-  getThreads(): Array<SummaryThread> {
+  getThreads(): Array<SummaryThread_Prev> {
     // alert("function start")
     this.summaryThreadService.getThreads()
     // .subscribe(summaryThreadList => this.summaryThreadList = summaryThreadList);
-    .subscribe(wtf => this.summaryThreadList = wtf);
+    .subscribe(stlp => this.summaryThreadList = stlp);
 
     console.log(this.summaryThreadList)
     // alert("function end")
