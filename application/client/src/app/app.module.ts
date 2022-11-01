@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';//added for filter checkboxes
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -23,18 +24,21 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FilterComponent } from './filter/filter.component';
 import { ExpandedDiscussionViewComponent } from './expanded-discussion-view/expanded-discussion-view.component';
 import { PestReportComponent } from './pest-report/pest-report.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select'
+
 
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,//added ReactiveFormsModule
     AppRoutingModule,
     HttpClientModule,
     GoogleMapsModule,
@@ -61,6 +65,7 @@ import { MatSelectModule } from '@angular/material/select'
     RegisterComponent,
     ForumComponent,
     NavComponent,
+    FilterComponent,
     ExpandedDiscussionViewComponent,
     PestReportComponent,
   ],
