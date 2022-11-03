@@ -65,9 +65,8 @@ app.route(`/api/pests/`).get((req, res) => {
 
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
-      console.log(q.rows);
+      const q = await pool.query(query);
+      console.log(q.rowCount);
       res.status(200).send(q.rows)
       
     } catch (err) {
@@ -303,8 +302,7 @@ app.route(`/api/activity/`).get((req, res) => {
 
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
       
