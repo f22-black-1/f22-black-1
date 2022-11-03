@@ -17,7 +17,7 @@ import { Pest } from '../pest';
 })
 export class PestReportComponent implements OnInit {
 
-  message: string = "Hello!"
+  message: string = "Pest has been Reported!"
   dialog!:MatDialog;
   pests: Pest[] = [];
   pest!: Pest;
@@ -44,6 +44,7 @@ export class PestReportComponent implements OnInit {
   sendMessage() {
     console.log(`Sending.... ${this.message}`);
     this.messageEvent.emit(this.message)
+    alert(this.message)
   }
 
   map = new MapComponent(this.dialog, this.pestService);

@@ -28,7 +28,7 @@ export class MapComponent implements OnInit {
     private  dialogRef : MatDialog,
     private pestService: PestService
     ) {}
-  @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
+  @ViewChild(GoogleMap, { static: false }) GoogleMap!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) infoWindow!: MapInfoWindow;
 
   mapHeight = "900px";
@@ -56,13 +56,25 @@ export class MapComponent implements OnInit {
   }
 
 
+  createMarker(options: google.maps.MarkerOptions): google.maps.Marker {
+
+    const marker = new google.maps.Marker(options)
+    return marker;
+
+  }
+
+
   markerPositions: google.maps.LatLngLiteral[] = [];
   markerIcon: string;
 
   markerOptions: google.maps.MarkerOptions = {
     draggable: false,
-    animation: google.maps.Animation.DROP,
+    animation: google.maps.Animation.DROP
   };
+
+
+  markers: google.maps.Marker[] = [];
+  marker: google.maps.Marker;
  
   markerInfoContent = '';
   openInfoWindow(marker: MapMarker, position: google.maps.LatLngLiteral) { 
@@ -71,16 +83,6 @@ export class MapComponent implements OnInit {
     this.infoWindow.open(marker);
 
     console.log(`Marker positions: {${position.lat}, ${position.lng}}`)
-  }
-
-  getMarkerIcon() {
-
-    return this.markerIcon;
-  }
-
-  setMarkerIcon(icon: string) {
-
-    this.markerIcon = icon;
   }
 
 
@@ -95,24 +97,44 @@ export class MapComponent implements OnInit {
     this.pestService.getIncidents().subscribe( async data => {
       const incidents = await data;
 
+      let options = this.markerOptions;
+      let marker = this.marker;
+
+      console.log(options)
+      console.log(marker) // undefined
+      
       // Work with incidents
       for (let incident in incidents) {
         let xcoord = parseFloat(incidents[incident].xcoord) 
         let ycoord = parseFloat(incidents[incident].ycoord)
         console.log({lat: xcoord, lng: ycoord})
 
-        // Need to have pesttype here so we can if check the icon
+        // Need to have pesttype here so we can if-check the icon
         console.log(incidents)
         if (incidents[incident].pestid == '55884984-3891-4c9c-b8d0-8526c65d5588') {
-          this.setMarkerIcon(this.iconBase + 'donatello.png')
-          this.markerPositions.push({lat: xcoord, lng: ycoord});
+          options.icon = this.iconBase + 'donatello.png';
+          options.position = {lat: xcoord, lng: ycoord};
+          marker = this.createMarker(options)
+          this.markerPositions.push(options.position)
+          this.markers.push(marker)
+          this.markerInfoContent = incidents[incident].reportdate 
         }
         if (incidents[incident].pestid == 'b0b6c409-f67d-4646-be93-0bd4d1111ff4') {
-          this.setMarkerIcon(this.iconBase + 'raphael.png')
-          this.markerPositions.push({lat: xcoord, lng: ycoord});
+          options.icon = this.iconBase + 'raphael.png';
+          options.position = {lat: xcoord, lng: ycoord};
+          marker = this.createMarker(options)
+          this.markerPositions.push(options.position)
+          this.markers.push(marker)
+          this.markerInfoContent = incidents[incident].reportdate 
+        }
+        else {
+          options.position = {lat: xcoord, lng: ycoord};
+          marker = this.createMarker(options)
+          this.markerPositions.push(options.position)
+          this.markers.push(marker)
+          this.markerInfoContent = incidents[incident].reportdate
         }
         
-        // this.markerPositions.push({lat: xcoord, lng: ycoord});
       }
     }
   )}
@@ -120,7 +142,10 @@ export class MapComponent implements OnInit {
   getReportAndSetMarker(event: google.maps.MapMouseEvent) {
     console.log(`Getting report....`)
     this.addVisibleMarker(event) 
-    this.dialogRef.open(PestReportComponent);
+    this.dialogRef.open(PestReportComponent, {
+      height: '33%',
+      width: '33%'
+  });
 
   }
   

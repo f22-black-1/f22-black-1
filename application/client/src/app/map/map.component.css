@@ -7,4 +7,6 @@
   
   .infoWindow {
     color: #000000;
+    /*  */
+    align-items: center;
     }
