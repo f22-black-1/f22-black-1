@@ -49,12 +49,8 @@ CREATE TABLE IF NOT EXISTS Incident (
   SubmitterID UUID REFERENCES Users(UserID),
   PestID UUID REFERENCES Pest(PestID),
   ReportDate TIMESTAMP WITH TIME ZONE,
-<<<<<<< HEAD
   XCoord FLOAT,
   Ycoord FLOAT
-=======
-  GeoCodeAvail BOOLEAN,
-  GeoCode TEXT
 );
 
 
@@ -66,7 +62,6 @@ CREATE TABLE IF NOT EXISTS Activity (
 --   ThreadID UUID REFERENCES Thread(ThreadID), --TreadID NULL
 --   ResponseID UUID REFERENCES ThreadResponse(ResponseID), --NULL
 --   FeedbackID UUID REFERENCES ThreadFeedback(FeedbackID)--NULL
->>>>>>> dde10ba0ec584842c2719c7251ea62bc9889ce03
 );
 
 
