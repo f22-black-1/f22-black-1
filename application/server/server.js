@@ -55,8 +55,7 @@ app.route(`/api/pests/`).get((req, res) => {
 
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      const q = await pool.query(query);
       console.log(q.rowCount);
       res.status(200).send(q.rows)
       
@@ -77,8 +76,7 @@ app.route(`/api/Thread/`).get((req, res) => {
 
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
       
@@ -101,8 +99,7 @@ app.route(`/api/summaryThreadList/`).get((req, res) => {
 
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
       
@@ -144,7 +141,6 @@ app.route('/api/pest/create').post((req, res) => {
 
   const queryDB = async () => {
     try {
-      await pool.connect();
       const q = await pool.query(query);
       console.log(q.command)
       res.status(201).send()
@@ -174,7 +170,6 @@ app.route('/api/pest/delete').delete((req, res) => {
 
   const queryDB = async () => {
     try {
-      await pool.connect();
       const q = await pool.query(query);
       console.log(q.command)
       res.status(201).send()
@@ -214,7 +209,6 @@ app.route('/api/pest/update').put((req, res) => {
                  
   const queryDB = async () => {
     try {
-      await pool.connect();
       const q = await pool.query(query);
       console.log(q.command)
       res.status(201).send()
@@ -245,8 +239,7 @@ app.route(`/api/pests/type`).get((req, res) => {
 
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
       
@@ -278,8 +271,7 @@ app.route(`/api/pests/severity`).get((req, res) => {
 
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
       
