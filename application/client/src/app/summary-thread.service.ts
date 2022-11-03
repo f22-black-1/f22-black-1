@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { SummaryThread, SummaryThread_Prev } from './summary-thread';
@@ -16,6 +16,11 @@ export class SummaryThreadService {
    }
 
   private summaryThreadsUrl = 'api/forum';  // URL to web  
+  private selectedThreadID = new BehaviorSubject('thread id value goes here');
+  private selectedThreadItem!: SummaryThread_Prev;
+  // private selectedThreadItem! = new BehaviorSubject();
+
+  currentThreadID = this.selectedThreadID.asObservable();
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -57,6 +62,17 @@ export class SummaryThreadService {
          catchError(this.handleError<SummaryThread_Prev[]>('getThreads', [])));
     }
 
+    updateSelectedThread(tid: string) {
+      this.selectedThreadID.next(tid);
+    }
 
+    updateSelectedThreadItem(stItem: SummaryThread_Prev): void {
+      this.selectedThreadItem = stItem;
+    }
+
+    getSelectedThreadItem(): SummaryThread_Prev {
+      console.log('selected item id:' + this.selectedThreadItem.threadid)
+      return this.selectedThreadItem;
+    }
 
 }

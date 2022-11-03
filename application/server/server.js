@@ -39,6 +39,10 @@ let pestObj = {
   PestImage: String,
 }
 
+let tidObj = { 
+  tid: String
+}
+
 // let threadObject = {
 //   threadid: number,
 //   incidentid: number,
@@ -114,6 +118,37 @@ app.route(`/api/summaryThreadList/`).get((req, res) => {
    
   queryDB();
 
+})
+
+//get expanded thread data
+app.route(`/api/expandedThread/`).get((req, res) => {
+  console.log("njs threadid: " + req.body.threadid);
+  thid = tidObj;
+  thid.tid = req.body.threadid;
+
+  query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment
+  FROM thread
+  WHERE (((thread.threadid)=' ${thid.tid} '))
+  UNION ALL
+  SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment
+  FROM threadresponse
+  WHERE (((threadresponse.threadid)=' ${thid.tid} ') and ((threadresponse.responseid)<>' ${thid.tid} '))
+  ORDER BY sort_order asc;`
+  
+    const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
 })
 
 // Add a new pest

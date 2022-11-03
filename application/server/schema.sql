@@ -68,15 +68,15 @@ CREATE TABLE IF NOT EXISTS Incident (
 );
 
 
-CREATE TABLE IF NOT EXISTS Activity (
-  ActvivityID,
-  ActivityType, -- IncidentReport, ThreadCreate, ThreadResponse, ThreedFeedback, etc.
-  ActivityTS, -- Incident.ReportDate
-  IncidentID NULL, --Incident.IncidentID
-  ThreadID NULL, --TreadID
-  ResponseID NULL, 
-  FeedbackID NULL
-);
+-- CREATE TABLE IF NOT EXISTS Activity (
+--   ActvivityID,
+--   ActivityType, -- IncidentReport, ThreadCreate, ThreadResponse, ThreedFeedback, etc.
+--   ActivityTS, -- Incident.ReportDate
+--   IncidentID NULL, --Incident.IncidentID
+--   ThreadID NULL, --TreadID
+--   ResponseID NULL, 
+--   FeedbackID NULL
+-- );
 
 
 CREATE TABLE IF NOT EXISTS Thread (

@@ -16,8 +16,9 @@ export class ForumComponent implements OnInit {
   stl2: SummaryThread[] = [];
   summaryThread!: SummaryThread;
   testVar!: number;
+  stlIndex: number = 0;
 
-  constructor(private summaryThreadService: SummaryThreadService) {
+  constructor(public summaryThreadService: SummaryThreadService) {
     this.testVar = 5;
     this.updateTempThreadList();
   }
@@ -27,14 +28,25 @@ export class ForumComponent implements OnInit {
   }
 
   getThreads(): Array<SummaryThread_Prev> {
-    // alert("function start")
     this.summaryThreadService.getThreads()
-    // .subscribe(summaryThreadList => this.summaryThreadList = summaryThreadList);
     .subscribe(stlp => this.summaryThreadList = stlp);
 
     console.log(this.summaryThreadList)
-    // alert("function end")
     return this.summaryThreadList
+  }
+
+  incrementIndex(): void {
+    this.stlIndex++;
+  }
+
+  resetIndex(): void {
+    this.stlIndex = 0;
+  }
+
+  sendSelectedIndex(tid: string): void {
+    this.summaryThreadService.updateSelectedThread(tid); //temp -- remove later
+    console.log('selected thread id: ' + this.summaryThreadList[0].threadid);
+    this.summaryThreadService.updateSelectedThreadItem(this.summaryThreadList[0]);
   }
 
   printItem(tid: number): void {
