@@ -2,7 +2,7 @@
 <ul class="activities">
   <li *ngFor="let activity of activities">
     <a routerLink="/detail/{{activity.activityid}}">
-      <span class="badge">{{activity.activitytype}} </span> <span>{{activity.activityid}}</span>
+      <span class="badge">Type: {{activity.activitytype}} </span> <span class="badge">ID: {{activity.activityid}}</span>
     </a>
   </li>
 </ul>
