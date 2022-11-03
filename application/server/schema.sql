@@ -42,20 +42,6 @@ CREATE TABLE IF NOT EXISTS Pest (
   PestImage TEXT
 );
 
--- DROP TABLE IF EXISTS pest;
--- CREATE TABLE IF NOT EXISTS pest (
---     pest_id INTEGER, 
---     pest_type TEXT,
---     x_coord INTEGER,
---     y_coord INTEGER,
---     id INTEGER,
---     name TEXT);
-
--- INSERT INTO pest VALUES (1, 'Ants', 100, 100, 1001, 'Formicoidea');
--- INSERT INTO pest VALUES (2, 'Bees', 100, -100, 1002, 'Apoidea');
--- INSERT INTO pest VALUES (3, 'Cougers', -100, 100, 1003, 'Felidae');
--- INSERT INTO pest VALUES (4, 'Dragonflies', -100, -100, 1004, 'Anisoptera');
-
 
 CREATE TABLE IF NOT EXISTS Incident (
   IncidentID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
@@ -63,20 +49,20 @@ CREATE TABLE IF NOT EXISTS Incident (
   SubmitterID UUID REFERENCES Users(UserID),
   PestID UUID REFERENCES Pest(PestID),
   ReportDate TIMESTAMP WITH TIME ZONE,
-  GeoCodeAvail BOOLEAN,
-  GeoCode TEXT
+  XCoord FLOAT,
+  Ycoord FLOAT
 );
 
 
--- CREATE TABLE IF NOT EXISTS Activity (
---   ActvivityID,
---   ActivityType, -- IncidentReport, ThreadCreate, ThreadResponse, ThreedFeedback, etc.
---   ActivityTS, -- Incident.ReportDate
---   IncidentID NULL, --Incident.IncidentID
---   ThreadID NULL, --TreadID
---   ResponseID NULL, 
---   FeedbackID NULL
--- );
+CREATE TABLE IF NOT EXISTS Activity (
+  ActivityID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+  ActivityType VARCHAR(255), -- IncidentReport, ThreadCreate, ThreadResponse, ThreedFeedback, etc.
+  ActivityTS TIMESTAMP WITH TIME ZONE, -- Incident.ReportDate
+  IncidentID UUID REFERENCES Incident(IncidentID) --Incident.IncidentID NULL
+--   ThreadID UUID REFERENCES Thread(ThreadID), --TreadID NULL
+--   ResponseID UUID REFERENCES ThreadResponse(ResponseID), --NULL
+--   FeedbackID UUID REFERENCES ThreadFeedback(FeedbackID)--NULL
+);
 
 
 CREATE TABLE IF NOT EXISTS Thread (
@@ -115,3 +101,4 @@ COPY Incident FROM '/docker-entrypoint-initdb.d/csv/incident.csv' CSV HEADER;
 COPY Thread FROM '/docker-entrypoint-initdb.d/csv/thread.csv' CSV HEADER;
 COPY ThreadResponse FROM '/docker-entrypoint-initdb.d/csv/threadresponse.csv' CSV HEADER;
 COPY ThreadFeedback FROM '/docker-entrypoint-initdb.d/csv/threadfeedback.csv' CSV HEADER;
+COPY Activity FROM '/docker-entrypoint-initdb.d/csv/activity.csv' CSV HEADER;

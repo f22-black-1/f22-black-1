@@ -6,3 +6,13 @@ export interface Pest {
     pestdescription: string;
     pestimage: string;
   }
+
+  export interface Incident {
+    incidentid: string;
+    locid: string;
+    submitterid: string;
+    pestid: string;
+    reportdate: string;
+    xcoord: number;
+    ycoord: number;
+  }
