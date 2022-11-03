@@ -1,4 +1,8 @@
 /* ActivityComponent's private CSS styles */
+
+table, th, td {
+  border: 1px solid;
+}
 /* .activities {
     margin: 0 0 2em 0;
     list-style-type: none;
