@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Pest } from '../pest';
+import { Pest, Incident } from '../pest';
 import { PestService } from '../pest.service';
 
 // This component will be used to retrieve all the pests
@@ -14,11 +14,14 @@ export class PestsComponent implements OnInit {
   pests: Pest[] = [];
   pest!: Pest;
 
+  incidents: Incident[] = [];
+
 
   constructor(private pestService: PestService) { }
 
   ngOnInit(): void {
     this.getPests();
+    this.getIncidents();
   }
 
   getPests(): Array<Pest> {
@@ -30,6 +33,13 @@ export class PestsComponent implements OnInit {
     return this.pests
     
   }
+
+  getIncidents(): void {
+    this.pestService.getIncidents()
+    .subscribe(incidents => this.incidents = incidents);
+    
+  }
+
 
   createPest(pest: Pest): Array<Pest> {
     this.pestService.createPest(pest)
