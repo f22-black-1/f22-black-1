@@ -92,6 +92,29 @@ app.route(`/api/Thread/`).get((req, res) => {
 
 })
 
+
+// Get all incidents
+app.route(`/api/incidents/`).get((req, res) => {
+  query = `SELECT * FROM incident`
+
+    const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rowCount);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
+
 //get summary thread list
 app.route(`/api/summaryThreadList/`).get((req, res) => {
   query = `select  thread.*, '../../assets/Incident_Report_Images/PestImage_Coyote.PNG' as imagePath, '../../assets/Incident_Report_Images/Incident_Coyote.png' as iconPath,

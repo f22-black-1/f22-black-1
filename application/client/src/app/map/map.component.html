@@ -1,42 +1,43 @@
-<!-- <div class="google_map_container">
-    <google-map 
-        [height]="mapHeight" 
-        [width]="mapWidth" 
-        [zoom]="mapZoom" 
-        [center]="mapCenter" 
-        [options]="mapOptions"
-        (mapClick)="addMarker($event, markerOptions)"
-    >
-
-        <map-marker
-            #marker="mapMarker"
-            [position]="mapCenter"
-            [options]="markerOptions"
-            (mapClick)="openInfoWindow(marker)"
-        >
-        </map-marker>
-        <map-info-window>{{ markerInfoContent }}</map-info-window>
-    </google-map>
-</div> -->
-
 <google-map [height]="mapHeight"
             [width]="mapWidth"
-            [center]="center"
-            [zoom]="zoom"
+            [center]="mapCenter"
+            [zoom]="mapZoom"
             [options]="mapOptions"
-            (mapClick)="addInvisibleMarker($event, markerOptions)"
-            >
-  <map-marker #marker="mapMarker"
-              *ngFor="let markerPosition of markerPositions"
-  
-              [position]="markerPosition"
-              [options]="markerOptions"
-              (mapClick)="openInfoWindow(marker)">
-  </map-marker>
+            (mapClick)="getReportAndSetMarker($event)"
+            (mapMousemove)="move($event)">
+    <map-marker #marker="mapMarker"
+                *ngFor="let markerPosition of markerPositions"
+                [position]="markerPosition"
+                [options]="markerOptions"
+                [icon]="markerIcon"
+                (mapClick)="openInfoWindow(marker, markerPosition)"></map-marker>
+    <map-info-window class="infoWindow">{{markerInfoContent}}
+        <div id="content">
+            <div id="siteNotice">
+            </div>
+            <h1 id="firstHeading" class="firstHeading">Uluru</h1>
+            <div id="bodyContent">
+            <p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large 
+            sandstone rock formation in the southern part of the 
+            Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) 
+            south west of the nearest large town, Alice Springs; 450&#160;km 
+            (280&#160;mi) by road. Kata Tjuta and Uluru are the two major 
+            features of the Uluru - Kata Tjuta National Park. Uluru is 
+            sacred to the Pitjantjatjara and Yankunytjatjara, the 
+            Aboriginal people of the area. It has many springs, waterholes, 
+            rock caves and ancient paintings. Uluru is listed as a World 
+            Heritage Site.</p>
+            <p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">
+            https://en.wikipedia.org/w/index.php?title=Uluru</a> 
+            (last visited June 22, 2009).</p>
+            </div>
+        </div>
 
-              <map-info-window>{{ markerInfoContent }}</map-info-window>
-              
-              
+
+    </map-info-window>
+
+<!-- <div>Latitude: {{display?.lat}}</div>
+<div>Longitude: {{display?.lng}}</div> -->
 </google-map>
 
 

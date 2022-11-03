@@ -35,7 +35,7 @@ export class PestReportComponent implements OnInit {
     this.pestService.getPests()
     .subscribe(pests => this.pests = pests);
 
-    console.log(this.pests)
+    console.log(this.pests.length)
 
     return this.pests
     
@@ -46,7 +46,7 @@ export class PestReportComponent implements OnInit {
     this.messageEvent.emit(this.message)
   }
 
-  map = new MapComponent(this.dialog);
+  map = new MapComponent(this.dialog, this.pestService);
 
 
   
