@@ -49,6 +49,16 @@ let pestObj = {
 //   comment: string
 // }
 
+let activityObj = {
+  ActivityID: String,
+  ActivityType: String,
+  ActivityTS: Date,
+  IncidentID: String,
+  // ThreadID: String,
+  // ResponseID: String,
+  // FeedbackID: String,
+}
+
 // Get all pests
 app.route(`/api/pests/`).get((req, res) => {
   query = `SELECT * FROM pest`
@@ -306,6 +316,104 @@ app.route(`/api/pests/severity`).get((req, res) => {
   queryDB();
 
 })
+
+//Get all activities
+app.route(`/api/activity/`).get((req, res) => {
+  query = `SELECT * FROM Activity`
+
+    const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
+
+
+// Add a new activity
+// app.route('/api/activity/create').post((req, res) => {
+    
+//   console.log(req.body);
+
+//   activityToCreate = activityObj;
+
+//   activityToCreate.ActivityID = req.body.activityid;
+//   activityToCreate.ActivityType = req.body.activitytype;
+//   activityToCreate.ActivityTS = req.body.activityts;
+//   activityToCreate.IncidentID = req.body.incidentid;
+//   //activityToCreate.ThreadID = req.body.threadid;
+//   // activityToCreate.ResponseID = req.body.responseid;
+//   // activityToCreate.FeedbackID = req.body.feedbackid;
+  
+
+//   console.log(activityToCreate)
+
+//                                       //add ThreadID, ResponseID, and FeedbackID
+//   const query = `INSERT INTO Activity(ActivityType, ActivityTS, IncidentID) 
+//                   VALUES (
+//                         '${activityToCreate.ActivityType}',
+//                          '${activityToCreate.ActivityTS}',
+//                          '${activityToCreate.IncidentID}'
+//                          );`
+
+//   const queryDB = async () => {
+//     try {
+//       await pool.connect();
+//       const q = await pool.query(query);
+//       console.log(q.command)
+//       res.status(201).send()
+//     } catch (err) {
+//       console.log(err);
+//       res.status(500).send()
+//     }
+//   };
+  
+//   queryDB();
+
+// })
+
+
+
+// Delete an Activity
+// app.route('/api/activity/delete').delete((req, res) => {
+//   console.log(req.body);
+
+//   activityToDelete = activityObj;
+
+//   activityToDelete.ActivityId = req.body.activityid;
+
+//   console.log(activityToDelete)
+
+
+//   const query = `DELETE FROM activity WHERE activityid = '${activityToDelete.ActivityID}';`
+
+//   const queryDB = async () => {
+//     try {
+//       await pool.connect();
+//       const q = await pool.query(query);
+//       console.log(q.command)
+//       res.status(201).send()
+//     } catch (err) {
+//       console.log(err);
+//       res.status(500).send()
+//     }
+//   };
+  
+//   queryDB();
+
+// })
+
+
+
 
 // // Get pest by id
 // // app.route(`/api/pest/id`).get((req, res) => {

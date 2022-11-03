@@ -1,0 +1,22 @@
+<table>
+  <caption style="font-weight: bold">Recent Activity</caption>
+  <tr>
+    <th>Activity Type</th>
+    <th>Activity ID</th>
+  </tr>
+  <tr *ngFor="let activity of activities">
+    <td>{{activity.activitytype}}</td>
+    <a routerLink="/detail/{{activity.activityid}}">
+      <td>{{activity.activityid}}</td>
+    </a>
+  </tr>
+</table>
+
+<!-- <h2>Recent Neighborhood Activity</h2>
+<ul class="activities">
+  <li *ngFor="let activity of activities">
+    <a routerLink="/detail/{{activity.activityid}}">
+      <span class="badge">Type: {{activity.activitytype}} </span> <span class="badge">ID: {{activity.activityid}}</span>
+    </a>
+  </li>
+</ul> -->

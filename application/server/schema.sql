@@ -49,8 +49,24 @@ CREATE TABLE IF NOT EXISTS Incident (
   SubmitterID UUID REFERENCES Users(UserID),
   PestID UUID REFERENCES Pest(PestID),
   ReportDate TIMESTAMP WITH TIME ZONE,
+<<<<<<< HEAD
   XCoord FLOAT,
   Ycoord FLOAT
+=======
+  GeoCodeAvail BOOLEAN,
+  GeoCode TEXT
+);
+
+
+CREATE TABLE IF NOT EXISTS Activity (
+  ActivityID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+  ActivityType VARCHAR(255), -- IncidentReport, ThreadCreate, ThreadResponse, ThreedFeedback, etc.
+  ActivityTS TIMESTAMP WITH TIME ZONE, -- Incident.ReportDate
+  IncidentID UUID REFERENCES Incident(IncidentID) --Incident.IncidentID NULL
+--   ThreadID UUID REFERENCES Thread(ThreadID), --TreadID NULL
+--   ResponseID UUID REFERENCES ThreadResponse(ResponseID), --NULL
+--   FeedbackID UUID REFERENCES ThreadFeedback(FeedbackID)--NULL
+>>>>>>> dde10ba0ec584842c2719c7251ea62bc9889ce03
 );
 
 
@@ -90,3 +106,4 @@ COPY Incident FROM '/docker-entrypoint-initdb.d/csv/incident.csv' CSV HEADER;
 COPY Thread FROM '/docker-entrypoint-initdb.d/csv/thread.csv' CSV HEADER;
 COPY ThreadResponse FROM '/docker-entrypoint-initdb.d/csv/threadresponse.csv' CSV HEADER;
 COPY ThreadFeedback FROM '/docker-entrypoint-initdb.d/csv/threadfeedback.csv' CSV HEADER;
+COPY Activity FROM '/docker-entrypoint-initdb.d/csv/activity.csv' CSV HEADER;
