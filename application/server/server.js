@@ -57,7 +57,7 @@ app.route(`/api/pests/`).get((req, res) => {
     try {
       const client = await pool.connect();
       const q = await client.query(query);
-      console.log(q.rowCount);
+      console.log(q.rows);
       res.status(200).send(q.rows)
       
     } catch (err) {
@@ -91,6 +91,28 @@ app.route(`/api/Thread/`).get((req, res) => {
   queryDB();
 
 })
+
+//Get all activities
+app.route(`/api/activities/`).get((req, res) => {
+  query = `SELECT * FROM Activity`
+
+    const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
 
 //get summary thread list
 app.route(`/api/summaryThreadList/`).get((req, res) => {
