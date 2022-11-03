@@ -56,6 +56,17 @@ export class PestService {
       catchError(this.handleError<Pest[]>('getPests', [])));
   }
 
+  getAPest(pest: Pest): Observable<any>{
+
+    console.log(`fetched pest from DB`);
+    console.log(`${pest}`);
+    
+    return this.http.post<Pest>('http://localhost:8080/api/pest/apest', pest)
+    .pipe(
+      tap(_=> this.log(`fetched a pest`)),
+      catchError(this.handleError<Pest>(`getAPest`)));
+  }
+
   /** POST NEW pest to the DB */
   createPest(pest: Pest): Observable<any> {
     

@@ -294,7 +294,7 @@ app.route(`/api/pests/severity`).get((req, res) => {
 })
 
 // Get a pest by Pest ID
-app.route(`/api/pest/apest`).get((req, res) => {
+app.route(`/api/pest/apest`).post((req, res) => {
   console.log(req.body);
 
   pestToGet = pestObj;

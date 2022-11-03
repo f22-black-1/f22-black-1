@@ -19,13 +19,24 @@ export class PestUpdateComponent implements OnInit {
     pestimage: ""
   }
 
-  constructor() { }
+  constructor(private pestService: PestService) { }
+
+
  
   ngOnInit(): void {
   }
 
   getPestID(val: string){
     this.pest.pestid = val;
+    this.pestService.getAPest(this.pest).subscribe( 
+    async data => {  const pests = await data;   console.log(pests);
+      this.pest.pestname = pests[0].pestname;
+      this.pest.pesttype = pests[0].pesttype;
+      this.pest.severity = pests[0].severity;
+      this.pest.pestdescription = pests[0].pestdescription;
+      
+      
+    });
     
   }
 }
