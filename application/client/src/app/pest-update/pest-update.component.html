@@ -1,7 +1,7 @@
 <form>
     <label for="PestID">Pest ID</label><br>
     <input type="text" id="PestID" name="id" size="50" #id>
-    <mat-list-item><button (click)="getPestID(id.value)">Search</button></mat-list-item><br><br>
+    <mat-list-item><button (click)="getPestDetails(id.value)">Search</button></mat-list-item><br><br>
     
     <label for="PestName">Pest Name</label><br>
     <input type="text" id="pname" name="pname" value={{pest.pestname}} size="50"><br><br>
@@ -10,5 +10,6 @@
     <label for="Severity">Severity</label><br>
     <input type="text" id="severity" name="severity" value={{pest.severity}} size="50"><br><br>
     <label for="Pest Description">Pest Description</label><br>
-    <input type="text" id="pdesc" name="pdesc" value={{pest.pestdescription}} size="75"><br><br>
+    <input type="text" id="pdesc" name="pdesc" value={{pest.pestdescription}} size="75">
+    <mat-list-item><button (click)="updatePest()">Update</button></mat-list-item><br><br>
 </form>

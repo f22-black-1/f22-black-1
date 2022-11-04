@@ -26,7 +26,7 @@ export class PestUpdateComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getPestID(val: string){
+  getPestDetails(val: string){
     this.pest.pestid = val;
     this.pestService.getAPest(this.pest).subscribe( 
     async data => {  const pests = await data;   console.log(pests);
@@ -34,9 +34,14 @@ export class PestUpdateComponent implements OnInit {
       this.pest.pesttype = pests[0].pesttype;
       this.pest.severity = pests[0].severity;
       this.pest.pestdescription = pests[0].pestdescription;
-      
-      
-    });
-    
+    });    
   }
+
+  updatePest(){
+    this.pestService.updatePest(this.pest).subscribe(
+    async data => {  
+  });
+  }
+
+
 }

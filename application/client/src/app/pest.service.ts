@@ -96,7 +96,7 @@ export class PestService {
 
     console.log(`Updating PEST: ${pest}`)
 
-    return this.http.post<Pest>('http://localhost:8080/api/pest/update', pest).pipe(
+    return this.http.put<Pest>('http://localhost:8080/api/pest/update', pest).pipe(
         tap(_ => this.log(`updated pest id=${pest.pestid}`)),
         catchError(this.handleError<Pest>('updatePest')));
   }
