@@ -93,51 +93,26 @@ export class MapComponent implements OnInit {
    
  }
 
-  getIncidents(): void {
+ Incidents: Array<Incident> = [];
+ incident: Incident
+  getIncidents(): Array<Incident> {
     this.pestService.getIncidents().subscribe( async data => {
       const incidents = await data;
 
-      let options = this.markerOptions;
-      let marker = this.marker;
-
-      console.log(options)
-      console.log(marker) // undefined
-      
-      // Work with incidents
-      for (let incident in incidents) {
-        let xcoord = parseFloat(incidents[incident].xcoord) 
-        let ycoord = parseFloat(incidents[incident].ycoord)
-        console.log({lat: xcoord, lng: ycoord})
-
-        // Need to have pesttype here so we can if-check the icon
-        console.log(incidents)
-        if (incidents[incident].pestid == '55884984-3891-4c9c-b8d0-8526c65d5588') {
-          options.icon = this.iconBase + 'donatello.png';
-          options.position = {lat: xcoord, lng: ycoord};
-          marker = this.createMarker(options)
-          this.markerPositions.push(options.position)
-          this.markers.push(marker)
-          this.markerInfoContent = incidents[incident].reportdate 
-        }
-        if (incidents[incident].pestid == 'b0b6c409-f67d-4646-be93-0bd4d1111ff4') {
-          options.icon = this.iconBase + 'raphael.png';
-          options.position = {lat: xcoord, lng: ycoord};
-          marker = this.createMarker(options)
-          this.markerPositions.push(options.position)
-          this.markers.push(marker)
-          this.markerInfoContent = incidents[incident].reportdate 
-        }
-        else {
-          options.position = {lat: xcoord, lng: ycoord};
-          marker = this.createMarker(options)
-          this.markerPositions.push(options.position)
-          this.markers.push(marker)
-          this.markerInfoContent = incidents[incident].reportdate
-        }
-        
+      //console.log(incidents[0].incidentid)
+      for (let i=0; i < incidents.length; i++) {
+        console.log(incidents[i]);
+        this.Incidents.push(incidents[i]);
       }
-    }
-  )}
+      
+    
+    })
+    return this.Incidents
+  };
+     
+
+
+
 
   getReportAndSetMarker(event: google.maps.MapMouseEvent) {
     console.log(`Getting report....`)
@@ -156,12 +131,40 @@ export class MapComponent implements OnInit {
 
     console.log(`Centering map on ${this.mapCenter.lat}, ${this.mapCenter.lng}`);
 
-    this.getIncidents();
+    let incidents = this.getIncidents(); 
+    console.log(incidents[0])
+
+
+    // console.log({lat: xcoord, lng: ycoord})
+
+    // // Work with incidents
 
   }
-  
-
-
-
-
 }
+
+
+      // // Need to have pesttype here so we can if-check the icon
+      // console.log(incidents)
+      // if (incidents[incident].pestid == '55884984-3891-4c9c-b8d0-8526c65d5588') {
+      //   options.icon = this.iconBase + 'donatello.png';
+      //   options.position = {lat: xcoord, lng: ycoord};
+      //   marker = this.createMarker(options)
+      //   this.markerPositions.push(options.position)
+      //   this.markers.push(marker)
+      //   this.markerInfoContent = incidents[incident].reportdate 
+      // }
+      // if (incidents[incident].pestid == 'b0b6c409-f67d-4646-be93-0bd4d1111ff4') {
+      //   options.icon = this.iconBase + 'raphael.png';
+      //   options.position = {lat: xcoord, lng: ycoord};
+      //   marker = this.createMarker(options)
+      //   this.markerPositions.push(options.position)
+      //   this.markers.push(marker)
+      //   this.markerInfoContent = incidents[incident].reportdate 
+      // }
+      // else {
+      //   options.position = {lat: xcoord, lng: ycoord};
+      //   marker = this.createMarker(options)
+      //   this.markerPositions.push(options.position)
+      //   this.markers.push(marker)
+      //   this.markerInfoContent = incidents[incident].reportdate
+      // }
