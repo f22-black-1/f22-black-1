@@ -1,7 +1,8 @@
-/* :host {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    background-color: white;
-    color: black;
-  } */
+
+  h1 { color:white;
+  }
+
+  .window {
+    background-color: rgb(135, 162, 149);
+    
+  }

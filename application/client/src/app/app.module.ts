@@ -30,7 +30,8 @@ import { PestReportComponent } from './pest-report/pest-report.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input'
-import { MatSelectModule } from '@angular/material/select'
+import { MatSelectModule } from '@angular/material/select';
+import { ActivityComponent } from './activity/activity.component'
 
 
 
@@ -68,6 +69,7 @@ import { MatSelectModule } from '@angular/material/select'
     FilterComponent,
     ExpandedDiscussionViewComponent,
     PestReportComponent,
+    ActivityComponent,
   ],
   exports: [
     //GoogleMapsModule
