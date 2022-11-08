@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, ElementRef} from '@angular/core';
+import {Component, ViewChild, OnInit, ElementRef, SimpleChanges} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -64,15 +64,6 @@ export class MapComponent implements OnInit {
   }
 
 
-  markerPositions: google.maps.LatLngLiteral[] = [];
-  markerIcon: string;
-
-  markerOptions: google.maps.MarkerOptions = {
-    draggable: false,
-    animation: google.maps.Animation.DROP
-  };
-
-
   markers: google.maps.Marker[] = [];
   marker: google.maps.Marker;
  
@@ -86,6 +77,14 @@ export class MapComponent implements OnInit {
   }
 
 
+  markerPositions: google.maps.LatLngLiteral[] = [];
+  markerIcon: string;
+
+  markerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+    animation: google.maps.Animation.DROP
+  };
+
   addVisibleMarker(event: google.maps.MapMouseEvent) {
          
     this.markerPositions.push(event.latLng!.toJSON());
@@ -93,16 +92,22 @@ export class MapComponent implements OnInit {
    
  }
 
- Incidents: Array<Incident> = [];
+ Incidents: Array<Object> = [];
  incident: Incident
-  getIncidents(): Array<Incident> {
+  getIncidents(): Array<Object> {
     this.pestService.getIncidents().subscribe( async data => {
       const incidents = await data;
+      let position = google.maps.LatLng;
+    
 
       //console.log(incidents[0].incidentid)
       for (let i=0; i < incidents.length; i++) {
-        console.log(incidents[i]);
+        // console.log(incidents[i]);
         this.Incidents.push(incidents[i]);
+        position = (incidents[i].xcoord, incidents[i].ycoord);
+        console.log(position);
+                // this.markerPositions.push();
+        // console.log(`Added marker to ${event.latLng!}` )
       }
       
     
@@ -110,8 +115,6 @@ export class MapComponent implements OnInit {
     return this.Incidents
   };
      
-
-
 
 
   getReportAndSetMarker(event: google.maps.MapMouseEvent) {
@@ -130,16 +133,17 @@ export class MapComponent implements OnInit {
   ngOnInit() {
 
     console.log(`Centering map on ${this.mapCenter.lat}, ${this.mapCenter.lng}`);
+    this.getIncidents();
+    // let incidents = this.getIncidents();
 
-    let incidents = this.getIncidents(); 
-    console.log(incidents[0])
-
-
-    // console.log({lat: xcoord, lng: ycoord})
-
-    // // Work with incidents
+    // console.log(incidents)
 
   }
+
+  
+  
+
+  
 }
 
 
