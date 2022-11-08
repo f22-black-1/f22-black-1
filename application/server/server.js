@@ -39,6 +39,10 @@ let pestObj = {
   PestImage: String,
 }
 
+let tidObj = { 
+  tid: String
+}
+
 // let threadObject = {
 //   threadid: number,
 //   incidentid: number,
@@ -48,6 +52,16 @@ let pestObj = {
 //   subject: string,
 //   comment: string
 // }
+
+let activityObj = {
+  ActivityID: String,
+  ActivityType: String,
+  ActivityTS: Date,
+  IncidentID: String,
+  // ThreadID: String,
+  // ResponseID: String,
+  // FeedbackID: String,
+}
 
 // Get all pests
 app.route(`/api/pests/`).get((req, res) => {
@@ -133,6 +147,37 @@ app.route(`/api/summaryThreadList/`).get((req, res) => {
    
   queryDB();
 
+})
+
+//get expanded thread data
+app.route(`/api/expandedThread/`).get((req, res) => {
+  console.log("njs threadid: " + req.body.threadid);
+  thid = tidObj;
+  thid.tid = req.body.threadid;
+
+  query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment
+  FROM thread
+  WHERE (((thread.threadid)=' ${thid.tid} '))
+  UNION ALL
+  SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment
+  FROM threadresponse
+  WHERE (((threadresponse.threadid)=' ${thid.tid} ') and ((threadresponse.responseid)<>' ${thid.tid} '))
+  ORDER BY sort_order asc;`
+  
+    const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
 })
 
 // Add a new pest
@@ -306,6 +351,104 @@ app.route(`/api/pests/severity`).get((req, res) => {
   queryDB();
 
 })
+
+//Get all activities
+app.route(`/api/activity/`).get((req, res) => {
+  query = `SELECT * FROM Activity`
+
+    const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
+
+
+// Add a new activity
+// app.route('/api/activity/create').post((req, res) => {
+    
+//   console.log(req.body);
+
+//   activityToCreate = activityObj;
+
+//   activityToCreate.ActivityID = req.body.activityid;
+//   activityToCreate.ActivityType = req.body.activitytype;
+//   activityToCreate.ActivityTS = req.body.activityts;
+//   activityToCreate.IncidentID = req.body.incidentid;
+//   //activityToCreate.ThreadID = req.body.threadid;
+//   // activityToCreate.ResponseID = req.body.responseid;
+//   // activityToCreate.FeedbackID = req.body.feedbackid;
+  
+
+//   console.log(activityToCreate)
+
+//                                       //add ThreadID, ResponseID, and FeedbackID
+//   const query = `INSERT INTO Activity(ActivityType, ActivityTS, IncidentID) 
+//                   VALUES (
+//                         '${activityToCreate.ActivityType}',
+//                          '${activityToCreate.ActivityTS}',
+//                          '${activityToCreate.IncidentID}'
+//                          );`
+
+//   const queryDB = async () => {
+//     try {
+//       await pool.connect();
+//       const q = await pool.query(query);
+//       console.log(q.command)
+//       res.status(201).send()
+//     } catch (err) {
+//       console.log(err);
+//       res.status(500).send()
+//     }
+//   };
+  
+//   queryDB();
+
+// })
+
+
+
+// Delete an Activity
+// app.route('/api/activity/delete').delete((req, res) => {
+//   console.log(req.body);
+
+//   activityToDelete = activityObj;
+
+//   activityToDelete.ActivityId = req.body.activityid;
+
+//   console.log(activityToDelete)
+
+
+//   const query = `DELETE FROM activity WHERE activityid = '${activityToDelete.ActivityID}';`
+
+//   const queryDB = async () => {
+//     try {
+//       await pool.connect();
+//       const q = await pool.query(query);
+//       console.log(q.command)
+//       res.status(201).send()
+//     } catch (err) {
+//       console.log(err);
+//       res.status(500).send()
+//     }
+//   };
+  
+//   queryDB();
+
+// })
+
+
+
 
 // // Get pest by id
 // // app.route(`/api/pest/id`).get((req, res) => {

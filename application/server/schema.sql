@@ -54,6 +54,17 @@ CREATE TABLE IF NOT EXISTS Incident (
 );
 
 
+CREATE TABLE IF NOT EXISTS Activity (
+  ActivityID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+  ActivityType VARCHAR(255), -- IncidentReport, ThreadCreate, ThreadResponse, ThreedFeedback, etc.
+  ActivityTS TIMESTAMP WITH TIME ZONE, -- Incident.ReportDate
+  IncidentID UUID REFERENCES Incident(IncidentID) --Incident.IncidentID NULL
+--   ThreadID UUID REFERENCES Thread(ThreadID), --TreadID NULL
+--   ResponseID UUID REFERENCES ThreadResponse(ResponseID), --NULL
+--   FeedbackID UUID REFERENCES ThreadFeedback(FeedbackID)--NULL
+);
+
+
 CREATE TABLE IF NOT EXISTS Thread (
   ThreadID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
   IncidentID UUID REFERENCES Incident(IncidentID),
@@ -90,3 +101,4 @@ COPY Incident FROM '/docker-entrypoint-initdb.d/csv/incident.csv' CSV HEADER;
 COPY Thread FROM '/docker-entrypoint-initdb.d/csv/thread.csv' CSV HEADER;
 COPY ThreadResponse FROM '/docker-entrypoint-initdb.d/csv/threadresponse.csv' CSV HEADER;
 COPY ThreadFeedback FROM '/docker-entrypoint-initdb.d/csv/threadfeedback.csv' CSV HEADER;
+COPY Activity FROM '/docker-entrypoint-initdb.d/csv/activity.csv' CSV HEADER;
