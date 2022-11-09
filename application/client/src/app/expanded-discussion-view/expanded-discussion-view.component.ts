@@ -26,6 +26,7 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   }
 
   public getReceivedThreadItem(): SummaryThread_Prev {
+    console.log(this.receivedThreadItem);
     return this.receivedThreadItem;
   }
 

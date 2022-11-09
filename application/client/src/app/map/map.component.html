@@ -6,10 +6,10 @@
             (mapClick)="getReportAndSetMarker($event)"
             (mapMousemove)="move($event)">
     <map-marker #marker="mapMarker"
-                [options]="markerOptions"
-                *ngFor="let position of markerPositions"
-                [position]="position"
-                (mapClick)="openInfoWindow(marker, position)"
+                *ngFor="let reportedPest of reportedPests"
+                [position]="reportedPest.position"
+                [options]="reportedPest.options"
+                (mapClick)="openInfoWindow(marker, reportedPest.position)"
                 
                 >
             </map-marker>
@@ -40,11 +40,3 @@
 <!-- <div>Latitude: {{display?.lat}}</div>
 <div>Longitude: {{display?.lng}}</div> -->
 </google-map>
-
-
-
-
-    
-
-
-<!-- <mat-list-item><button  class="btn btn-primary" (click)="openDialog()">Report</button></mat-list-item> -->
