@@ -34,10 +34,17 @@ export class PestUpdateComponent implements OnInit {
       this.pest.pesttype = pests[0].pesttype;
       this.pest.severity = pests[0].severity;
       this.pest.pestdescription = pests[0].pestdescription;
+      this.pest.pestimage = pests[0].pestimage;
     });    
   }
 
-  updatePest(){
+  updatePest(pn: string, ptype: string, psev: string, pdesc: string){
+    this.pest.pestname = pn;
+    this.pest.pesttype = ptype;
+    this.pest.severity = psev;
+    this.pest.pestdescription = pdesc;
+    
+    console.log(this.pest);
     this.pestService.updatePest(this.pest).subscribe(
     async data => {  
   });

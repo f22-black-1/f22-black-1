@@ -252,9 +252,11 @@ app.route('/api/pest/delete').delete((req, res) => {
 
 
 // Update a whole Pest object (except the key)
-app.route('/api/pest/update').put((req, res) => {
+app.route('/api/pest/update').post((req, res) => {
+  console.log(`-----------`);
   console.log(req.body);
-
+  console.log(`----------`);
+  
   pestToUpdate = pestObj;
 
   pestToUpdate.PestID = req.body.pestid;
@@ -264,7 +266,7 @@ app.route('/api/pest/update').put((req, res) => {
   pestToUpdate.PestDescription = req.body.pestdescription;
   pestToUpdate.PestImage = req.body.pestimage;
 
-  console.log(pestToUpdate)
+  //console.log(pestToUpdate)
 
   const query = `UPDATE pest 
                 SET pestname = '${pestToUpdate.PestName}', 
@@ -287,6 +289,32 @@ app.route('/api/pest/update').put((req, res) => {
   
   queryDB();
 
+})
+
+// Get a pest by Pest ID
+app.route(`/api/pest/apest`).post((req, res) => {
+  console.log(req.body);
+
+  pestToGet = pestObj;
+  pestToGet.PestID = req.body.pestid;
+
+  console.log(pestToGet.PestID);
+
+   query = `SELECT * FROM pest WHERE pestid = '${pestToGet.PestID}'`
+
+  const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+  queryDB();
 })
 
 // Get names of all pest with same pest type
@@ -352,21 +380,15 @@ app.route(`/api/pests/severity`).get((req, res) => {
 
 })
 
-// Get a pest by Pest ID
-app.route(`/api/pest/apest`).post((req, res) => {
-  console.log(req.body);
 
-  pestToGet = pestObj;
-  pestToGet.PestID = req.body.pestid;
 
-  console.log(pestToGet.PestID);
+//Get all activities
+app.route(`/api/activity/`).get((req, res) => {
+  query = `SELECT * FROM Activity`
 
-   query = `SELECT * FROM pest WHERE pestid = '${pestToGet.PestID}'`
-
-  const queryDB = async () => {
+    const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
       
@@ -375,7 +397,9 @@ app.route(`/api/pest/apest`).post((req, res) => {
       res.status(500).send()
     }
   };
+   
   queryDB();
+
 })
 
 // // Get pest by id

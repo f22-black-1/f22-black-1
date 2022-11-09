@@ -4,12 +4,12 @@
     <mat-list-item><button (click)="getPestDetails(id.value)">Search</button></mat-list-item><br><br>
     
     <label for="PestName">Pest Name</label><br>
-    <input type="text" id="pname" name="pname" value={{pest.pestname}} size="50"><br><br>
+    <input type="text" id="pname" name="pname" value={{pest.pestname}} size="50" #pname><br><br>
     <label for="PestType">Pest Type</label><br>
-    <input type="text" id="ptype" name="ptype" value={{pest.pesttype}} size="50"><br><br>
+    <input type="text" id="ptype" name="ptype" value={{pest.pesttype}} size="50" #ptype><br><br>
     <label for="Severity">Severity</label><br>
-    <input type="text" id="severity" name="severity" value={{pest.severity}} size="50"><br><br>
+    <input type="text" id="severity" name="severity" value={{pest.severity}} size="50" #psev><br><br>
     <label for="Pest Description">Pest Description</label><br>
-    <input type="text" id="pdesc" name="pdesc" value={{pest.pestdescription}} size="75">
-    <mat-list-item><button (click)="updatePest()">Update</button></mat-list-item><br><br>
+    <input type="text" id="pdesc" name="pdesc" value={{pest.pestdescription}} size="75" #pdesc>
+    <mat-list-item><button (click)="updatePest(pname.value, ptype.value, psev.value, pdesc.value)">Update</button></mat-list-item><br><br>
 </form>
