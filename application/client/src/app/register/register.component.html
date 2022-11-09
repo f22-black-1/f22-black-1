@@ -1,1 +1,72 @@
-<p>register works!</p>
+<div class="container">
+    <div [hidden]="submitted">
+    <h1>Register</h1>
+    
+    <form (ngSubmit)="onSubmit()" #RegisterForm="ngForm"> 
+    
+        <div class="form-group">
+            <label for="FirstName">First Name: </label>
+            <input type="text" class="form-control" id="FirstName" 
+                required
+                    [(ngModel)]="model.FirstName" name="FirstName"
+                    #FirstNameField ="ngModel">
+            <div [hidden]="FirstNameField.valid || FirstNameField.pristine"
+                class="alert alert-danger">
+            First Name is required
+            </div>              
+        </div>
+
+        <div class="form-group">
+            <label for="LastName">Last Name: </label>
+            <input type="text" class="form-control" id="LastName" 
+                required
+                    [(ngModel)]="model.LastName" name="LastName"
+                    #LastNameField ="ngModel">
+            <div [hidden]="LastNameField.valid || LastNameField.pristine"
+                class="alert alert-danger">
+            Last Name is required
+            </div>              
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email: </label>
+            <input type="text" class="form-control" id="Email" 
+                required
+                    [(ngModel)]="model.Email" name="Email"
+                    #EmailField ="ngModel">
+            <div [hidden]="EmailField.valid || EmailField.pristine"
+                class="alert alert-danger">
+            Email is required
+            </div>              
+        </div>
+        
+        <div class="form-group">
+            <label for="Username">Username: </label>
+            <input type="text" class="form-control" id="Username" 
+                required
+                    [(ngModel)]="model.Username" name="Username"
+                    #UsernameField ="ngModel">
+            <div [hidden]="UsernameField.valid || UsernameField.pristine"
+                class="alert alert-danger">
+            Username is required
+            </div>              
+        </div>
+    
+        <div class="form-group">
+            <label for="Password">Password: </label>
+            <input type="text" class="form-control" id="Password"
+                required
+                    [(ngModel)]="model.Password" name="Password"  
+                    #PasswordField ="ngModel"> 
+            <div [hidden]="PasswordField.valid || PasswordField.pristine"
+                class="alert alert-danger">
+            Password is required
+            </div>
+        </div>
+    
+    <button type="submit" class="btn btn-success" [disabled]="!RegisterForm.form.valid">Submit</button>
+    
+    
+    </form>
+    </div>
+    </div>

@@ -1,5 +1,5 @@
 export interface SummaryThread_Prev {
-    threadid: number; 
+    threadid: string; 
     incidentid: number;
     locid: number;
     creatorid: string;

@@ -32,10 +32,11 @@
             <img src={{summaryThread_Prev.iconpath}}  alt="Icon Image" class="stImageFormats">
         </div>
         <div class="stPestImage">
-            <img src={{summaryThread_Prev.imagepath}}  alt="Icon Image" class="stPestImageFormats">
+            <img src={{summaryThread_Prev.imagepath}}  alt="Pest Image" class="stPestImageFormats">
         </div>
         <div class="stTitle">
-            <a routerLink="/expanded-discussion-view" class="stTitleLink">{{summaryThread_Prev.subject}}</a>
+            <!-- <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.summaryThreadService.updateSelectedThread('id from: ' + summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}}</a> -->
+            <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.sendSelectedIndex(summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}}</a>
         </div>
         <div class="stDescription">
             <span>{{summaryThread_Prev.comment.substring(0,90)}} ... </span>
@@ -48,12 +49,15 @@
                 {{(summaryThread_Prev.total_positive / (summaryThread_Prev.record_count)) * 100 | number:'1.0-0'}}%</span>
         </div>
         <div class="stVerification">
-
+            <label name="stIndex" class="std_font">{{this.stlIndex}}</label>
+            <!-- <data class="std_font" name="indexVal" value="{{this.stlIndex}}">{{this.stlIndex}}</data> -->
         </div>
         <div class="stUserInfo">
             <span>Submitted by: {{summaryThread_Prev.creatorid}} on {{summaryThread_Prev.createdate}}</span>
         </div>
+        {{this.incrementIndex()}}
     </div>
+    {{this.resetIndex()}}
 </div>
 
 

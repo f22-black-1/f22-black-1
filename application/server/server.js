@@ -39,6 +39,10 @@ let pestObj = {
   PestImage: String,
 }
 
+let tidObj = { 
+  tid: String
+}
+
 // let threadObject = {
 //   threadid: number,
 //   incidentid: number,
@@ -49,14 +53,23 @@ let pestObj = {
 //   comment: string
 // }
 
+let activityObj = {
+  ActivityID: String,
+  ActivityType: String,
+  ActivityTS: Date,
+  IncidentID: String,
+  // ThreadID: String,
+  // ResponseID: String,
+  // FeedbackID: String,
+}
+
 // Get all pests
 app.route(`/api/pests/`).get((req, res) => {
   query = `SELECT * FROM pest`
 
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      const q = await pool.query(query);
       console.log(q.rowCount);
       res.status(200).send(q.rows)
       
@@ -77,8 +90,7 @@ app.route(`/api/Thread/`).get((req, res) => {
 
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
       
@@ -92,6 +104,28 @@ app.route(`/api/Thread/`).get((req, res) => {
 
 })
 
+
+// Get all incidents
+app.route(`/api/incidents/`).get((req, res) => {
+  query = `SELECT * FROM incident`
+
+    const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.rowCount);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
+
 //get summary thread list
 app.route(`/api/summaryThreadList/`).get((req, res) => {
   query = `select  thread.*, '../../assets/Incident_Report_Images/PestImage_Coyote.PNG' as imagePath, '../../assets/Incident_Report_Images/Incident_Coyote.png' as iconPath,
@@ -99,6 +133,37 @@ app.route(`/api/summaryThreadList/`).get((req, res) => {
   from thread left join threadfeedback on thread.threadid = threadfeedback.threadid
   group by thread.threadid;`
 
+    const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
+//get expanded thread data
+app.route(`/api/expandedThread/`).get((req, res) => {
+  console.log("njs threadid: " + req.body.threadid);
+  thid = tidObj;
+  thid.tid = req.body.threadid;
+
+  query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment
+  FROM thread
+  WHERE (((thread.threadid)=' ${thid.tid} '))
+  UNION ALL
+  SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment
+  FROM threadresponse
+  WHERE (((threadresponse.threadid)=' ${thid.tid} ') and ((threadresponse.responseid)<>' ${thid.tid} '))
+  ORDER BY sort_order asc;`
+  
     const queryDB = async () => {
     try {
       const client = await pool.connect();
@@ -113,7 +178,6 @@ app.route(`/api/summaryThreadList/`).get((req, res) => {
   };
    
   queryDB();
-
 })
 
 // Add a new pest
@@ -144,7 +208,6 @@ app.route('/api/pest/create').post((req, res) => {
 
   const queryDB = async () => {
     try {
-      await pool.connect();
       const q = await pool.query(query);
       console.log(q.command)
       res.status(201).send()
@@ -174,7 +237,6 @@ app.route('/api/pest/delete').delete((req, res) => {
 
   const queryDB = async () => {
     try {
-      await pool.connect();
       const q = await pool.query(query);
       console.log(q.command)
       res.status(201).send()
@@ -214,7 +276,6 @@ app.route('/api/pest/update').put((req, res) => {
                  
   const queryDB = async () => {
     try {
-      await pool.connect();
       const q = await pool.query(query);
       console.log(q.command)
       res.status(201).send()
@@ -245,8 +306,7 @@ app.route(`/api/pests/type`).get((req, res) => {
 
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
       
@@ -278,8 +338,7 @@ app.route(`/api/pests/severity`).get((req, res) => {
 
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
       

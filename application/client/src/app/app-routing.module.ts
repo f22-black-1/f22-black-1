@@ -11,6 +11,7 @@ import { ForumComponent } from './forum/forum.component';
 import { ExpandedDiscussionViewComponent } from './expanded-discussion-view/expanded-discussion-view.component';
 import { PestReportComponent } from './pest-report/pest-report.component';
 import { PestUpdateComponent } from './pest-update/pest-update.component';
+import { ActivityComponent } from './activity/activity.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'map', pathMatch: 'full' },
@@ -27,7 +28,10 @@ const routes: Routes = [
   { path: 'pest-update', component: PestUpdateComponent},
 
   // This route is for testing CRUD operations on the PEST Object (See Video Demo from 14 Oct 2022)
-  { path: 'pest_crud_test', component: PestsComponent }
+  { path: 'pest_crud_test', component: PestsComponent },
+
+  //This route is for testing CRUD operations on the Activity object
+  { path: 'activity_crud_test', component: ActivityComponent}
 
 ];
 

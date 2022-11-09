@@ -1,3 +1,17 @@
 <div class="Container_Main">
-    <p>expanded-discussion-view works!</p>
+    <div class="originalThread">
+        <div class="stPestImage">
+            <img src={{this.getReceivedThreadItem().imagepath}} alt="Pest Icon" class="stPestImageFormats">
+        </div>
+        <div class="stTitle">
+            <span>{{this.getReceivedThreadItem().subject}}</span>
+        </div>
+        <div class="stDescription">
+            <span>{{this.getReceivedThreadItem().comment}}</span>
+        </div>
+    </div>
 </div>
+<p>expanded-discussion-view works!</p>
+<p>{{this.receivedThreadID}}</p>
+<p>id from object: {{this.getReceivedThreadItem().threadid}}</p>
+<p>object subject: {{this.getReceivedThreadItem().subject}}</p>
