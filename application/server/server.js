@@ -151,6 +151,7 @@ app.route(`/api/summaryThreadList/`).get((req, res) => {
 
 //get expanded thread data
 app.route(`/api/expandedThread/`).get((req, res) => {
+  console.log("entered: server.js");
   console.log("njs threadid: " + req.body.threadid);
   thid = tidObj;
   thid.tid = req.body.threadid;

@@ -21,6 +21,7 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   ngOnInit(): void {
     this.sumThreadService.currentThreadID.subscribe(idNum => this.receivedThreadID = idNum)
     this.receivedThreadItem = this.sumThreadService.getSelectedThreadItem();
+    // console.log("getting responses for: " + this.getReceivedThreadItem().threadid);
     this.getResponses();
   }
 
@@ -29,11 +30,12 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   }
 
   getResponses(): Array<responses> {
+    console.log("getting responses for: " + this.getReceivedThreadItem().threadid);
     this.expThreadService.getThreadResponses(this.receivedThreadID)
     .subscribe(etr => this.responseList = etr);
 
     console.log(this.responseList)
     return this.responseList
-  }
+  }  
 
 }
