@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SummaryThread_Prev } from '../summary-thread';
 import { SummaryThreadService } from "../summary-thread.service";
-import { responses } from "../expanded-thread";
+import { responses, responseTable } from "../expanded-thread";
 import { ExpandedThreadService } from "../expanded-thread.service";
 
 @Component({
@@ -13,6 +13,9 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   private responseList: responses[] = [];
   private response!: responses;
 
+  private rptl: responseTable[] = [];
+  private rp!: responseTable;
+
   public receivedThreadID: string="";
   private receivedThreadItem!: SummaryThread_Prev;
   
@@ -22,11 +25,12 @@ export class ExpandedDiscussionViewComponent implements OnInit {
     this.sumThreadService.currentThreadID.subscribe(idNum => this.receivedThreadID = idNum)
     this.receivedThreadItem = this.sumThreadService.getSelectedThreadItem();
     // console.log("getting responses for: " + this.getReceivedThreadItem().threadid);
+    this.getRps();
     this.getResponses();
   }
 
   public getReceivedThreadItem(): SummaryThread_Prev {
-    console.log(this.receivedThreadItem);
+    // console.log(this.receivedThreadItem);
     return this.receivedThreadItem;
   }
 
@@ -35,8 +39,23 @@ export class ExpandedDiscussionViewComponent implements OnInit {
     this.expThreadService.getThreadResponses(this.receivedThreadID)
     .subscribe(etr => this.responseList = etr);
 
-    console.log(this.responseList)
     return this.responseList
-  }  
+  }
+
+  getResponsesList(): Array<responses> {
+    return this.responseList;
+  }
+  
+  getRps(): Array<responseTable> {
+    this.expThreadService.getThreadResponses(this.receivedThreadID)
+    .subscribe(etr => this.responseList = etr);
+
+    return this.rptl;
+  }
+
+  printResponse(): void {
+    console.log(this.responseList[1].comment);
+    // console.log(this.rptl[0].comment);
+  }
 
 }

@@ -31,6 +31,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ActivityComponent } from './activity/activity.component'
 
 
@@ -53,8 +54,8 @@ import { ActivityComponent } from './activity/activity.component'
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
-    
+    MatSelectModule,
+    MatButtonToggleModule
   ],
   declarations: [
     AppComponent,

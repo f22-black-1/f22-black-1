@@ -20,7 +20,15 @@
                 {{(summaryThread.positiveFeedback / (summaryThread.positiveFeedback + summaryThread.negativeFeedback)) * 100 | number:'1.0-0'}}%</span>
         </div>
         <div class="stVerification">
-
+            <div class="stV_label tf1">
+                Following:
+            </div>
+            <div class="stV_slider">
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
         </div>
         <div class="stUserInfo">
             <span>Submitted by: {{summaryThread.creatorid}} on {{summaryThread.createdate}}</span>
@@ -49,8 +57,16 @@
                 {{(summaryThread_Prev.total_positive / (summaryThread_Prev.record_count)) * 100 | number:'1.0-0'}}%</span>
         </div>
         <div class="stVerification">
-            <label name="stIndex" class="std_font">{{this.stlIndex}}</label>
             <!-- <data class="std_font" name="indexVal" value="{{this.stlIndex}}">{{this.stlIndex}}</data> -->
+                <div class="stV_label tf1">
+                    {{this.stlIndex}}) Following:
+                </div>
+                <div class="stV_slider">
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
         </div>
         <div class="stUserInfo">
             <span>Submitted by: {{summaryThread_Prev.creatorid}} on {{summaryThread_Prev.createdate}}</span>
