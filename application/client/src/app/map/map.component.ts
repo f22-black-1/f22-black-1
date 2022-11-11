@@ -103,46 +103,95 @@ export class MapComponent implements OnInit {
         
         console.log(`Added ${pestReports[i].pestid} marker to ${this.position.lat}, ${this.position.lng}` )
           // TODO: Set icon based on pest type
-        if (pestReports[i].pestid == '55884984-3891-4c9c-b8d0-8526c65d5588') {
+        if (pestReports[i].pesttype == 'Feline') {
           let reportedPest = new ReportedPest();
           reportedPest.position = this.position;
           reportedPest.options.icon = this.iconBase + 'bobcat.png'
           this.reportedPests.push(reportedPest)
         }
-        else if (pestReports[i].pestid == 'b0b6c409-f67d-4646-be93-0bd4d1111ff4') {
+        else if (pestReports[i].pesttype == 'Ant') {
           let reportedPest = new ReportedPest();
           reportedPest.position = this.position;
           reportedPest.options.icon = this.iconBase + 'ant.png'
           this.reportedPests.push(reportedPest)
         }
-        else if (pestReports[i].pestid == '1304fec9-e2ac-4f72-8e74-2450d1a03abb') {
+        else if (pestReports[i].pesttype == 'Rodent') {
           let reportedPest = new ReportedPest();
           reportedPest.position = this.position;
           reportedPest.options.icon = this.iconBase + 'rat.png'
           this.reportedPests.push(reportedPest)
         }
-        else if (pestReports[i].pestid == '7a532d09-6b6f-4050-a8a5-2b367441e31d') {
+        else if (pestReports[i].pesttype == 'Bee') {
           let reportedPest = new ReportedPest();
           reportedPest.position = this.position;
           reportedPest.options.icon = this.iconBase + 'bee.png'
           this.reportedPests.push(reportedPest)
         }
-        else if (pestReports[i].pestid == 'a875fb40-3909-4610-a159-6e5bca823476') {
+        else if (pestReports[i].pesttype == 'Wasp') {
           let reportedPest = new ReportedPest();
           reportedPest.position = this.position;
           reportedPest.options.icon = this.iconBase + 'wasp.png'
           this.reportedPests.push(reportedPest)
         }
-        else if (pestReports[i].pestid == 'bd898a91-7b36-4442-8e41-479c5f951a20') {
+        else if (pestReports[i].pesttype == 'Canine') {
           let reportedPest = new ReportedPest();
           reportedPest.position = this.position;
           reportedPest.options.icon = this.iconBase + 'cougar.png'
+          this.reportedPests.push(reportedPest)
+        }
+        else if (pestReports[i].pesttype == 'Snake') {
+          let reportedPest = new ReportedPest();
+          reportedPest.position = this.position;
+          reportedPest.options.icon = this.iconBase + 'snake.png'
+          this.reportedPests.push(reportedPest)
+        }
+        else if (pestReports[i].pesttype == 'Plant') {
+          let reportedPest = new ReportedPest();
+          reportedPest.position = this.position;
+          reportedPest.options.icon = this.iconBase + 'ivy.png'
+          this.reportedPests.push(reportedPest)
+        }
+        else if (pestReports[i].pesttype == 'Fox') {
+          let reportedPest = new ReportedPest();
+          reportedPest.position = this.position;
+          reportedPest.options.icon = this.iconBase + 'fox.png'
+          this.reportedPests.push(reportedPest)
+        }
+        else if (pestReports[i].pesttype == 'Pig') {
+          let reportedPest = new ReportedPest();
+          reportedPest.position = this.position;
+          reportedPest.options.icon = this.iconBase + 'pig.png'
+          this.reportedPests.push(reportedPest)
+        }
+        else if (pestReports[i].pesttype == 'Raccoon') {
+          let reportedPest = new ReportedPest();
+          reportedPest.position = this.position;
+          reportedPest.options.icon = this.iconBase + 'raccoon.png'
+          this.reportedPests.push(reportedPest)
+        }
+        else if (pestReports[i].pesttype == 'Bear') {
+          let reportedPest = new ReportedPest();
+          reportedPest.position = this.position;
+          reportedPest.options.icon = this.iconBase + 'bear.png'
+          this.reportedPests.push(reportedPest)
+        }
+        else if (pestReports[i].pesttype == 'Tick') {
+          let reportedPest = new ReportedPest();
+          reportedPest.position = this.position;
+          reportedPest.options.icon = this.iconBase + 'tick.png'
+          this.reportedPests.push(reportedPest)
+        }
+        else if (pestReports[i].pesttype == 'Caterpillar') {
+          let reportedPest = new ReportedPest();
+          reportedPest.position = this.position;
+          reportedPest.options.icon = this.iconBase + 'caterpillar.png'
           this.reportedPests.push(reportedPest)
         }
         else {
           let reportedPest = new ReportedPest();
           console.log("Not setting marker icon")
           reportedPest.position = this.position;
+          // reportedPest.options.icon = this.iconBase + 'wasp.png'
           this.reportedPests.push(reportedPest);
         }
 
