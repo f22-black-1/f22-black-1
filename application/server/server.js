@@ -83,15 +83,34 @@ app.route(`/api/pests/`).get((req, res) => {
 
 })
 
-//get threads
-app.route(`/api/Thread/`).get((req, res) => {
-  query = `SELECT * FROM Thread`
-
+// Get all incidents
+app.route(`/api/incidents/`).get((req, res) => {
+  query = `SELECT * FROM incident`
 
     const queryDB = async () => {
     try {
       const q = await pool.query(query);
-      console.log(q.rows);
+      console.log(q.rowCount);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
+// Get all incidents
+app.route(`/api/pestreports/`).get((req, res) => {
+  query = `SELECT * FROM pestreport`
+
+    const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.rowCount);
       res.status(200).send(q.rows)
       
     } catch (err) {
@@ -105,14 +124,15 @@ app.route(`/api/Thread/`).get((req, res) => {
 })
 
 
-// Get all incidents
-app.route(`/api/incidents/`).get((req, res) => {
-  query = `SELECT * FROM incident`
+//get threads
+app.route(`/api/Thread/`).get((req, res) => {
+  query = `SELECT * FROM Thread`
+
 
     const queryDB = async () => {
     try {
       const q = await pool.query(query);
-      console.log(q.rowCount);
+      console.log(q.rows);
       res.status(200).send(q.rows)
       
     } catch (err) {

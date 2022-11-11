@@ -9,7 +9,7 @@ import { PestReportComponent } from '../pest-report/pest-report.component';
 import { PestService } from '../pest.service';
 import * as mapStyle from "./map.component.style.json";
 // TODO: Merge Pest and Incident Data Structures
-import { Pest, Incident} from '../pest';
+import { Pest, Incident, PestReport} from '../pest';
 
 
 // See: https://github.com/angular/components/blob/main/src/google-maps/README.md
@@ -90,50 +90,50 @@ export class MapComponent implements OnInit {
    
  }
 
- Incidents: Array<Object> = [];
- incident: Incident
+ PestReports: Array<Object> = [];
+ pestReport: PestReport
  position: google.maps.LatLngLiteral;
   getIncidents(): any {
-    this.pestService.getIncidents().subscribe( async data => {
-      const incidents = await data;
+    this.pestService.getPestReports().subscribe( async data => {
+      const pestReports = await data;
 
-      for (let i=0; i < incidents.length; i++) {
-        this.Incidents.push(incidents[i]);
-        this.position = {lat: incidents[i].xcoord, lng: incidents[i].ycoord};
+      for (let i=0; i < pestReports.length; i++) {
+        this.PestReports.push(pestReports[i]);
+        this.position = {lat: pestReports[i].xcoord, lng: pestReports[i].ycoord};
         
-        console.log(`Added ${incidents[i].pestid} marker to ${this.position.lat}, ${this.position.lng}` )
+        console.log(`Added ${pestReports[i].pestid} marker to ${this.position.lat}, ${this.position.lng}` )
           // TODO: Set icon based on pest type
-        if (incidents[i].pestid == '55884984-3891-4c9c-b8d0-8526c65d5588') {
+        if (pestReports[i].pestid == '55884984-3891-4c9c-b8d0-8526c65d5588') {
           let reportedPest = new ReportedPest();
           reportedPest.position = this.position;
           reportedPest.options.icon = this.iconBase + 'bobcat.png'
           this.reportedPests.push(reportedPest)
         }
-        else if (incidents[i].pestid == 'b0b6c409-f67d-4646-be93-0bd4d1111ff4') {
+        else if (pestReports[i].pestid == 'b0b6c409-f67d-4646-be93-0bd4d1111ff4') {
           let reportedPest = new ReportedPest();
           reportedPest.position = this.position;
           reportedPest.options.icon = this.iconBase + 'ant.png'
           this.reportedPests.push(reportedPest)
         }
-        else if (incidents[i].pestid == '1304fec9-e2ac-4f72-8e74-2450d1a03abb') {
+        else if (pestReports[i].pestid == '1304fec9-e2ac-4f72-8e74-2450d1a03abb') {
           let reportedPest = new ReportedPest();
           reportedPest.position = this.position;
           reportedPest.options.icon = this.iconBase + 'rat.png'
           this.reportedPests.push(reportedPest)
         }
-        else if (incidents[i].pestid == '7a532d09-6b6f-4050-a8a5-2b367441e31d') {
+        else if (pestReports[i].pestid == '7a532d09-6b6f-4050-a8a5-2b367441e31d') {
           let reportedPest = new ReportedPest();
           reportedPest.position = this.position;
           reportedPest.options.icon = this.iconBase + 'bee.png'
           this.reportedPests.push(reportedPest)
         }
-        else if (incidents[i].pestid == 'a875fb40-3909-4610-a159-6e5bca823476') {
+        else if (pestReports[i].pestid == 'a875fb40-3909-4610-a159-6e5bca823476') {
           let reportedPest = new ReportedPest();
           reportedPest.position = this.position;
           reportedPest.options.icon = this.iconBase + 'wasp.png'
           this.reportedPests.push(reportedPest)
         }
-        else if (incidents[i].pestid == 'bd898a91-7b36-4442-8e41-479c5f951a20') {
+        else if (pestReports[i].pestid == 'bd898a91-7b36-4442-8e41-479c5f951a20') {
           let reportedPest = new ReportedPest();
           reportedPest.position = this.position;
           reportedPest.options.icon = this.iconBase + 'cougar.png'
@@ -151,7 +151,7 @@ export class MapComponent implements OnInit {
     
     })
     
-    return this.Incidents
+    return this.PestReports
   };
      
 

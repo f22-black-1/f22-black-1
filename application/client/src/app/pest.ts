@@ -16,3 +16,21 @@ export interface Pest {
     xcoord: number;
     ycoord: number;
   }
+
+  
+  export interface PestReport {
+    reportid: string;
+    incidentid: string;
+    locid: string;
+    submitterid: string;
+    pestid: string;
+    reportdate: string;
+    reporttext: string;
+    xcoord: number;
+    ycoord: number;
+    pestname: string;
+    pesttype: string;
+    severity: string;
+    pestdescription: string;
+    pestimage: string;
+  }

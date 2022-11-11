@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Pest, Incident } from './pest';
+import { Pest, Incident, PestReport } from './pest';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NONE_TYPE } from '@angular/compiler';
@@ -69,6 +69,19 @@ export class PestService {
       catchError(this.handleError<Incident[]>('getIncidents', []))
     );
   }
+  
+    /** GET ALL Pest Reports from the DB */
+    getPestReports(): Observable<any> {
+
+      this.log('fetched incidents from DB');
+  
+  
+      return this.http.get<PestReport[]>(`http://localhost:8080/api/pestreports/`)  
+      .pipe(
+        tap(_ => this.log(`fetched all pestreports`)),
+        catchError(this.handleError<PestReport[]>('getPestReports', []))
+      );
+    }
 
 
   /** POST NEW pest to the DB */
