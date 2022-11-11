@@ -83,6 +83,27 @@ app.route(`/api/pests/`).get((req, res) => {
 
 })
 
+// Get all pest types
+app.route(`/api/pests/types`).get((req, res) => {
+  query = `SELECT DISTINCT pesttype FROM pest ORDER BY pesttype`
+
+    const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
+
 // Get all incidents
 app.route(`/api/incidents/`).get((req, res) => {
   query = `SELECT * FROM incident`
@@ -207,23 +228,18 @@ app.route('/api/pest/create').post((req, res) => {
 
   pestToCreate = pestObj;
 
-  pestToCreate.PestID = req.body.pestid;
-  pestToCreate.PestName = req.body.pestname;
-  pestToCreate.PestType = req.body.pesttype;
-  pestToCreate.Severity = req.body.severity;
-  pestToCreate.PestDescription = req.body.pestdescription;
-  pestToCreate.PestImage = req.body.pestimage;
+  pestToCreate.pestType = req.body.pesttype;
+  pestToCreate.xCoord = req.body.xcoord;
+  pestToCreate.yCoord = req.body.ycoord;
 
   console.log(pestToCreate)
 
 
-  const query = `INSERT INTO Pest(PestName,PestType, Severity, PestDescription, PestImage) 
+  const query = `INSERT INTO PestReport(PestType, XCoord, Ycoord) 
                   VALUES (
-                        '${pestToCreate.PestName}',
-                         '${pestToCreate.PestType}',
-                         '${pestToCreate.Severity}',
-                          '${pestToCreate.PestDescription}',
-                          '${pestToCreate.PestImage}'
+                         '${pestToCreate.pestType}',
+                         '${pestToCreate.xCoord}',
+                          '${pestToCreate.yCoord}'
                          );`
 
   const queryDB = async () => {

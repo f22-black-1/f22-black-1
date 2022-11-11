@@ -9,16 +9,29 @@ import { PestReportComponent } from '../pest-report/pest-report.component';
 import { PestService } from '../pest.service';
 import * as mapStyle from "./map.component.style.json";
 // TODO: Merge Pest and Incident Data Structures
-import { Pest, Incident, PestReport} from '../pest';
+import { Pest, PestMin, Incident, PestReport} from '../pest';
 
 
 // See: https://github.com/angular/components/blob/main/src/google-maps/README.md
 
 
 class ReportedPest {
+  pesttype: string;
   position: google.maps.LatLngLiteral = null;
   options: google.maps.MarkerOptions = {icon: null};
 }
+
+class InProgressPest {
+  pesttype: string;
+  position: google.maps.LatLngLiteral = null;
+  options: google.maps.MarkerOptions = {icon: null};
+}
+
+
+let InProgressPestList: InProgressPest[] = []
+
+
+
 
 @Component({
   selector: 'map',
@@ -74,24 +87,9 @@ export class MapComponent implements OnInit {
 
   reportedPests: ReportedPest[] = [];
 
-  addMarker(event: google.maps.MapMouseEvent) {
-    let position = event.latLng!.toJSON()
 
-    let reportedPest = new ReportedPest();
-    reportedPest.position = position;
-
-    // TODO: Don't let the marker be visible until after it has been reported
-    reportedPest.options.icon = null;
-    
-    this.reportedPests.push(reportedPest)
-    
-
-    console.log(`Manually added marker to ${position.lat}, ${position.lng}` )
-   
- }
 
  PestReports: Array<Object> = [];
- pestReport: PestReport
  position: google.maps.LatLngLiteral;
   getIncidents(): any {
     this.pestService.getPestReports().subscribe( async data => {
@@ -202,17 +200,72 @@ export class MapComponent implements OnInit {
     
     return this.PestReports
   };
+
+  createPest(pest: PestMin): void {
+    this.pestService.createPest(pest).subscribe( async data => {
+      const pestReports = await data;
+      location.reload() 
+    })
+    
+  }
+
+  addMarker(event: google.maps.MapMouseEvent) {
+    let position = event.latLng!.toJSON()
+
+    let reportedPest = new ReportedPest();
+    reportedPest.position = position;
+
+    // TODO: Don't let the marker be visible until after it has been reported   
+
+    console.log(`Preparing to added marker to ${position.lat}, ${position.lng}` )
+
+    return reportedPest;
+   
+ }
+
+  pestMin : PestMin;
+ 
+  inProgressPest = new InProgressPest()
      
+  setPestTypeFromReport(pesttype: string): void {
 
+    
 
-  getReportAndSetMarker(event: google.maps.MapMouseEvent) {
+    this.inProgressPest.position = InProgressPestList[0].position;
+    this.inProgressPest.pesttype = pesttype;
+    this.inProgressPest.options.icon = this.iconBase + 'caterpillar.png'
+    
+    console.log(this.inProgressPest)
+    console.log(this.inProgressPest.pesttype);
+
+    // Here we need to send the report to the Database and then call a ngOnInit()
+    this.pestMin = {pesttype: this.inProgressPest.pesttype, 
+                    xcoord: this.inProgressPest.position.lat, 
+                    ycoord: this.inProgressPest.position.lng}
+
+    console.log(this.pestMin);
+    this.createPest(this.pestMin);
+  }
+
+  setPestPositionFromReport(position: google.maps.LatLngLiteral): void {
+    console.log("Setting position from report")
+    this.inProgressPest.position = position;
+    console.log(this.inProgressPest);
+    InProgressPestList.push(this.inProgressPest)
+  }
+
+  getReportAndReturnMarkerLocation(event: google.maps.MapMouseEvent) {
     console.log(`Getting report....`)
-    this.addMarker(event) 
+    let reportedPest = this.addMarker(event) 
+    let position = reportedPest.position;
     this.dialogRef.open(PestReportComponent, {
       height: '33%',
       width: '33%'
     });
 
+    console.log(position);
+
+    this.setPestPositionFromReport(position);
   }
   
   ngOnInit() {

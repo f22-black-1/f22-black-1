@@ -17,7 +17,6 @@ export interface Pest {
     ycoord: number;
   }
 
-  
   export interface PestReport {
     reportid: string;
     incidentid: string;
@@ -33,4 +32,14 @@ export interface Pest {
     severity: string;
     pestdescription: string;
     pestimage: string;
+  }
+
+  export interface PestType {
+    pesttype: string;
+  }
+
+  export interface PestMin {
+    pesttype: string;
+    xcoord: number;
+    ycoord: number;
   }

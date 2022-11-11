@@ -41,14 +41,14 @@ export class PestsComponent implements OnInit {
   }
 
 
-  createPest(pest: Pest): Array<Pest> {
-    this.pestService.createPest(pest)
+  // createPest(pest: Pest): Array<Pest> {
+  //   this.pestService.createPest(pest)
 
-    console.log(this.pests)
+  //   console.log(this.pests)
 
-    return this.pests
+  //   return this.pests
     
-  }
+  // }
 
   deletePest(pest: Pest): Array<Pest> {
     this.pestService.deletePest(pest)
