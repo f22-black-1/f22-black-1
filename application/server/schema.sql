@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS Thread;
 DROP TABLE IF EXISTS ThreadResponse;
 DROP TABLE IF EXISTS ThreadFeedback;
 DROP TABLE IF EXISTS Pest;
+DROP TABLE IF EXISTS PestReport;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp"; -- For generating UUIDs; may require 'postgresql14-contrib' package
 
@@ -94,6 +95,23 @@ CREATE TABLE IF NOT EXISTS ThreadFeedback (
   SubmitDate TIMESTAMP WITH TIME ZONE
 );
 
+CREATE TABLE IF NOT EXISTS PestReport (
+  ReportID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+  IncidentID UUID REFERENCES Incident(IncidentID),
+  LocID UUID REFERENCES Neighborhood(LocID),
+  SubmitterID UUID REFERENCES Users(UserID),
+  PestID UUID REFERENCES Pest(PestID),
+  ReportDate TIMESTAMP WITH TIME ZONE,
+  ReportText TEXT,
+  XCoord FLOAT,
+  Ycoord FLOAT,
+  PestName VARCHAR(255),
+  PestType VARCHAR(50),
+  Severity VARCHAR(255),
+  PestDescription TEXT,
+  PestImage TEXT
+);
+
 COPY Neighborhood FROM '/docker-entrypoint-initdb.d/csv/neighborhood.csv' CSV HEADER;
 COPY Users FROM '/docker-entrypoint-initdb.d/csv/users.csv' CSV HEADER;
 COPY Pest FROM '/docker-entrypoint-initdb.d/csv/pests.csv' CSV HEADER;
@@ -102,3 +120,4 @@ COPY Thread FROM '/docker-entrypoint-initdb.d/csv/thread.csv' CSV HEADER;
 COPY ThreadResponse FROM '/docker-entrypoint-initdb.d/csv/threadresponse.csv' CSV HEADER;
 COPY ThreadFeedback FROM '/docker-entrypoint-initdb.d/csv/threadfeedback.csv' CSV HEADER;
 COPY Activity FROM '/docker-entrypoint-initdb.d/csv/activity.csv' CSV HEADER;
+COPY PestReport FROM '/docker-entrypoint-initdb.d/csv/pestreport.csv' CSV HEADER;

@@ -9,7 +9,8 @@ import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from "@angu
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select'
 import { MatInputModule} from '@angular/material/input'
-import { Pest } from '../pest';
+import { Pest, PestType } from '../pest';
+import { MatOptionSelectionChange } from '@angular/material/core';
 @Component({
   selector: 'child-component',
   templateUrl: './pest-report.component.html',
@@ -21,15 +22,19 @@ export class PestReportComponent implements OnInit {
   dialog!:MatDialog;
   pests: Pest[] = [];
   pest!: Pest;
+  pestTypes: PestType[] = [];
+  pestType!: PestType;
 
   @Output() messageEvent = new EventEmitter<string>();
 
   ngOnInit(): void {
-    this.getPests();
+    this.getPestTypes();
   }
 
 
   constructor(private pestService: PestService) { }
+
+  map = new MapComponent(this.dialog, this.pestService);
 
   getPests(): Array<Pest> {
     this.pestService.getPests()
@@ -41,13 +46,32 @@ export class PestReportComponent implements OnInit {
     
   }
 
-  sendMessage() {
-    console.log(`Sending.... ${this.message}`);
-    this.messageEvent.emit(this.message)
-    alert(this.message)
+  getPestTypes(): Array<PestType> {
+    this.pestService.getPestTypes()
+    .subscribe(pestTypes => this.pestTypes = pestTypes);
+
+    return this.pestTypes
+    
   }
 
-  map = new MapComponent(this.dialog, this.pestService);
+  onSelected(event: MatOptionSelectionChange, value:PestType): void {
+		this.pestType = value;
+    console.log(this.pestType);
+	}
+
+  sendMessage(value: PestType) {
+    this.pestType = value;
+    let pestTypeStr = JSON.stringify(this.pestType);
+    console.log(`Sending....`)
+    
+    console.log(pestTypeStr);
+    
+    alert(`New ${this.pestType.pesttype} reported!`)
+
+    this.map.setPestTypeFromReport(this.pestType.pesttype)
+
+  }
+
 
 
   
