@@ -40,7 +40,7 @@ let pestObj = {
 }
 
 let tidObj = { 
-  tid: String
+  reqThreadID: String
 }
 
 // let threadObject = {
@@ -191,21 +191,51 @@ app.route(`/api/summaryThreadList/`).get((req, res) => {
 })
 
 //get expanded thread data
-app.route(`/api/expandedThread/`).get((req, res) => {
-  console.log("njs threadid: " + req.body.threadid);
-  thid = tidObj;
-  thid.tid = req.body.threadid;
+app.route(`/api/expandedThread/`).post((req, res) => {
+  console.log("*******************TESTING****************");
+  console.log("njs req body: ")
+  console.log(req.body.params.updates[0].value)
+  // console.log("njs threadid: " + req.body.threadid);
+
+  // query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment
+  // FROM thread
+  // WHERE (((thread.threadid)=' ${reqThread.reqThreadID} '))
+  // UNION ALL
+  // SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment
+  // FROM threadresponse
+  // WHERE (((threadresponse.threadid)=' ${reqThread.reqThreadID} ') and ((threadresponse.responseid)<>' ${reqThread.reqThreadID} '))
+  // ORDER BY sort_order asc;`
 
   query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment
   FROM thread
-  WHERE (((thread.threadid)=' ${thid.tid} '))
+  WHERE (((thread.threadid)='bfa9f607-6c6d-4f42-ba33-ddeb729f02a2'))
   UNION ALL
   SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment
   FROM threadresponse
-  WHERE (((threadresponse.threadid)=' ${thid.tid} ') and ((threadresponse.responseid)<>' ${thid.tid} '))
+  WHERE (((threadresponse.threadid)='bfa9f607-6c6d-4f42-ba33-ddeb729f02a2') and ((threadresponse.responseid)<>'bfa9f607-6c6d-4f42-ba33-ddeb729f02a2'))
   ORDER BY sort_order asc;`
   
     const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+})
+
+app.route(`/api/ThreadResponse`).get((req, res) => {
+
+  query = `SELECT * from ThreadResponse;`
+
+  const queryDB = async () => {
     try {
       const client = await pool.connect();
       const q = await client.query(query);

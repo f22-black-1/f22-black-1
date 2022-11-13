@@ -1,7 +1,6 @@
 import { TemplateBindingParseResult } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { SummaryThread, SummaryThread_Prev } from '../summary-thread';
-
 import { SummaryThreadService } from '../summary-thread.service';
 
 @Component({

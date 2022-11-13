@@ -1,3 +1,38 @@
+.p1 {
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+.p2 {
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 12px;
+}
+
+.head1 {
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 16px;
+    font-style: bold;
+}
+
+.shadow {
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+}
+
+.defaultP {
+    position: relative;
+}
+
+.replyButton {
+    background-color: #009933;
+    width: 75%;
+    height: 80%;
+    color: white;
+    position: relative;
+    display: inline-block;
+    margin-top: 4px;
+    margin-left: 11%;
+    padding-top: 4px;
+}
+
 .Container_Main {
     height: 1200px;
     width: 1230px;
@@ -12,20 +47,23 @@
 
 .originalThread {
     height: auto;
-    min-height: 312px;
+    min-height: 320px;
     width: 99.5%;
     border-style: solid;
     border-color: black;
     border-width: thin;
-    background-color: #8fc7a2;
+    background-color: #98d7ad;
     float: center;
     position: relative;
     font-size: 15px;
+    overflow: auto;
+    margin-bottom: 6px;
 }
 
 .stPestImage {
     height:300px;
-    width:300px;
+    /* width:300px: */
+    width:25%;
     float:left;
     border-style: solid;
     border-color: black;
@@ -35,14 +73,15 @@
 }
 
 .stTitle {
-    font: cambria;
+    font-style: bold;
     float:left;
     border-style: solid;
     border-color: black;
     border-width: thin;
     height: auto;
     min-height: 41px;
-    width: 850px;
+    /* width: 850px; */
+    width: 72%;
     padding: 5px;
     margin-left: 5px;
     margin-top: 5px;
@@ -50,19 +89,129 @@
 }
 
 .stDescription {
-    font: cambria;
-    font-size:16px;
+    font-size:13px;
     color: black;
     float:left;
     border-style: solid;
     border-color: black;
     border-width: thin;
     height: auto;
-    min-height: 160px;
-    width: 850px;
+    min-height: 162px;
+    /* width: 850px; */
+    width: 72%;
     padding: 5px;
     margin-left: 5px;
     margin-top: 5px;
+}
+
+.feedback {
+    font-size:16px;
+    color: black;
+    float:left;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    height: 41px;
+    /* width: 850px; */
+    width: 72%;
+    padding: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+.fcfeedback {
+    height: 20px;
+    width: 25px;
+    margin-right: 5px;
+}
+
+.stMeta {
+    float:left;
+    font-size: 12px;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    /* height: auto; */
+    height: 41px;
+    /* min-height: 41px; */
+    /* width: 850px; */
+    width: 72%;
+    padding: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+    color: black;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.repliesH {
+    height: 40px;
+    width: 99.5%;
+    background-color: #98d7ad;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    float: center;
+    position: relative;
+    font-size: 20px;
+    font-style: bold;
+    color: black;
+    font-style: bold;
+    padding-top: 0.75%;
+    padding-left: 5px;
+    margin-bottom: 6px;
+}
+
+.responseContainer {
+    font-size:13px;
+    color: black;
+    float:left;
+    background-color: #98d7ad;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    height: auto;
+    min-height: 80px;
+    width: 99.5%;
+    margin-bottom: 6px;
+}
+
+.response {
+    margin-top: 5px;
+    margin-left: 5px;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    width: 99%;
+    min-height: 50px;
+    height: auto;
+    float: left;
+}
+
+.feedback2 {
+    color: black;
+    float:left;
+    /* border-style: solid;
+    border-color: black;
+    border-width: thin; */
+    height: 35px;
+    width: 90%;
+    padding: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px
+}
+
+.reply {
+    margin-top: 5px;
+    color: black;
+    float:left;
+    /* border-style: solid;
+    border-color: black;
+    border-width: thin; */
+    height: 35px;
+    width: 9%;
 }
 
 .menuButton {
@@ -72,18 +221,18 @@
     padding:10px;
     /* margin:10px; */
     background-color:#2E2E2E;
-    color:#3AE83A;
+    color:#00e64d;
     font-weight:bold;
     opacity:1;
     transition:1s;
-    }
+}
     
 .menuButton:hover {
     cursor:pointer; 
     background-color: grey;
     /*opacity:0.75;*/
     transition:0.5s;
-    color:#3AE83A;
+    color:#00e64d;
 }
 
  .stImageFormats {
@@ -105,4 +254,16 @@
     border-style: solid;
     border-color: black;
     border-width: thin; */
-} 
+}
+
+.tab4 {
+    tab-size: 4;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.sp1 {
+    tab-size: 1;
+    display: inline-block;
+    margin-left: 20px;
+}
