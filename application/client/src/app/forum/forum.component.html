@@ -1,4 +1,7 @@
 <div class="summaryThreadContainer">
+    
+    <app-filter (filterSelectedChanged)="onRadioButtonChanged($event)"></app-filter>
+
     <div *ngFor="let summaryThread of stl2" class="summaryThread shadow">
         <div class="stIncidentIcon">
             <img src={{summaryThread.iconPath}}  alt="Icon Image" class="stImageFormats">
