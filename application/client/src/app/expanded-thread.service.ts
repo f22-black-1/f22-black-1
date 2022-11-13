@@ -44,20 +44,34 @@ export class ExpandedThreadService {
   }
 
   /** GET all threads from the DB */
-  getThreadResponses(tid: string): Observable<responses[]> {
+  // getThreadResponses(tid: string): Observable<responses[]> {
     
-    console.log("service tid:" + tid);
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append('threadid', tid);    
-    // console.log("query param: " + queryParams.get('threadid'));
-    // this.log('fetched responses from DB');
+  //   console.log("service tid:" + tid);
+  //   let queryParams = new HttpParams();
+  //   queryParams = queryParams.append('threadid', tid);    
+  //   // console.log("query param: " + queryParams.get('threadid'));
+  //   // this.log('fetched responses from DB');
     
-    return this.http.get<responses[]>(`http://localhost:8080/api/expandedThread/`,{params:queryParams})
-      .pipe(
-        tap(_ => this.log(`fetched all responses`)),
-        catchError(this.handleError<responses[]>('getResponses', [])));
-  }
+  //   return this.http.get<responses[]>(`http://localhost:8080/api/expandedThread/`,{params:queryParams})
+  //     .pipe(
+  //       tap(_ => this.log(`fetched all responses`)),
+  //       catchError(this.handleError<responses[]>('getResponses', [])));
+  // }
  
+    getThreadResponsesPOST(tid: string): Observable<any> {
+    
+      // This log will bew useful when adding front-end code
+      console.log(`Getting THREAD: ${tid}`)
+      let queryParams = new HttpParams();
+      queryParams = queryParams.append('threadid', tid);   
+  
+      return this.http.post<any>(`http://localhost:8080/api/expandedThread/`, {params:queryParams})
+      .pipe(
+        tap(_ => this.log(`getting thread ${tid}`)), // TODO: determine which id this returns
+        catchError(this.handleError<any>('tid')));
+  
+    }
+  
   
   getTrps(): Observable<responseTable[]> {
     
