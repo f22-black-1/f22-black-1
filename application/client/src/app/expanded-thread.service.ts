@@ -44,6 +44,7 @@ export class ExpandedThreadService {
   }
 
   /** GET all threads from the DB */
+
   // getThreadResponses(tid: string): Observable<responses[]> {
     
   //   console.log("service tid:" + tid);
@@ -80,4 +81,5 @@ export class ExpandedThreadService {
         tap(_ => this.log(`fetched all rps`)),
         catchError(this.handleError<responseTable[]>('getRps', [])));
   }
+
 }

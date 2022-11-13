@@ -191,11 +191,13 @@ app.route(`/api/summaryThreadList/`).get((req, res) => {
 })
 
 //get expanded thread data
+
 app.route(`/api/expandedThread/`).post((req, res) => {
   console.log("*******************TESTING****************");
   console.log("njs req body: ")
   console.log(req.body.params.updates[0].value)
   // console.log("njs threadid: " + req.body.threadid);
+
 
   // query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment
   // FROM thread
