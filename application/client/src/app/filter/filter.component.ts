@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 import { FilterService } from '../filter.service';
 
@@ -16,5 +16,13 @@ export class FilterComponent implements OnInit {
 
   radioSelected:string="ALL";
   pestOptionArray:string[] = ["ALL", "Ant", "Bee", "Canine", "Feline", "Racoon", "Snake", "Wasp", "Unknown"];
+
+  @Output()
+  filterSelectedChanged: EventEmitter<string> = new EventEmitter<string>();
+
+  onFilterSelectedChanged(){
+    this.filterSelectedChanged.emit(this.radioSelected);
+    // console.log(this.radioSelected+" onFilterSelectecchanged()");
+  }
 
 }

@@ -26,6 +26,9 @@ export class ForumComponent implements OnInit {
     this.getThreads();
   }
 
+  //
+  //this plugs into the backend
+  //goes to the summary Thread service
   getThreads(): Array<SummaryThread_Prev> {
     this.summaryThreadService.getThreads()
     .subscribe(stlp => this.summaryThreadList = stlp);
@@ -145,5 +148,12 @@ export class ForumComponent implements OnInit {
     this.stl2.push(st3);
   }
 
+  //see pestOptionArray of filter componet for all of pest types
+  pestTypeSelected: string = "ALL";
+  
+  onRadioButtonChanged(pestType: string){
+    this.pestTypeSelected = pestType;
+    console.log(this.pestTypeSelected + " forum onRadioButtonChanged")
+  }
 
 }

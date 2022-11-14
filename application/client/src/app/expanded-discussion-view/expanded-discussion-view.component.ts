@@ -36,7 +36,9 @@ export class ExpandedDiscussionViewComponent implements OnInit {
 
   getResponses(): Array<responses> {
     console.log("getting responses for: " + this.getReceivedThreadItem().threadid);
-    this.expThreadService.getThreadResponses(this.receivedThreadID)
+
+    this.expThreadService.getThreadResponsesPOST(this.receivedThreadID)
+
     .subscribe(etr => this.responseList = etr);
 
     return this.responseList
@@ -47,7 +49,9 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   }
   
   getRps(): Array<responseTable> {
-    this.expThreadService.getThreadResponses(this.receivedThreadID)
+
+    this.expThreadService.getThreadResponsesPOST(this.receivedThreadID)
+
     .subscribe(etr => this.responseList = etr);
 
     return this.rptl;
