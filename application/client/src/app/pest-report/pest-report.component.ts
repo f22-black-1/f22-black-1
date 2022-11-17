@@ -11,6 +11,8 @@ import { MatSelectModule } from '@angular/material/select'
 import { MatInputModule} from '@angular/material/input'
 import { Pest, PestType } from '../pest';
 import { MatOptionSelectionChange } from '@angular/material/core';
+import {FlexModule} from '@angular/flex-layout';
+
 @Component({
   selector: 'child-component',
   templateUrl: './pest-report.component.html',
@@ -58,17 +60,28 @@ export class PestReportComponent implements OnInit {
 		this.pestType = value;
     console.log(this.pestType);
 	}
-
-  sendMessage(value: PestType) {
+ 
+  sendMessage(value: PestType, comments: String, image: String) {
     this.pestType = value;
     let pestTypeStr = JSON.stringify(this.pestType);
     console.log(`Sending....`)
-    
+
+    // TODO: send the content of these console.logs to the backend
+    console.log(comments);
+    // NOTE:  Since we will not be using something like S3 to store images, 
+    // this functionality will just allow us to add a pre-determined image 
+    // with its known path to the database, and allow the Info Window to 
+    // populate that image accordingly
+    console.log(image)   
     console.log(pestTypeStr);
     
     alert(`New ${this.pestType.pesttype} reported!`)
 
+    // Populate the map with the correct pest type for the correct marker
     this.map.setPestTypeFromReport(this.pestType.pesttype)
+
+    // TODO: this.map.setInfoWindowImageFromReport(...)
+    // TODO: this.map.setInfoWindowTextFromRepot(...)
 
   }
 
