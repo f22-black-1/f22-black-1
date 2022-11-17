@@ -1,6 +1,6 @@
-ActivityID,ActivityType,ActivityTS,IncidentID
-0d925a22-f3de-4893-91b6-697a967bc46e,Incident,6/4/22,8d936d99-7477-43e0-bda3-3ab3cb0e805f
-f0732a26-3394-45b2-9826-ef7a326226d7,Incident,10/2/22,81a1fa97-5371-4bdc-adfe-84c96dade479
-074abb2f-af9e-4f16-bc9a-b2215e5b2315,Incident,9/26/22,a536984b-9fbb-4171-82a1-5db11fcfb6d3
-f25baf17-e7ac-43a0-8f17-cd1b5ce984d4,Incident,10/30/22,bc769e8f-821f-4f7d-9bc5-50cadcee72cd
-f593f5be-998b-4656-8b9b-50a57b031ff7,Incident,10/27/22,ab58951a-457d-4306-9b4b-546fe5eb0a8c
+ActivityID,ActivityType,ActivityTS,ReportID,PestName,SubmitterID,Submitter,PestDescription,ReportText
+0d925a22-f3de-4893-91b6-697a967bc46e,Incident,some_time,a5e2775c-6dad-436c-8d79-84fec90644f4,N/A,No_SubmitterID,Some_User,N/A,No Report Text
+f0732a26-3394-45b2-9826-ef7a326226d7,Incident,some_time,3690eb06-67b7-43a6-8ad9-7c7781431f64,N/A,No_SubmitterID,Some_User,N/A,No Report Text
+074abb2f-af9e-4f16-bc9a-b2215e5b2315,Incident,some_time,8ddb5502-44fd-4d96-b5fd-828c02f0dc50,N/A,No_SubmitterID,Some_User,N/A,No Report Text
+f25baf17-e7ac-43a0-8f17-cd1b5ce984d4,Incident,some_time,8277cb46-e9bf-468f-8289-428e10a5a7ae,N/A,No_SubmitterID,Some_User,N/A,No Report Text
+f593f5be-998b-4656-8b9b-50a57b031ff7,Incident,some_time,f426dc1b-0856-4475-a331-931bd390f768,N/A,No_SubmitterID,Some_User,N/A,No Report Text

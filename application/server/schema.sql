@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS Thread;
 DROP TABLE IF EXISTS ThreadResponse;
 DROP TABLE IF EXISTS ThreadFeedback;
 DROP TABLE IF EXISTS Pest;
+DROP TABLE IF EXISTS PestReport;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp"; -- For generating UUIDs; may require 'postgresql14-contrib' package
 
@@ -54,17 +55,6 @@ CREATE TABLE IF NOT EXISTS Incident (
 );
 
 
-CREATE TABLE IF NOT EXISTS Activity (
-  ActivityID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
-  ActivityType VARCHAR(255), -- IncidentReport, ThreadCreate, ThreadResponse, ThreedFeedback, etc.
-  ActivityTS TIMESTAMP WITH TIME ZONE, -- Incident.ReportDate
-  IncidentID UUID REFERENCES Incident(IncidentID) --Incident.IncidentID NULL
---   ThreadID UUID REFERENCES Thread(ThreadID), --TreadID NULL
---   ResponseID UUID REFERENCES ThreadResponse(ResponseID), --NULL
---   FeedbackID UUID REFERENCES ThreadFeedback(FeedbackID)--NULL
-);
-
-
 CREATE TABLE IF NOT EXISTS Thread (
   ThreadID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
   IncidentID UUID REFERENCES Incident(IncidentID),
@@ -94,6 +84,38 @@ CREATE TABLE IF NOT EXISTS ThreadFeedback (
   SubmitDate TIMESTAMP WITH TIME ZONE
 );
 
+CREATE TABLE IF NOT EXISTS PestReport (
+  ReportID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+  IncidentID UUID REFERENCES Incident(IncidentID),
+  LocID UUID REFERENCES Neighborhood(LocID),
+  SubmitterID UUID REFERENCES Users(UserID),
+  PestID UUID REFERENCES Pest(PestID),
+  ReportDate TIMESTAMP WITH TIME ZONE,
+  ReportText TEXT,
+  XCoord FLOAT,
+  Ycoord FLOAT,
+  PestName VARCHAR(255),
+  PestType VARCHAR(50),
+  Severity VARCHAR(255),
+  PestDescription TEXT,
+  PestImage TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Activity (
+  ActivityID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
+  ActivityType VARCHAR(255), -- IncidentReport, ThreadCreate, ThreadResponse, ThreedFeedback, etc.
+  ActivityTS VARCHAR(25),
+  ReportID UUID,
+  PestName VARCHAR(255),
+  SubmitterID VARCHAR(100),
+  Submitter VARCHAR(100),
+  PestDescription TEXT,
+  ReportText TEXT
+--   ThreadID UUID REFERENCES Thread(ThreadID), --TreadID NULL
+--   ResponseID UUID REFERENCES ThreadResponse(ResponseID), --NULL
+--   FeedbackID UUID REFERENCES ThreadFeedback(FeedbackID)--NULL
+);
+
 COPY Neighborhood FROM '/docker-entrypoint-initdb.d/csv/neighborhood.csv' CSV HEADER;
 COPY Users FROM '/docker-entrypoint-initdb.d/csv/users.csv' CSV HEADER;
 COPY Pest FROM '/docker-entrypoint-initdb.d/csv/pests.csv' CSV HEADER;
@@ -102,3 +124,29 @@ COPY Thread FROM '/docker-entrypoint-initdb.d/csv/thread.csv' CSV HEADER;
 COPY ThreadResponse FROM '/docker-entrypoint-initdb.d/csv/threadresponse.csv' CSV HEADER;
 COPY ThreadFeedback FROM '/docker-entrypoint-initdb.d/csv/threadfeedback.csv' CSV HEADER;
 COPY Activity FROM '/docker-entrypoint-initdb.d/csv/activity.csv' CSV HEADER;
+COPY PestReport FROM '/docker-entrypoint-initdb.d/csv/pestreport.csv' CSV HEADER;
+
+--Updates Activity Table with values from other tables
+UPDATE Activity
+SET PestName = PestReport.PestName FROM PestReport
+WHERE Activity.ReportID = PestReport.ReportID AND PestReport.PestName IS NOT NULL;
+
+UPDATE Activity
+SET SubmitterID = PestReport.SubmitterID FROM PestReport
+WHERE Activity.ReportID = PestReport.ReportID AND PestReport.SubmitterID IS NOT NULL;
+
+UPDATE Activity
+SET Submitter = Users.UserName FROM Users
+WHERE Activity.SubmitterID = Users.UserID::VARCHAR AND Activity.SubmitterID IS NOT NULL;
+
+UPDATE Activity
+SET PestDescription = PestReport.PestDescription FROM PestReport
+WHERE Activity.ReportID = PestReport.ReportID AND PestReport.PestDescription IS NOT NULL;
+
+UPDATE Activity
+SET ReportText = PestReport.ReportText FROM PestReport
+WHERE Activity.ReportID = PestReport.ReportID AND PestReport.ReportText IS NOT NULL;
+
+UPDATE Activity
+SET ActivityTS = PestReport.ReportDate FROM PestReport
+WHERE Activity.ReportID = PestReport.ReportID AND PestReport.ReportDate IS NOT NULL;

@@ -1,21 +1,38 @@
 <h1 mat-dialog-title>Report a Pest!</h1>
-<div mat-dialog-content class="window">
-    <!-- <mat-form-field appearance="fill">
-        <mat-label>Input</mat-label>
-        <input matInput>
-      </mat-form-field> -->
-      <mat-form-field appearance="fill">
-        <mat-label>What kind of Pest?</mat-label>
-        <mat-select>
-          <mat-option
-          *ngFor="let pest of pests" [value] = "pest">
-          {{pest.pestname}}
-        </mat-option>
-        </mat-select>
-      </mat-form-field>
+<div class="window">
 
-</div>
+      <div fxLayout="row">
+        <section>
+          <li class="mat-form-field--inline">
+          <mat-form-field appearance="fill">
+            <mat-label>What kind of Pest?</mat-label>
+              <mat-select>
+              <mat-option
+              (onSelectionChange)="onSelected($event, pestType)"
+              *ngFor="let pestType of pestTypes" [value] = "pestType">
+              {{pestType.pesttype}}
+            </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field >
+            Upload Image File (Optional)
+            <input matInput readonly name="name"/>
+            <input type="file" #fileInput id="uploadFile" name="uploadFile" accept="image/*" />
+            <!-- <input class= "img-button" type="button" id="loadImage" value="Upload Image" onclick="document.getElementById('uploadFile').click();" /> -->
+          </mat-form-field>
+          </li>
+        </section>
+      </div>  
+    
+    
+    <section>
+      <mat-form-field appearance="fill" class="textbox">
+        <mat-label>Comments (Optional)</mat-label>
+        <textarea #comments matInput ></textarea>
+      </mat-form-field>
+  </section>
+  </div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>
-  <button mat-raised-button mat-dialog-close color="primary" (click)="sendMessage()">Send Report</button>
+  <button mat-raised-button mat-dialog-close color="primary" (click)="sendMessage(pestType, comments.value, fileInput.value)">Send Report</button>
 </div>

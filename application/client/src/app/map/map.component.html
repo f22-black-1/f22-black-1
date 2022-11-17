@@ -3,7 +3,7 @@
             [center]="mapCenter"
             [zoom]="mapZoom"
             [options]="mapOptions"
-            (mapClick)="getReportAndSetMarker($event)"
+            (mapClick)="getReportAndReturnMarkerLocation($event)"
             (mapMousemove)="move($event)">
     <map-marker #marker="mapMarker"
                 *ngFor="let reportedPest of reportedPests"

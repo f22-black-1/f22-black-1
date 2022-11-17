@@ -52,6 +52,7 @@ export class SummaryThreadService {
     }
 
     /** GET all threads from the DB */
+    //formun connects to server.js
     getThreads(): Observable<SummaryThread_Prev[]> {
 
       this.log('fetched threads from DB');

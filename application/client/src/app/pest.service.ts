@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Pest, Incident } from './pest';
+import { Pest, Incident, PestReport, PestType, PestMin } from './pest';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NONE_TYPE } from '@angular/compiler';
@@ -78,6 +78,17 @@ export class PestService {
         tap(_ => this.log(`updated pest id=${pest.pestid}`)),
         catchError(this.handleError<Pest>('updatePest')));
   }
+    /** GET DISTINCT pest types from the DB */
+    getPestTypes(): Observable<PestType[]> {
+
+      this.log('fetched pests from DB');
+  
+  
+      return this.http.get<PestType[]>(`http://localhost:8080/api/pests/types`)  
+      .pipe(
+        tap(_ => this.log(`fetched all pest types`)),
+        catchError(this.handleError<PestType[]>('getPestTypes', [])));
+    }
 
   /** GET ALL incidents from the DB */
   getIncidents(): Observable<any> {
@@ -91,20 +102,34 @@ export class PestService {
       catchError(this.handleError<Incident[]>('getIncidents', []))
     );
   }
+  
+    /** GET ALL Pest Reports from the DB */
+    getPestReports(): Observable<any> {
+
+      this.log('fetched incidents from DB');
+  
+  
+      return this.http.get<PestReport[]>(`http://localhost:8080/api/pestreports/`)  
+      .pipe(
+        tap(_ => this.log(`fetched all pestreports`)),
+        catchError(this.handleError<PestReport[]>('getPestReports', []))
+      );
+    }
 
 
   /** POST NEW pest to the DB */
-  createPest(pest: Pest): Observable<any> {
+  createPest(pest: PestMin): Observable<any> {
     
     // This log will bew useful when adding front-end code
-    console.log(`Creating PEST: ${pest}`)
+    console.log(`Creating PEST: ${pest.pesttype}`)
 
-    return this.http.post<Pest>('http://localhost:8080/api/pest/create', pest)
+    return this.http.post<PestMin>(`http://localhost:8080/api/pest/create`, pest)
     .pipe(
-      tap(_ => this.log(`created new pest with pest_id=${pest.pestid}`)), // TODO: determine which id this returns
-      catchError(this.handleError<Pest>('createPest')));
+      tap(_ => this.log(`created new ${pest.pesttype}`)), // TODO: determine which id this returns
+      catchError(this.handleError<PestMin>('createPest')));
 
   }
+
 
   /** DELETE an entire pest object in the DB */
   deletePest(pest: Pest): Observable<any> {
