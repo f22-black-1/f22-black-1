@@ -57,6 +57,27 @@ export class PestService {
       catchError(this.handleError<Pest[]>('getPests', [])));
   }
 
+    //get a single pest by id
+  getAPest(pest: Pest): Observable<any>{
+
+    console.log(`fetched pest from DB`);
+    console.log(`${pest}`);
+    
+    return this.http.post<Pest>('http://localhost:8080/api/pest/apest', pest)
+    .pipe(
+      tap(_=> this.log(`fetched a pest`)),
+      catchError(this.handleError<Pest>(`getAPest`)));
+  }
+
+  /** PUT (update) a pest in the DB with a given id */
+  updatePest(pest: Pest): Observable<any> {
+
+    console.log(`Updating PEST: ${pest}`)
+
+    return this.http.post<Pest>('http://localhost:8080/api/pest/update', pest).pipe(
+        tap(_ => this.log(`updated pest id=${pest.pestid}`)),
+        catchError(this.handleError<Pest>('updatePest')));
+  }
     /** GET DISTINCT pest types from the DB */
     getPestTypes(): Observable<PestType[]> {
 
@@ -121,15 +142,7 @@ export class PestService {
       );
   }
 
-  /** PUT (update) a pest in the DB with a given id */
-  updatePest(pest: Pest): Observable<any> {
-
-    console.log(`Updating PEST: ${pest}`)
-
-    return this.http.post<Pest>('http://localhost:8080/api/pest/update', pest).pipe(
-        tap(_ => this.log(`updated pest id=${pest.pestid}`)),
-        catchError(this.handleError<Pest>('updatePest')));
-  }
+  
 
 
   //TODO: This is here so things don't break but otherwise plays no current role
