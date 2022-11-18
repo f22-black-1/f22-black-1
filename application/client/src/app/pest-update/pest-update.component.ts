@@ -46,8 +46,14 @@ export class PestUpdateComponent implements OnInit {
     
     console.log(this.pest);
     this.pestService.updatePest(this.pest).subscribe(
-    async data => {  
-  });
+    async data => {});
+  alert("The Pest Has Been Updated");
+    this.pest.pestid= "";
+    this.pest.pestname="";
+    this.pest.pesttype= "";
+    this.pest.severity= "";
+    this.pest.pestdescription= "",
+    this.pest.pestimage= "";
   }
 
 
