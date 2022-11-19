@@ -47,10 +47,11 @@
         </div>
         <div class="stTitle">
             <!-- <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.summaryThreadService.updateSelectedThread('id from: ' + summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}}</a> -->
-            <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.sendSelectedIndex(summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}}</a>
+            <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.sendSelectedIndex(summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}} [<span attr.id="{{summaryThread_Prev.threadid}}">{{this.stlIndex}}</span>]</a>
         </div>
         <div class="stDescription">
             <span>{{summaryThread_Prev.comment.substring(0,90)}} ... </span>
+            <button class="menuButton" ng-click="this.testIt('f25baf17-e7ac-43a0-8f17-cd1b5ce984d4')">Index</button>
         </div>
         <div class="stActivity">
             <span>Views: {{summaryThread_Prev.record_count}} / Responses: {{summaryThread_Prev.record_count}}</span>
@@ -61,8 +62,10 @@
         </div>
         <div class="stVerification">
             <!-- <data class="std_font" name="indexVal" value="{{this.stlIndex}}">{{this.stlIndex}}</data> -->
-                <div class="stV_label tf1">
-                    {{this.stlIndex}}) Following:
+                <div id="index" class="stV_label tf1">
+                    <!-- {{this.stlIndex}}) Following: -->
+                    <!-- left off here.  Attempting to attribute bind to span -->
+                    Following: 
                 </div>
                 <div class="stV_slider">
                     <label class="switch">

@@ -1,5 +1,5 @@
 import { TemplateBindingParseResult } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SummaryThread, SummaryThread_Prev } from '../summary-thread';
 import { SummaryThreadService } from '../summary-thread.service';
 
@@ -16,6 +16,10 @@ export class ForumComponent implements OnInit {
   summaryThread!: SummaryThread;
   testVar!: number;
   stlIndex: number = 0;
+
+  testStr: string = "";
+  // @ViewChild(var) myNameElem: ElementRef;
+  
 
   constructor(public summaryThreadService: SummaryThreadService) {
     this.testVar = 5;
@@ -37,6 +41,8 @@ export class ForumComponent implements OnInit {
     return this.summaryThreadList
   }
 
+
+
   incrementIndex(): void {
     this.stlIndex++;
   }
@@ -48,6 +54,7 @@ export class ForumComponent implements OnInit {
   sendSelectedIndex(tid: string): void {
     this.summaryThreadService.updateSelectedThread(tid); //temp -- remove later
     console.log('selected thread id: ' + this.summaryThreadList[0].threadid);
+    // this.summaryThreadService.updateSelectedThreadItem(this.summaryThreadList[0]);
     this.summaryThreadService.updateSelectedThreadItem(this.summaryThreadList[0]);
   }
 
@@ -56,10 +63,11 @@ export class ForumComponent implements OnInit {
     alert(this.stl2[3].subject)
   }
 
-  testIt()
+  testIt(arrayId: string)
   {
-    alert("This is a test message")
-    alert(this.stl2[1].incidentid)
+    
+    
+    console.log("testIt value received: " + arrayId);
   }
 
   updateTempThreadList()

@@ -197,25 +197,26 @@ app.route(`/api/expandedThread/`).post((req, res) => {
   console.log("njs req body: ")
   console.log(req.body.params.updates[0].value)
   // console.log("njs threadid: " + req.body.threadid);
-
-
-  // query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment
-  // FROM thread
-  // WHERE (((thread.threadid)=' ${reqThread.reqThreadID} '))
-  // UNION ALL
-  // SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment
-  // FROM threadresponse
-  // WHERE (((threadresponse.threadid)=' ${reqThread.reqThreadID} ') and ((threadresponse.responseid)<>' ${reqThread.reqThreadID} '))
-  // ORDER BY sort_order asc;`
+  selectedThread = tidObj
+  selectedThread.reqThreadID = req.body.params.updates[0].value
 
   query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment
   FROM thread
-  WHERE (((thread.threadid)='bfa9f607-6c6d-4f42-ba33-ddeb729f02a2'))
+  WHERE (((thread.threadid)='${selectedThread.reqThreadID}'))
   UNION ALL
   SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment
   FROM threadresponse
-  WHERE (((threadresponse.threadid)='bfa9f607-6c6d-4f42-ba33-ddeb729f02a2') and ((threadresponse.responseid)<>'bfa9f607-6c6d-4f42-ba33-ddeb729f02a2'))
+  WHERE (((threadresponse.threadid)='${selectedThread.reqThreadID}') and ((threadresponse.responseid)<>'${selectedThread.reqThreadID}'))
   ORDER BY sort_order asc;`
+
+  // query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment
+  // FROM thread
+  // WHERE (((thread.threadid)='bfa9f607-6c6d-4f42-ba33-ddeb729f02a2'))
+  // UNION ALL
+  // SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment
+  // FROM threadresponse
+  // WHERE (((threadresponse.threadid)='bfa9f607-6c6d-4f42-ba33-ddeb729f02a2') and ((threadresponse.responseid)<>'bfa9f607-6c6d-4f42-ba33-ddeb729f02a2'))
+  // ORDER BY sort_order asc;`
   
     const queryDB = async () => {
     try {
