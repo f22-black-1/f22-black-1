@@ -1,8 +1,42 @@
 
-  h1 { color:white;
-  }
+h1 { 
+  color:white; 
+  height: 10%;
+  overflow-y: hidden;
+}
 
-  .window {
-    background-color: rgb(135, 162, 149);
-    
-  }
+.window { 
+  background-color: rgb(135, 162, 149);
+  height: 60%;
+  
+}
+
+.textbox {
+  width: 100%;
+}
+
+.mat-form-field--inline {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mat-form-field--inline .mat-form-field {
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+}
+
+.mat-form-field--inline .mat-form-field:nth-child(1) {
+    margin-right: 10px;
+}
+
+.img-button {
+  color: white;
+  padding:5px 15px; 
+  background:#7B1FA2ff; 
+  border:0 none;
+  cursor:pointer;
+  -webkit-border-radius: 5px;
+  border-radius: 5px; 
+}

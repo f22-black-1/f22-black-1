@@ -320,27 +320,29 @@ app.route('/api/pest/delete').delete((req, res) => {
 
 
 // Update a whole Pest object (except the key)
-app.route('/api/pest/update').put((req, res) => {
+app.route('/api/pest/update').post((req, res) => {
+  console.log(`-----------`);
   console.log(req.body);
-
+  console.log(`----------`);
+  
   pestToUpdate = pestObj;
 
-  pestToUpdate.pestId = req.body.pest_id;
-  pestToUpdate.pestType = req.body.pest_type;
-  pestToUpdate.xCoord = req.body.x_coord;
-  pestToUpdate.yCoord = req.body.y_coord;
-  pestToUpdate.id = req.body.id;
-  pestToUpdate.name = req.body.name;
+  pestToUpdate.PestID = req.body.pestid;
+  pestToUpdate.PestName = req.body.pestname;
+  pestToUpdate.PestType = req.body.pesttype;
+  pestToUpdate.Severity = req.body.severity;
+  pestToUpdate.PestDescription = req.body.pestdescription;
+  pestToUpdate.PestImage = req.body.pestimage;
 
-  console.log(pestToUpdate)
+  //console.log(pestToUpdate)
 
   const query = `UPDATE pest 
-                 SET pest_type = '${pestToUpdate.pestType}', 
-                     x_coord = ${pestToUpdate.xCoord}, 
-                     y_coord = ${pestToUpdate.yCoord}, 
-                     id = ${pestToUpdate.id}, 
-                     name =  '${pestToUpdate.name}' 
-                 WHERE pest_id = ${pestToUpdate.pestId} ;` 
+                SET pestname = '${pestToUpdate.PestName}', 
+                    pesttype = '${pestToUpdate.PestType}', 
+                    severity = '${pestToUpdate.Severity}', 
+                    pestdescription = '${pestToUpdate.PestDescription}', 
+                    pestimage =  '${pestToUpdate.PestImage}' 
+                    WHERE pestid = '${pestToUpdate.PestID}';`
                  
   const queryDB = async () => {
     try {
@@ -355,6 +357,32 @@ app.route('/api/pest/update').put((req, res) => {
   
   queryDB();
 
+})
+
+// Get a pest by Pest ID
+app.route(`/api/pest/apest`).post((req, res) => {
+  console.log(req.body);
+
+  pestToGet = pestObj;
+  pestToGet.PestID = req.body.pestid;
+
+  console.log(pestToGet.PestID);
+
+   query = `SELECT * FROM pest WHERE pestid = '${pestToGet.PestID}'`
+
+  const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+  queryDB();
 })
 
 // Get names of all pest with same pest type
@@ -420,6 +448,8 @@ app.route(`/api/pests/severity`).get((req, res) => {
 
 })
 
+
+
 //Get all activities
 app.route(`/api/activity/`).get((req, res) => {
   query = `SELECT * FROM Activity`
@@ -439,84 +469,6 @@ app.route(`/api/activity/`).get((req, res) => {
   queryDB();
 
 })
-
-
-
-// Add a new activity
-// app.route('/api/activity/create').post((req, res) => {
-    
-//   console.log(req.body);
-
-//   activityToCreate = activityObj;
-
-//   activityToCreate.ActivityID = req.body.activityid;
-//   activityToCreate.ActivityType = req.body.activitytype;
-//   activityToCreate.ActivityTS = req.body.activityts;
-//   activityToCreate.IncidentID = req.body.incidentid;
-//   //activityToCreate.ThreadID = req.body.threadid;
-//   // activityToCreate.ResponseID = req.body.responseid;
-//   // activityToCreate.FeedbackID = req.body.feedbackid;
-  
-
-//   console.log(activityToCreate)
-
-//                                       //add ThreadID, ResponseID, and FeedbackID
-//   const query = `INSERT INTO Activity(ActivityType, ActivityTS, IncidentID) 
-//                   VALUES (
-//                         '${activityToCreate.ActivityType}',
-//                          '${activityToCreate.ActivityTS}',
-//                          '${activityToCreate.IncidentID}'
-//                          );`
-
-//   const queryDB = async () => {
-//     try {
-//       await pool.connect();
-//       const q = await pool.query(query);
-//       console.log(q.command)
-//       res.status(201).send()
-//     } catch (err) {
-//       console.log(err);
-//       res.status(500).send()
-//     }
-//   };
-  
-//   queryDB();
-
-// })
-
-
-
-// Delete an Activity
-// app.route('/api/activity/delete').delete((req, res) => {
-//   console.log(req.body);
-
-//   activityToDelete = activityObj;
-
-//   activityToDelete.ActivityId = req.body.activityid;
-
-//   console.log(activityToDelete)
-
-
-//   const query = `DELETE FROM activity WHERE activityid = '${activityToDelete.ActivityID}';`
-
-//   const queryDB = async () => {
-//     try {
-//       await pool.connect();
-//       const q = await pool.query(query);
-//       console.log(q.command)
-//       res.status(201).send()
-//     } catch (err) {
-//       console.log(err);
-//       res.status(500).send()
-//     }
-//   };
-  
-//   queryDB();
-
-// })
-
-
-
 
 // // Get pest by id
 // // app.route(`/api/pest/id`).get((req, res) => {
@@ -556,4 +508,3 @@ app.route(`/api/activity/`).get((req, res) => {
 // app.route('/api/pests/update/:location').put((req, res) => {
 //     res.status(200).send(req.body)
 //   })
-
