@@ -12,6 +12,7 @@
         <div class="feedback p1">
             <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVote">
             <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVote">
+            <button class="replyButtonOT p2" (click)="this.generateResponseInputWindow()">Reply</button>
         </div>
         <div class="stMeta p1">
             <span class="p1">Positive Feedback: {{this.getReceivedThreadItem().total_positive}}</span><span class="tab4"></span>
@@ -34,10 +35,28 @@
             <span class="p1">Submitted By: {{this.response.userid}} on {{this.response.createdate}}</span>
         </div>
         <div class="reply">
-            <button class="replyButton p2">Reply</button>
+            <button class="replyButton p2" (click)="this.generateResponseInputWindow()">Reply</button>
         </div>
     </div>
+
+    <!-- New Response -->
+    <div *ngIf="showTextInput">
+        <div class="responseContainer shadow defaultP">
+            <div class="response p1">
+                <textarea id="textInput" class="responseInput2 p2" rows="3" name="userResponse" [formControl]="textInput"></textarea>
+            </div>
+            <div class="feedback2 p2"></div>
+            <div class="reply">
+                <button class="replyButton p2" (click)="this.sendNewResponse(this.textInput.value)">Post</button>
+            </div>
+        </div>
+    </div>
+
 </div>
+<div class="footer p1 shadow defaultP">
+    <button class="returnToForumButton p2" routerLink="/forum">Return</button>
+</div>
+
 <p>expanded-discussion-view works!</p>
 <p>{{this.receivedThreadID}}</p>
 <p>id from object: {{this.getReceivedThreadItem().threadid}}</p>

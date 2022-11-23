@@ -1,5 +1,5 @@
 import { TemplateBindingParseResult } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SummaryThread, SummaryThread_Prev } from '../summary-thread';
 import { SummaryThreadService } from '../summary-thread.service';
 
@@ -14,16 +14,19 @@ export class ForumComponent implements OnInit {
 
   stl2: SummaryThread[] = [];
   summaryThread!: SummaryThread;
-  testVar!: number;
   stlIndex: number = 0;
-
+  threadIndexList: number[] = [];
+  indexCount: number = 0;
+  
+  testStr: string = "";
+  
   constructor(public summaryThreadService: SummaryThreadService) {
-    this.testVar = 5;
     this.updateTempThreadList();
   }
   
   ngOnInit(): void {
     this.getThreads();
+    this.generateIndexes();
   }
 
   //
@@ -37,6 +40,22 @@ export class ForumComponent implements OnInit {
     return this.summaryThreadList
   }
 
+  getSelectedIndex(threadNum: string): number {
+    for(let x = 0; x < this.summaryThreadList.length; x++)
+    {
+      if(threadNum === this.summaryThreadList[x].threadid)
+        return x;
+    }   
+    return 0;
+  }
+
+  generateIndexes(): void {
+    for(let x = 0; x < this.summaryThreadList.length; x++)
+    {
+      this.threadIndexList.push(x);
+    }
+  }
+
   incrementIndex(): void {
     this.stlIndex++;
   }
@@ -46,20 +65,21 @@ export class ForumComponent implements OnInit {
   }
 
   sendSelectedIndex(tid: string): void {
+    var selectedIndex = this.getSelectedIndex(tid);
     this.summaryThreadService.updateSelectedThread(tid); //temp -- remove later
-    console.log('selected thread id: ' + this.summaryThreadList[0].threadid);
-    this.summaryThreadService.updateSelectedThreadItem(this.summaryThreadList[0]);
+    console.log('selected thread id: ' + this.summaryThreadList[selectedIndex].threadid);
+    this.summaryThreadService.updateSelectedThreadItem(this.summaryThreadList[selectedIndex]);
   }
 
   printItem(tid: number): void {
-    alert("message - testVar: " + this.testVar)
     alert(this.stl2[3].subject)
   }
 
-  testIt()
+  testIt(arrayId: string)
   {
-    alert("This is a test message")
-    alert(this.stl2[1].incidentid)
+    console.log("testIt value received: " + arrayId);
+    console.log("array size: " + this.summaryThreadList.length);
+    console.log("selected index: " + this.getSelectedIndex(arrayId));
   }
 
   updateTempThreadList()
