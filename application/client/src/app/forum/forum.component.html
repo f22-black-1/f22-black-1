@@ -46,12 +46,12 @@
             <img src={{summaryThread_Prev.imagepath}}  alt="Pest Image" class="stPestImageFormats">
         </div>
         <div class="stTitle">
-            <!-- <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.summaryThreadService.updateSelectedThread('id from: ' + summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}}</a> -->
-            <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.sendSelectedIndex(summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}} [<span attr.id="{{summaryThread_Prev.threadid}}">{{this.stlIndex}}</span>]</a>
+            <!-- <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.sendSelectedIndex(summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}} [<span attr.id="{{summaryThread_Prev.threadid}}">{{this.stlIndex}}</span>] </a> -->
+            <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.sendSelectedIndex(summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}}</a>
         </div>
         <div class="stDescription">
             <span>{{summaryThread_Prev.comment.substring(0,90)}} ... </span>
-            <button class="menuButton" ng-click="this.testIt('f25baf17-e7ac-43a0-8f17-cd1b5ce984d4')">Index</button>
+            <!-- <button class="menuButton" (click)="this.testIt(summaryThread_Prev.threadid)">Index</button> -->
         </div>
         <div class="stActivity">
             <span>Views: {{summaryThread_Prev.record_count}} / Responses: {{summaryThread_Prev.record_count}}</span>

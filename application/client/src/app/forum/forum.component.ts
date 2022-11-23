@@ -14,20 +14,19 @@ export class ForumComponent implements OnInit {
 
   stl2: SummaryThread[] = [];
   summaryThread!: SummaryThread;
-  testVar!: number;
   stlIndex: number = 0;
-
-  testStr: string = "";
-  // @ViewChild(var) myNameElem: ElementRef;
+  threadIndexList: number[] = [];
+  indexCount: number = 0;
   
-
+  testStr: string = "";
+  
   constructor(public summaryThreadService: SummaryThreadService) {
-    this.testVar = 5;
     this.updateTempThreadList();
   }
   
   ngOnInit(): void {
     this.getThreads();
+    this.generateIndexes();
   }
 
   //
@@ -41,7 +40,21 @@ export class ForumComponent implements OnInit {
     return this.summaryThreadList
   }
 
+  getSelectedIndex(threadNum: string): number {
+    for(let x = 0; x < this.summaryThreadList.length; x++)
+    {
+      if(threadNum === this.summaryThreadList[x].threadid)
+        return x;
+    }   
+    return 0;
+  }
 
+  generateIndexes(): void {
+    for(let x = 0; x < this.summaryThreadList.length; x++)
+    {
+      this.threadIndexList.push(x);
+    }
+  }
 
   incrementIndex(): void {
     this.stlIndex++;
@@ -52,22 +65,21 @@ export class ForumComponent implements OnInit {
   }
 
   sendSelectedIndex(tid: string): void {
+    var selectedIndex = this.getSelectedIndex(tid);
     this.summaryThreadService.updateSelectedThread(tid); //temp -- remove later
-    console.log('selected thread id: ' + this.summaryThreadList[0].threadid);
-    // this.summaryThreadService.updateSelectedThreadItem(this.summaryThreadList[0]);
-    this.summaryThreadService.updateSelectedThreadItem(this.summaryThreadList[0]);
+    console.log('selected thread id: ' + this.summaryThreadList[selectedIndex].threadid);
+    this.summaryThreadService.updateSelectedThreadItem(this.summaryThreadList[selectedIndex]);
   }
 
   printItem(tid: number): void {
-    alert("message - testVar: " + this.testVar)
     alert(this.stl2[3].subject)
   }
 
   testIt(arrayId: string)
   {
-    
-    
     console.log("testIt value received: " + arrayId);
+    console.log("array size: " + this.summaryThreadList.length);
+    console.log("selected index: " + this.getSelectedIndex(arrayId));
   }
 
   updateTempThreadList()

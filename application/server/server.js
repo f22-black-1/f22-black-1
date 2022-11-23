@@ -3,6 +3,7 @@ const config = require('./config');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv')
 const { Pool } = require('pg');
+const { response } = require('express');
 
 const app = express();
 dotenv.config(); //Reads .env file and makes it accessible via process.env
@@ -41,6 +42,13 @@ let pestObj = {
 
 let tidObj = { 
   reqThreadID: String
+}
+
+let responseObj = {
+  ThreadID: String,
+  UserID: String,
+  ResponseDate: Date,
+  Comment: String,
 }
 
 // let threadObject = {
@@ -191,12 +199,10 @@ app.route(`/api/summaryThreadList/`).get((req, res) => {
 })
 
 //get expanded thread data
-
 app.route(`/api/expandedThread/`).post((req, res) => {
   console.log("*******************TESTING****************");
   console.log("njs req body: ")
   console.log(req.body.params.updates[0].value)
-  // console.log("njs threadid: " + req.body.threadid);
   selectedThread = tidObj
   selectedThread.reqThreadID = req.body.params.updates[0].value
 
@@ -208,15 +214,6 @@ app.route(`/api/expandedThread/`).post((req, res) => {
   FROM threadresponse
   WHERE (((threadresponse.threadid)='${selectedThread.reqThreadID}') and ((threadresponse.responseid)<>'${selectedThread.reqThreadID}'))
   ORDER BY sort_order asc;`
-
-  // query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment
-  // FROM thread
-  // WHERE (((thread.threadid)='bfa9f607-6c6d-4f42-ba33-ddeb729f02a2'))
-  // UNION ALL
-  // SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment
-  // FROM threadresponse
-  // WHERE (((threadresponse.threadid)='bfa9f607-6c6d-4f42-ba33-ddeb729f02a2') and ((threadresponse.responseid)<>'bfa9f607-6c6d-4f42-ba33-ddeb729f02a2'))
-  // ORDER BY sort_order asc;`
   
     const queryDB = async () => {
     try {
@@ -231,6 +228,36 @@ app.route(`/api/expandedThread/`).post((req, res) => {
     }
   };
    
+  queryDB();
+})
+
+app.route(`/api/createThreadResponse`).post((req, res) => {
+  // console.log('------------------------ testing area ------------------------');
+  // console.log("request body???:");
+  // console.log(req.body);
+  // console.log('------------------------ testing area ------------------------');
+
+  reqresponse = responseObj;
+
+  reqresponse.ThreadID = req.body.threadid;  
+  reqresponse.UserID = req.body.userid;
+  reqresponse.ResponseDate = req.body.responsedate;
+  reqresponse.Comment = req.body.comment;
+
+  query = `insert into threadresponse (threadid, userid, responsedate, comment)
+  SELECT '${reqresponse.ThreadID}' as threadid, '${reqresponse.UserID}' as userid, '${reqresponse.ResponseDate}' as responsedate, '${reqresponse.Comment}' as comment;`
+
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.command)
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+
   queryDB();
 })
 

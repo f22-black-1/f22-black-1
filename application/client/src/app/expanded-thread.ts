@@ -15,3 +15,10 @@ export interface responseTable {
     responsedate: Date,
     comment: string,
 }
+
+export interface newResponse {
+    threadid: string,
+    userid: string,
+    responsedate: Date,
+    comment: string,
+}

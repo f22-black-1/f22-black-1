@@ -21,6 +21,18 @@
     position: relative;
 }
 
+.replyButtonOT {
+    background-color: #009933;
+    width: 80px;
+    height: 30px;
+    color: white;
+    position: relative;
+    float: right;
+    margin-top: 0px;
+    padding-top: 4px;
+    border: black;
+}
+
 .replyButton {
     background-color: #009933;
     width: 75%;
@@ -33,8 +45,21 @@
     padding-top: 4px;
 }
 
+.returnToForumButton {
+    background-color: #009933;
+    width: 100px;
+    height: 50px;
+    color: white;
+    position: relative;
+    float: right;
+    margin-top: 4px;
+    padding-top: 13px;
+    border: black;
+}
+
 .Container_Main {
-    height: 1200px;
+    /* height: 1200px; */
+    min-height: 1050px;
     width: 1230px;
     /*border-color: black;*/
     border-style: solid;
@@ -163,6 +188,25 @@
     margin-bottom: 6px;
 }
 
+.footer {
+    height: 60px;
+    width: 1230px;
+    background-color: #98d7ad;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    position: relative;
+    /* bottom: 0; */
+    font-size: 20px;
+    font-style: bold;
+    color: black;
+    font-style: bold;
+    /* padding-top: 0.75%; */
+    padding-left: 5px;
+    
+    float: left;
+}
+
 .responseContainer {
     font-size:13px;
     color: black;
@@ -213,6 +257,8 @@
     height: 35px;
     width: 9%;
 }
+
+
 
 .menuButton {
     border:2px solid #000000;
@@ -266,4 +312,24 @@
     tab-size: 1;
     display: inline-block;
     margin-left: 20px;
+}
+
+.responseInput {
+    background-color:#98d7ad;
+    color: black;
+    border-style: none;
+    width: 100%;
+    height: 50px;
+    overflow: auto;
+    justify-content: start;
+}
+
+.responseInput2 {
+    background-color:#98d7ad;
+    color: black;
+    border-style: none;
+    width: 100%;
+    height: 101%;
+    overflow: auto;
+    resize: none;
 }
