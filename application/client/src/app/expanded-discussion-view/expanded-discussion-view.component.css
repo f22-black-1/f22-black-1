@@ -150,6 +150,13 @@
     margin-right: 5px;
 }
 
+.fcfeedbackbutton {
+    height: 20px;
+    width: 25px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
 .stMeta {
     float:left;
     font-size: 12px;

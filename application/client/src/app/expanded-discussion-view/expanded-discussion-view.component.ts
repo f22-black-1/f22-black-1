@@ -103,4 +103,8 @@ export class ExpandedDiscussionViewComponent implements OnInit {
     // console.log(this.rptl[0].comment);
   }
 
+  doSomething(): void {
+    console.log("This button is doing something!")
+  }
+
 }

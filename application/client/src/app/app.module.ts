@@ -33,7 +33,8 @@ import { MatInputModule} from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select';
 import { PestUpdateComponent } from './pest-update/pest-update.component'
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { ActivityComponent } from './activity/activity.component'
+import { ActivityComponent } from './activity/activity.component';
+import { PestInfoComponent } from './pest-info/pest-info.component'
 
 
 
@@ -73,6 +74,7 @@ import { ActivityComponent } from './activity/activity.component'
     PestReportComponent,
     PestUpdateComponent,
     ActivityComponent,
+    PestInfoComponent,
   ],
   exports: [
     //GoogleMapsModule
