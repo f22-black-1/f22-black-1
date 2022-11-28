@@ -53,7 +53,6 @@
             <span class="p1">Submitted By: {{this.response.username}} on {{this.response.createdate}}</span>
         </div>
         <div class="reply">
-<<<<<<< HEAD
             <div *ngIf="this.signedInUser.userid === this.response.userid; else replyOnly">
                 <button class="replyButton_ng p2" [matMenuTriggerFor]="menu">Action</button>
                 <mat-menu #menu="matMenu">
@@ -79,9 +78,6 @@
                 <button class="responseControlPanelButton p2" style="float:right;" (click)="this.sendNewResponse(this.textInput.value)">Post</button>
                 <button class="responseControlPanelButton p2" style="float:right;">Discard</button>
             </div>
-=======
-            <button class="replyButton p2" (click)="this.generateResponseInputWindow()">Reply</button>
->>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
         </div>
     </div>
 
