@@ -118,13 +118,16 @@
 .returnToForumButton {
     background-color: #009933;
     width: 100px;
-    height: 50px;
+    height: 35px;
     color: white;
     position: relative;
     float: right;
-    margin-top: 4px;
-    padding-top: 13px;
+    margin-top: 11px;
+    padding-top: 7px;
     border: black;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
 }
 
 .Container_Main {

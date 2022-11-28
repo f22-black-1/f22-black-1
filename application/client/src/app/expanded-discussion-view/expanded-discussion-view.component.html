@@ -15,9 +15,8 @@
         <div class="feedback p1">
             <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVote">
             <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVote">
-            <button class="replyButtonOT p2" (click)="this.generateResponseInputWindow()">Reply</button>
         </div>
-                    <!-- <button class="replyButtonOT p2" (click)="this.generateResponseInputWindow()">Reply</button> -->
+            <!-- <button class="replyButtonOT p2" (click)="this.generateResponseInputWindow()">Reply</button> -->
             <div class="reply_op">
                 <div *ngIf="this.signedInUser.userid === this.getReceivedThreadItem().creatorid; else replyOnly">
                     <button class="replyButtonOT2 p2" [matMenuTriggerFor]="menu">Action</button>
@@ -28,7 +27,7 @@
                     </mat-menu>
                 </div>
                 <ng-template #replyOnly>
-                    <button class="replyButtonOT p2" (click)="this.generateResponseInputWindow()">Reply</button>
+                    <button class="replyButtonOT2 p2" (click)="this.generateResponseInputWindow()">Reply</button>
                 </ng-template>
             </div>
         
@@ -94,9 +93,6 @@
         </div>
     </div>
 
-</div>
-<div class="footer p1 shadow defaultP">
-    <button class="returnToForumButton p2" routerLink="/forum">Return</button>
 </div>
 <div class="footer p1 shadow defaultP">
 
