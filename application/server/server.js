@@ -51,8 +51,11 @@ let responseObj = {
   Comment: String,
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
 // let threadObject = {
 //   threadid: number,
 //   incidentid: number,
@@ -242,12 +245,21 @@ app.route(`/api/expandedThread/`).post((req, res) => {
   selectedThread = tidObj
   selectedThread.reqThreadID = req.body.params.updates[0].value
 
+<<<<<<< HEAD
   query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment, users.username
   FROM thread left join users on thread.creatorid = users.userid
   WHERE (((thread.threadid)='${selectedThread.reqThreadID}'))
   UNION ALL
   SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment, users.username
   FROM threadresponse left join users on threadresponse.userid = users.userid
+=======
+  query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment
+  FROM thread
+  WHERE (((thread.threadid)='${selectedThread.reqThreadID}'))
+  UNION ALL
+  SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment
+  FROM threadresponse
+>>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
   WHERE (((threadresponse.threadid)='${selectedThread.reqThreadID}') and ((threadresponse.responseid)<>'${selectedThread.reqThreadID}'))
   ORDER BY sort_order asc;`
   
@@ -268,6 +280,14 @@ app.route(`/api/expandedThread/`).post((req, res) => {
 })
 
 app.route(`/api/createThreadResponse`).post((req, res) => {
+<<<<<<< HEAD
+=======
+  // console.log('------------------------ testing area ------------------------');
+  // console.log("request body???:");
+  // console.log(req.body);
+  // console.log('------------------------ testing area ------------------------');
+
+>>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
   reqresponse = responseObj;
 
   reqresponse.ThreadID = req.body.threadid;  

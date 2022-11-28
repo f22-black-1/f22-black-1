@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TextFieldModule } from '@angular/cdk/text-field';
+<<<<<<< HEAD
 import { MatMenuModule } from '@angular/material/menu';
+=======
+>>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SummaryThread_Prev } from '../summary-thread';
 import { SummaryThreadService } from "../summary-thread.service";
@@ -29,12 +32,20 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   public userInput: string;
   
   public userResponse!: newResponse;
+<<<<<<< HEAD
   public signedInUser: CurrentUser;
   public menu1: MatMenuModule; //not sure if necessary yet
 
   constructor(private sumThreadService:SummaryThreadService, private expThreadService: ExpandedThreadService) { 
     this.signedInUser = this.generateUser();
   }
+=======
+
+  //Temp - User Profile Data
+  public userID: string = "12d09e49-2368-44d8-b21c-1b8e10c7cb2e";
+
+  constructor(private sumThreadService:SummaryThreadService, private expThreadService: ExpandedThreadService) { }
+>>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
 
   ngOnInit(): void {
     this.receivedThreadItem = this.sumThreadService.getSelectedThreadItem();
@@ -94,7 +105,11 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   sendNewResponse(newResponse: string): void {
     let responseInfo: newResponse = {
       threadid: this.receivedThreadID,
+<<<<<<< HEAD
       userid: this.signedInUser.userid,
+=======
+      userid: this.userID,
+>>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
       responsedate: new Date(),
       comment: newResponse
     }

@@ -15,6 +15,7 @@
         <div class="feedback p1">
             <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVote">
             <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVote">
+            <button class="replyButtonOT p2" (click)="this.generateResponseInputWindow()">Reply</button>
         </div>
                     <!-- <button class="replyButtonOT p2" (click)="this.generateResponseInputWindow()">Reply</button> -->
             <div class="reply_op">
@@ -52,6 +53,7 @@
             <span class="p1">Submitted By: {{this.response.username}} on {{this.response.createdate}}</span>
         </div>
         <div class="reply">
+<<<<<<< HEAD
             <div *ngIf="this.signedInUser.userid === this.response.userid; else replyOnly">
                 <button class="replyButton_ng p2" [matMenuTriggerFor]="menu">Action</button>
                 <mat-menu #menu="matMenu">
@@ -77,12 +79,35 @@
                 <button class="responseControlPanelButton p2" style="float:right;" (click)="this.sendNewResponse(this.textInput.value)">Post</button>
                 <button class="responseControlPanelButton p2" style="float:right;">Discard</button>
             </div>
+=======
+            <button class="replyButton p2" (click)="this.generateResponseInputWindow()">Reply</button>
+>>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
         </div>
     </div>
+
+    <!-- New Response -->
+    <div *ngIf="showTextInput">
+        <div class="responseContainer shadow defaultP">
+            <div class="response p1">
+                <textarea id="textInput" class="responseInput2 p2" rows="3" name="userResponse" [formControl]="textInput"></textarea>
+            </div>
+            <div class="feedback2 p2"></div>
+            <div class="reply">
+                <button class="replyButton p2" (click)="this.sendNewResponse(this.textInput.value)">Post</button>
+            </div>
+        </div>
+    </div>
+
 </div>
+<div class="footer p1 shadow defaultP">
+    <button class="returnToForumButton p2" routerLink="/forum">Return</button>
+</div>
+<<<<<<< HEAD
 <div class="footer p1 shadow defaultP">
 
 </div>
+=======
+>>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
 
 <p>expanded-discussion-view works!</p>
 <p>{{this.receivedThreadID}}</p>
