@@ -33,10 +33,7 @@ export interface SummaryThread {
     locVerified: boolean; //comment out
     imgVerified: boolean; //comment out
 }
-<<<<<<< HEAD
 
 export interface PestTypeFilter {
     pesttype: string;
 }
-=======
->>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2

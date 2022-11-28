@@ -1,10 +1,6 @@
 import { TemplateBindingParseResult } from '@angular/compiler';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-<<<<<<< HEAD
 import { SummaryThread, SummaryThread_Prev, PestTypeFilter } from '../summary-thread';
-=======
-import { SummaryThread, SummaryThread_Prev } from '../summary-thread';
->>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
 import { SummaryThreadService } from '../summary-thread.service';
 
 @Component({
@@ -21,18 +17,13 @@ export class ForumComponent implements OnInit {
   stlIndex: number = 0;
   threadIndexList: number[] = [];
   indexCount: number = 0;
-<<<<<<< HEAD
     
-=======
-  
->>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
   testStr: string = "";
   
   constructor(public summaryThreadService: SummaryThreadService) {
     this.updateTempThreadList();
   }
   
-<<<<<<< HEAD
   ngOnInit(pestTypeFilter: string = ""): void {
     if(pestTypeFilter.length > 0)
     {
@@ -45,10 +36,6 @@ export class ForumComponent implements OnInit {
       this.getThreads();
     }
 
-=======
-  ngOnInit(): void {
-    this.getThreads();
->>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
     this.generateIndexes();
   }
 
@@ -63,7 +50,6 @@ export class ForumComponent implements OnInit {
     return this.summaryThreadList
   }
 
-<<<<<<< HEAD
   getThreadsWithFilter(pType: string): Array<SummaryThread_Prev> {
     let pTypeFilter: PestTypeFilter = {
       pesttype: pType,
@@ -76,8 +62,6 @@ export class ForumComponent implements OnInit {
     return this.summaryThreadList
   }
 
-=======
->>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
   getSelectedIndex(threadNum: string): number {
     for(let x = 0; x < this.summaryThreadList.length; x++)
     {
@@ -107,13 +91,10 @@ export class ForumComponent implements OnInit {
     this.summaryThreadService.updateSelectedThread(tid); //temp -- remove later
     console.log('selected thread id: ' + this.summaryThreadList[selectedIndex].threadid);
     this.summaryThreadService.updateSelectedThreadItem(this.summaryThreadList[selectedIndex]);
-<<<<<<< HEAD
   }
 
   applyPestTypeFilter(pType: string): void {
     this.ngOnInit(pType);
-=======
->>>>>>> df1be1bb9d8e10cd8435e4e65a7ca12097bbc8b2
   }
 
   printItem(tid: number): void {
