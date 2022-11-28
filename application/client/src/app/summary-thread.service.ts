@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { SummaryThread, SummaryThread_Prev } from './summary-thread';
+import { SummaryThread, SummaryThread_Prev, PestTypeFilter } from './summary-thread';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -82,6 +82,17 @@ export class SummaryThreadService {
       return this.http.get<SummaryThread_Prev[]>(`http://localhost:8080/api/summaryThreadList/`)
        .pipe(
          tap(_ => this.log(`fetched all threads`)),
+         catchError(this.handleError<SummaryThread_Prev[]>('getThreads', [])));
+    }
+
+    getThreadsWithFilter(pType: PestTypeFilter): Observable<SummaryThread_Prev[]> {
+
+      this.log('fetched threads from DB');
+      console.log('pest type: ' + pType);
+
+      return this.http.post<SummaryThread_Prev[]>('http://localhost:8080/api/summaryThreadList/pestType', pType)
+       .pipe(
+         tap(_ => this.log(`fetched all thread with pest type: ${pType.pesttype}`)),
          catchError(this.handleError<SummaryThread_Prev[]>('getThreads', [])));
     }
 
