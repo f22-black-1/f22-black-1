@@ -32,7 +32,6 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   public signedInUser: CurrentUser;
   public menu1: MatMenuModule; //not sure if necessary yet
 
-
   constructor(private sumThreadService:SummaryThreadService, private expThreadService: ExpandedThreadService) { 
     this.signedInUser = this.generateUser();
   }
