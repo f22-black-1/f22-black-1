@@ -1,8 +1,8 @@
-<div class="summaryThreadContainer">
-    
+<div class="footer fhTextFormats shadow">
     <app-filter (filterSelectedChanged)="onRadioButtonChanged($event)"></app-filter>
-
-    <div *ngFor="let summaryThread of stl2" class="summaryThread shadow">
+</div>
+<div class="summaryThreadContainer">
+    <!-- <div *ngFor="let summaryThread of stl2" class="summaryThread shadow">
         <div class="stIncidentIcon">
             <img src={{summaryThread.iconPath}}  alt="Icon Image" class="stImageFormats">
         </div>
@@ -13,7 +13,7 @@
             <a routerLink="/expanded-discussion-view" class="stTitleLink">{{summaryThread.subject}}</a>
         </div>
         <div class="stDescription">
-            <span>{{summaryThread.comment.substring(0,90)}} ... </span>
+            <span>{{summaryThread.comment}}</span>
         </div>
         <div class="stActivity">
             <span>Views: {{summaryThread.views}} / Responses: {{summaryThread.responses}}</span>
@@ -36,7 +36,7 @@
         <div class="stUserInfo">
             <span>Submitted by: {{summaryThread.creatorid}} on {{summaryThread.createdate}}</span>
         </div>
-    </div>
+    </div> -->
     <!-- <button (click)="printItem(1)">Test It!</button> -->
     <div *ngFor="let summaryThread_Prev of summaryThreadList" class="summaryThread shadow">
         <div class="stIncidentIcon">
@@ -50,7 +50,7 @@
             <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.sendSelectedIndex(summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}}</a>
         </div>
         <div class="stDescription">
-            <span>{{summaryThread_Prev.comment.substring(0,90)}} ... </span>
+            <span>{{summaryThread_Prev.comment}}</span>
             <!-- <button class="menuButton" (click)="this.testIt(summaryThread_Prev.threadid)">Index</button> -->
         </div>
         <div class="stActivity">
@@ -75,11 +75,12 @@
                 </div>
         </div>
         <div class="stUserInfo">
-            <span>Submitted by: {{summaryThread_Prev.creatorid}} on {{summaryThread_Prev.createdate}}</span>
+            <span>Submitted by: {{summaryThread_Prev.username}} on {{summaryThread_Prev.createdate}}</span>
         </div>
         {{this.incrementIndex()}}
     </div>
     {{this.resetIndex()}}
 </div>
-
+<div class="footer fhTextFormats shadow">
+</div>
 

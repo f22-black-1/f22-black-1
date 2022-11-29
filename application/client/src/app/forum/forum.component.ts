@@ -1,6 +1,6 @@
 import { TemplateBindingParseResult } from '@angular/compiler';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { SummaryThread, SummaryThread_Prev } from '../summary-thread';
+import { SummaryThread, SummaryThread_Prev, PestTypeFilter } from '../summary-thread';
 import { SummaryThreadService } from '../summary-thread.service';
 
 @Component({
@@ -17,15 +17,25 @@ export class ForumComponent implements OnInit {
   stlIndex: number = 0;
   threadIndexList: number[] = [];
   indexCount: number = 0;
-  
+    
   testStr: string = "";
   
   constructor(public summaryThreadService: SummaryThreadService) {
     this.updateTempThreadList();
   }
   
-  ngOnInit(): void {
-    this.getThreads();
+  ngOnInit(pestTypeFilter: string = ""): void {
+    if(pestTypeFilter.length > 0)
+    {
+      //forum applies pest type filter before opening
+      this.getThreadsWithFilter(pestTypeFilter);
+    }
+    else
+    {
+      //forum opens with no pest type filter
+      this.getThreads();
+    }
+
     this.generateIndexes();
   }
 
@@ -34,6 +44,18 @@ export class ForumComponent implements OnInit {
   //goes to the summary Thread service
   getThreads(): Array<SummaryThread_Prev> {
     this.summaryThreadService.getThreads()
+    .subscribe(stlp => this.summaryThreadList = stlp);
+
+    console.log(this.summaryThreadList)
+    return this.summaryThreadList
+  }
+
+  getThreadsWithFilter(pType: string): Array<SummaryThread_Prev> {
+    let pTypeFilter: PestTypeFilter = {
+      pesttype: pType,
+    }
+
+    this.summaryThreadService.getThreadsWithFilter(pTypeFilter)
     .subscribe(stlp => this.summaryThreadList = stlp);
 
     console.log(this.summaryThreadList)
@@ -69,6 +91,10 @@ export class ForumComponent implements OnInit {
     this.summaryThreadService.updateSelectedThread(tid); //temp -- remove later
     console.log('selected thread id: ' + this.summaryThreadList[selectedIndex].threadid);
     this.summaryThreadService.updateSelectedThreadItem(this.summaryThreadList[selectedIndex]);
+  }
+
+  applyPestTypeFilter(pType: string): void {
+    this.ngOnInit(pType);
   }
 
   printItem(tid: number): void {
@@ -174,6 +200,15 @@ export class ForumComponent implements OnInit {
   onRadioButtonChanged(pestType: string){
     this.pestTypeSelected = pestType;
     console.log(this.pestTypeSelected + " forum onRadioButtonChanged")
+
+    if(this.pestTypeSelected === "ALL")
+    {
+      this.ngOnInit();
+    }
+    else
+    {
+      this.applyPestTypeFilter(this.pestTypeSelected);
+    }
   }
 
 }

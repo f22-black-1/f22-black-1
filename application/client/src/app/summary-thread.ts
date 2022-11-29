@@ -10,6 +10,10 @@ export interface SummaryThread_Prev {
     iconpath: string;
     record_count: number;
     total_positive: number;
+    reportdate: Date;
+    pestid: string;
+    pesttype: string;
+    username: string;
 }
 
 export interface SummaryThread {
@@ -28,4 +32,8 @@ export interface SummaryThread {
     negativeFeedback: number; //comment out
     locVerified: boolean; //comment out
     imgVerified: boolean; //comment out
+}
+
+export interface PestTypeFilter {
+    pesttype: string;
 }

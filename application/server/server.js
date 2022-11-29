@@ -51,6 +51,8 @@ let responseObj = {
   Comment: String,
 }
 
+
+
 // let threadObject = {
 //   threadid: number,
 //   incidentid: number,
@@ -177,17 +179,21 @@ app.route(`/api/Thread/`).get((req, res) => {
 
 //get summary thread list
 app.route(`/api/summaryThreadList/`).get((req, res) => {
-  query = `select  thread.*, '../../assets/Incident_Report_Images/PestImage_Coyote.PNG' as imagePath, '../../assets/Incident_Report_Images/Incident_Coyote.png' as iconPath,
-  Count(threadfeedback.feedbackid) as Record_Count, coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive
-  from thread left join threadfeedback on thread.threadid = threadfeedback.threadid
-  group by thread.threadid;`
+
+    query = `select  thread.*, '../../assets/Incident_Report_Images/PestImage_Coyote.PNG' as imagePath, '../../assets/Incident_Report_Images/Incident_Coyote.png' as iconPath,
+    Count(threadfeedback.feedbackid) as Record_Count, coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive, incident.reportdate, pest.pestid, pest.pesttype, users.username
+    from ((pest inner join (incident inner join thread on incident.incidentid = thread.incidentid) on pest.pestid = incident.pestid) left join threadfeedback on thread.threadid = threadfeedback.threadid)
+    left join users on thread.creatorid = users.userid
+    group by thread.threadid, incident.reportdate, pest.pestid, pest.pesttype, users.username
+    order by incident.reportdate desc;`
 
     const queryDB = async () => {
     try {
-      const q = await pool.query(query);
+      const client = await pool.connect();
+      const q = await client.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
-      
+
     } catch (err) {
       console.log(err);
       res.status(500).send()
@@ -195,7 +201,37 @@ app.route(`/api/summaryThreadList/`).get((req, res) => {
   };
    
   queryDB();
+})
 
+//filter by pest type
+app.route(`/api/summaryThreadList/pestType`).post((req, res) => {
+
+  console.log('--------------------------------------- TEST ---------------------------------------');
+  console.log(req.body.pesttype);
+  console.log('--------------------------------------- TEST ---------------------------------------');
+
+  query = `select  thread.*, '../../assets/Incident_Report_Images/PestImage_Coyote.PNG' as imagePath, '../../assets/Incident_Report_Images/Incident_Coyote.png' as iconPath,
+  Count(threadfeedback.feedbackid) as Record_Count, coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive, incident.reportdate, pest.pestid, pest.pesttype, users.username
+  from ((pest inner join (incident inner join thread on incident.incidentid = thread.incidentid) on pest.pestid = incident.pestid) left join threadfeedback on thread.threadid = threadfeedback.threadid)
+  left join users on thread.creatorid = users.userid
+  where (((pest.pesttype)='${req.body.pesttype}'))
+  group by thread.threadid, incident.reportdate, pest.pestid, pest.pesttype, users.username
+  order by incident.reportdate desc;`
+
+  const queryDB = async () => {
+    try {
+      const client = await pool.connect();
+      const q = await client.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+};
+ 
+queryDB();
 })
 
 //get expanded thread data
@@ -206,12 +242,12 @@ app.route(`/api/expandedThread/`).post((req, res) => {
   selectedThread = tidObj
   selectedThread.reqThreadID = req.body.params.updates[0].value
 
-  query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment
-  FROM thread
+  query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment, users.username
+  FROM thread left join users on thread.creatorid = users.userid
   WHERE (((thread.threadid)='${selectedThread.reqThreadID}'))
   UNION ALL
-  SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment
-  FROM threadresponse
+  SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment, users.username
+  FROM threadresponse left join users on threadresponse.userid = users.userid
   WHERE (((threadresponse.threadid)='${selectedThread.reqThreadID}') and ((threadresponse.responseid)<>'${selectedThread.reqThreadID}'))
   ORDER BY sort_order asc;`
   
@@ -232,11 +268,6 @@ app.route(`/api/expandedThread/`).post((req, res) => {
 })
 
 app.route(`/api/createThreadResponse`).post((req, res) => {
-  // console.log('------------------------ testing area ------------------------');
-  // console.log("request body???:");
-  // console.log(req.body);
-  // console.log('------------------------ testing area ------------------------');
-
   reqresponse = responseObj;
 
   reqresponse.ThreadID = req.body.threadid;  

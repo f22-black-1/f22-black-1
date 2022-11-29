@@ -5,3 +5,9 @@ export class Login {
   ) {}
   
 }
+
+//signed-in user profile for test purposes
+export class CurrentUser {
+  userid: string;
+  username: string;
+}

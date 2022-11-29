@@ -34,7 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { PestUpdateComponent } from './pest-update/pest-update.component'
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ActivityComponent } from './activity/activity.component'
-
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -56,7 +56,8 @@ import { ActivityComponent } from './activity/activity.component'
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatMenuModule
   ],
   declarations: [
     AppComponent,

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { MatMenuModule } from '@angular/material/menu';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SummaryThread_Prev } from '../summary-thread';
 import { SummaryThreadService } from "../summary-thread.service";
 import { responses, responseTable, newResponse } from "../expanded-thread";
 import { ExpandedThreadService } from "../expanded-thread.service";
+import { CurrentUser } from '../login'
 
 @Component({
   selector: 'app-expanded-discussion-view',
@@ -27,11 +29,12 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   public userInput: string;
   
   public userResponse!: newResponse;
+  public signedInUser: CurrentUser;
+  public menu1: MatMenuModule; //not sure if necessary yet
 
-  //Temp - User Profile Data
-  public userID: string = "12d09e49-2368-44d8-b21c-1b8e10c7cb2e";
-
-  constructor(private sumThreadService:SummaryThreadService, private expThreadService: ExpandedThreadService) { }
+  constructor(private sumThreadService:SummaryThreadService, private expThreadService: ExpandedThreadService) { 
+    this.signedInUser = this.generateUser();
+  }
 
   ngOnInit(): void {
     this.receivedThreadItem = this.sumThreadService.getSelectedThreadItem();
@@ -44,6 +47,14 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   public getReceivedThreadItem(): SummaryThread_Prev {
     // console.log(this.receivedThreadItem);
     return this.receivedThreadItem;
+  }
+
+  generateUser(): CurrentUser {
+    let tempUser: CurrentUser = {
+      userid: "12d09e49-2368-44d8-b21c-1b8e10c7cb2e",
+      username: "KDecker",
+    }
+    return tempUser;
   }
 
   getResponses(): Array<responses> {
@@ -83,7 +94,7 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   sendNewResponse(newResponse: string): void {
     let responseInfo: newResponse = {
       threadid: this.receivedThreadID,
-      userid: this.userID,
+      userid: this.signedInUser.userid,
       responsedate: new Date(),
       comment: newResponse
     }
