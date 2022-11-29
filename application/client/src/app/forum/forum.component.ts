@@ -1,7 +1,8 @@
-import { TemplateBindingParseResult } from '@angular/compiler';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { SummaryThread, SummaryThread_Prev, PestTypeFilter } from '../summary-thread';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SummaryThread, SummaryThread_Prev, PestTypeFilter, ThreadInput } from '../summary-thread';
 import { SummaryThreadService } from '../summary-thread.service';
+import { ThreadComponent } from '../thread/thread.component';
 
 @Component({
   selector: 'app-forum',
@@ -18,9 +19,13 @@ export class ForumComponent implements OnInit {
   threadIndexList: number[] = [];
   indexCount: number = 0;
     
+  newInput: ThreadInput;
+  inputTitle: string;
+  inputComment: string;
+
   testStr: string = "";
   
-  constructor(public summaryThreadService: SummaryThreadService) {
+  constructor(public summaryThreadService: SummaryThreadService, public threadCreationWindow: MatDialog) {
     this.updateTempThreadList();
   }
   
@@ -39,7 +44,17 @@ export class ForumComponent implements OnInit {
     this.generateIndexes();
   }
 
-  //
+  openThreadCreationWindow(): void {
+    const entryInt = this.threadCreationWindow.open(ThreadComponent, {
+      width: '350px',
+      // threadinput: {title: this.inputTitle, comment: this.inputComment}
+      data: {name: this.inputTitle, animal: this.inputComment}
+    });
+
+    entryInt.afterClosed().subscribe(result => {console.log('window closed -- result: ' + result); this.inputComment = result;});
+  }
+
+
   //this plugs into the backend
   //goes to the summary Thread service
   getThreads(): Array<SummaryThread_Prev> {
@@ -212,3 +227,5 @@ export class ForumComponent implements OnInit {
   }
 
 }
+
+

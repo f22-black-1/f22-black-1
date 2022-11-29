@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PestsComponent } from './pests/pests.component';
 import { PestDetailComponent } from './pest-detail/pest-detail.component';
@@ -12,6 +11,7 @@ import { ExpandedDiscussionViewComponent } from './expanded-discussion-view/expa
 import { PestReportComponent } from './pest-report/pest-report.component';
 import { PestUpdateComponent } from './pest-update/pest-update.component';
 import { ActivityComponent } from './activity/activity.component';
+import { ThreadComponent } from './thread/thread.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'map', pathMatch: 'full' },
@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'expanded-discussion-view', component: ExpandedDiscussionViewComponent},
   { path: 'report', component: PestReportComponent },
   { path: 'pest-update', component: PestUpdateComponent},
+  { path: 'thread', component: ThreadComponent },
 
   // This route is for testing CRUD operations on the PEST Object (See Video Demo from 14 Oct 2022)
   { path: 'pest_crud_test', component: PestsComponent },

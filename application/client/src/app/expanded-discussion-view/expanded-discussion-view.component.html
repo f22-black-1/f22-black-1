@@ -1,10 +1,19 @@
 <div class="footer p1 shadow defaultP">
+    <div class="stV_label">
+        <span class="p1 label_1">Following:</span>
+    </div>
+    <div class="stV_slider">
+        <label class="switch" style="margin-top:8px;">
+            <input type="checkbox" checked>
+            <span class="slider round"></span>
+        </label>
+    </div>
     <button class="returnToForumButton p2" routerLink="/forum">Return</button>
 </div>
 <div class="Container_Main">
     <div class="originalThread shadow">
         <div class="stPestImage">
-            <img src={{this.getReceivedThreadItem().imagepath}} alt="Pest Icon" class="stPestImageFormats">
+            <img src={{this.getReceivedThreadItem().pestimage}} alt="Pest Icon" class="stPestImageFormats">
         </div>
         <div class="stTitle p1">
             <span class="head1">{{this.getReceivedThreadItem().subject}}</span>
@@ -20,10 +29,10 @@
             <div class="reply_op">
                 <div *ngIf="this.signedInUser.userid === this.getReceivedThreadItem().creatorid; else replyOnly">
                     <button class="replyButtonOT2 p2" [matMenuTriggerFor]="menu">Action</button>
-                    <mat-menu #menu="matMenu">
+                    <mat-menu #menu="matMenu" class="mat-menu">
                         <button mat-menu-item class="replyButton p2" (click)="this.generateResponseInputWindow()">Reply</button>
                         <button mat-menu-item class="replyButton p2">Edit</button>
-                        <button mat-menu-item class="replyButton p2">Delete</button>
+                        <button mat-menu-item class="replyButton p2" (click)="this.removeResponse(this.getReceivedThreadItem().threadid)">Delete</button>
                     </mat-menu>
                 </div>
                 <ng-template #replyOnly>
@@ -55,9 +64,9 @@
             <div *ngIf="this.signedInUser.userid === this.response.userid; else replyOnly">
                 <button class="replyButton_ng p2" [matMenuTriggerFor]="menu">Action</button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item class="replyButton p2" (click)="this.generateResponseInputWindow()">Reply</button>
-                    <button mat-menu-item class="replyButton p2">Edit</button>
-                    <button mat-menu-item class="replyButton p2">Delete</button>
+                    <button mat-menu-item class="replyButtonMenu p2" (click)="this.generateResponseInputWindow()">Reply</button>
+                    <button mat-menu-item class="replyButtonMenu p2">Edit</button>
+                    <button mat-menu-item class="replyButtonMenu p2" (click)="this.removeResponse(this.response.threadid)">Delete</button>
                 </mat-menu>
             </div>
             <ng-template #replyOnly>
@@ -75,24 +84,10 @@
             <!-- <div class="feedback2 p2"></div> -->
             <div class="responseControlPanel">
                 <button class="responseControlPanelButton p2" style="float:right;" (click)="this.sendNewResponse(this.textInput.value)">Post</button>
-                <button class="responseControlPanelButton p2" style="float:right;">Discard</button>
+                <button class="responseControlPanelButton p2" style="float:right;" (click)="this.discardResponse()">Discard</button>
             </div>
         </div>
     </div>
-
-    <!-- New Response -->
-    <div *ngIf="showTextInput">
-        <div class="responseContainer shadow defaultP">
-            <div class="response p1">
-                <textarea id="textInput" class="responseInput2 p2" rows="3" name="userResponse" [formControl]="textInput"></textarea>
-            </div>
-            <div class="feedback2 p2"></div>
-            <div class="reply">
-                <button class="replyButton p2" (click)="this.sendNewResponse(this.textInput.value)">Post</button>
-            </div>
-        </div>
-    </div>
-
 </div>
 <div class="footer p1 shadow defaultP">
 

@@ -43,40 +43,47 @@
             <img src={{summaryThread_Prev.iconpath}}  alt="Icon Image" class="stImageFormats">
         </div>
         <div class="stPestImage">
-            <img src={{summaryThread_Prev.imagepath}}  alt="Pest Image" class="stPestImageFormats">
+            <img src={{summaryThread_Prev.pestimage}}  alt="Image Path" class="stPestImageFormats">
         </div>
-        <div class="stTitle">
-            <!-- <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.sendSelectedIndex(summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}} [<span attr.id="{{summaryThread_Prev.threadid}}">{{this.stlIndex}}</span>] </a> -->
-            <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.sendSelectedIndex(summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}}</a>
+        <div *ngIf="this.summaryThread_Prev.threadid === null || this.summaryThread_Prev.threadid === ''; else dispThreadInfo">
+            <div class="stDNE defaultContainerFormats">
+                <span class="tf1_Light">Reported by {{summaryThread_Prev.reportsubmitterusername}} on: {{summaryThread_Prev.repcreationdate}}</span><br>
+                <br><span class="tf1_Light">Incident report currently contains no discussion threads.</span><br>
+                <br><span class="tf1_Light">Click below to create new discussion thread.</span><br>
+                <button class="replyButtonOT2 tf1" (click)="this.openThreadCreationWindow()">Create Thread</button>
+            </div>
         </div>
-        <div class="stDescription">
-            <span>{{summaryThread_Prev.comment}}</span>
-            <!-- <button class="menuButton" (click)="this.testIt(summaryThread_Prev.threadid)">Index</button> -->
-        </div>
-        <div class="stActivity">
-            <span>Views: {{summaryThread_Prev.record_count}} / Responses: {{summaryThread_Prev.record_count}}</span>
-        </div>
-        <div class="stRating">
-            <span>Positive Feedback: {{summaryThread_Prev.total_positive}} <span class="tab4"></span>Quality Rating: 
-                {{(summaryThread_Prev.total_positive / (summaryThread_Prev.record_count)) * 100 | number:'1.0-0'}}%</span>
-        </div>
-        <div class="stVerification">
-            <!-- <data class="std_font" name="indexVal" value="{{this.stlIndex}}">{{this.stlIndex}}</data> -->
-                <div id="index" class="stV_label tf1">
-                    <!-- {{this.stlIndex}}) Following: -->
-                    <!-- left off here.  Attempting to attribute bind to span -->
-                    Following: 
-                </div>
-                <div class="stV_slider">
-                    <label class="switch">
-                        <input type="checkbox" checked>
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-        </div>
-        <div class="stUserInfo">
-            <span>Submitted by: {{summaryThread_Prev.username}} on {{summaryThread_Prev.createdate}}</span>
-        </div>
+        <ng-template #dispThreadInfo>
+            <div class="stTitle">
+                <!-- <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.sendSelectedIndex(summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}} [<span attr.id="{{summaryThread_Prev.threadid}}">{{this.stlIndex}}</span>] </a> -->
+                <a routerLink="/expanded-discussion-view" class="stTitleLink" (click)="this.sendSelectedIndex(summaryThread_Prev.threadid)">{{summaryThread_Prev.subject}}</a>
+            </div>
+            <div class="stDescription">
+                <span>{{summaryThread_Prev.comment}}</span>
+                <!-- <button class="menuButton" (click)="this.testIt(summaryThread_Prev.threadid)">Index</button> -->
+            </div>
+            <div class="stActivity">
+                <span>Views: {{summaryThread_Prev.record_count}} / Responses: {{summaryThread_Prev.record_count}}</span>
+            </div>
+            <div class="stRating">
+                <span>Positive Feedback: {{summaryThread_Prev.total_positive}} <span class="tab4"></span>Quality Rating: 
+                    {{(summaryThread_Prev.total_positive / (summaryThread_Prev.record_count)) * 100 | number:'1.0-0'}}%</span>
+            </div>
+            <div class="stVerification">
+                    <div id="index" class="stV_label tf1">
+                        Following: 
+                    </div>
+                    <div class="stV_slider">
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+            </div>
+            <div class="stUserInfo">
+                <span>Submitted by: {{summaryThread_Prev.username}} on {{summaryThread_Prev.createdate}}</span>
+            </div>
+        </ng-template>
         {{this.incrementIndex()}}
     </div>
     {{this.resetIndex()}}
