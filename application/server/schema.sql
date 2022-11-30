@@ -111,9 +111,9 @@ CREATE TABLE IF NOT EXISTS Activity (
   Submitter VARCHAR(100),
   PestDescription TEXT,
   ReportText TEXT
---   ThreadID UUID REFERENCES Thread(ThreadID), --TreadID NULL
---   ResponseID UUID REFERENCES ThreadResponse(ResponseID), --NULL
---   FeedbackID UUID REFERENCES ThreadFeedback(FeedbackID)--NULL
+--   ThreadID UUID, --ThreadID NULL
+--   ResponseID UUID, --NULL
+--   FeedbackID UUID--NULL
 );
 
 COPY Neighborhood FROM '/docker-entrypoint-initdb.d/csv/neighborhood.csv' CSV HEADER;
