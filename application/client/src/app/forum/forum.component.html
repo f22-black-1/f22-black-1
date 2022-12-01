@@ -37,8 +37,11 @@
             <span>Submitted by: {{summaryThread.creatorid}} on {{summaryThread.createdate}}</span>
         </div>
     </div> -->
-    <!-- <button (click)="printItem(1)">Test It!</button> -->
-    <div *ngFor="let summaryThread_Prev of summaryThreadList" class="summaryThread shadow">
+    
+    <!-- <div *ngFor="let summaryThread_Prev of summaryThreadList" class="flex-wrapper">
+    <div class="summaryThread shadow tag">     -->
+
+    <div *ngFor="let summaryThread_Prev of summaryThreadList" class="summaryThread shadow tag">
         <div class="stIncidentIcon">
             <img src={{summaryThread_Prev.iconpath}}  alt="Icon Image" class="stImageFormats">
         </div>
@@ -86,8 +89,9 @@
         </ng-template>
         {{this.incrementIndex()}}
     </div>
+    <!-- </div> -->
     {{this.resetIndex()}}
 </div>
 <div class="footer fhTextFormats shadow">
 </div>
-
+<button (click)="this.printItem()">Debug Print</button>

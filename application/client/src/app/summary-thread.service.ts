@@ -4,7 +4,7 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { SummaryThread, SummaryThread_Prev, PestTypeFilter, 
-  IncidentData, PestRepID, NewThreadData } from './summary-thread';
+  IncidentData, PestRepID, NewThreadData, ThreadID, NewOriginalResponse } from './summary-thread';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -137,15 +137,15 @@ export class SummaryThreadService {
     }
 
 
-    addNewThread(newThreadData: NewThreadData): Observable<NewThreadData> {
+    addNewThread(newThreadData: NewThreadData): Observable<ThreadID> {
       console.log("incident(report) id: " + newThreadData.incidentid);
       console.log("subject(title): " + newThreadData.subject);
       console.log("comment: " + newThreadData.comment);
-  
-      return this.http.post<NewThreadData>('http://localhost:8080/api/thread/addCreationThread', newThreadData)
+      
+      return this.http.post<ThreadID>('http://localhost:8080/api/thread/addCreationThread', newThreadData)
       .pipe(
         tap(_ => this.log(`adding thread for incident id: ${newThreadData.incidentid}`)),
-        catchError(this.handleError<NewThreadData>('create thread')));
+        catchError(this.handleError<ThreadID>('create thread')));
     }
 
     
@@ -156,5 +156,17 @@ export class SummaryThreadService {
       .pipe(
         tap(_ => this.log(`getting thread for report id: ${pRepID.reportid}`)),
         catchError(this.handleError<PestRepID>('get thread id')));
+    }
+
+    addFirstResponse(newResponse: NewOriginalResponse): Observable<NewOriginalResponse> {
+      console.log("response id: " + newResponse.responseid);
+      console.log("user id: " + newResponse.userid);
+      console.log("response date: " + newResponse.responsedate);
+      console.log("comment: " + newResponse.comment);
+      
+      return this.http.post<NewOriginalResponse>('http://localhost:8080/api/threadresponse/addOriginalThread', newResponse)
+      .pipe(
+        tap(_ => this.log(`adding thread for response id: ${newResponse.responseid}`)),
+        catchError(this.handleError<NewOriginalResponse>('create response')));
     }
 }

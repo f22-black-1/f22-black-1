@@ -348,6 +348,23 @@
     font-weight: bold;
     color: white;
 }
+
+
+.flex-wrapper {
+    display: flex;
+    height: 183px;
+}
+
+.tag {
+    margin-right: 2px;
+    transition: margin 0.2s ease-in-out;
+    /* background-color: gray; */
+}
+
+.tag:hover {
+    margin-top: -2;
+}
+
 /* * {
     margin: 0;
     padding: 0;

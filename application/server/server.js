@@ -300,13 +300,16 @@ app.route(`/api/thread/addCreationThread`).post((req, res) => {
   query = `insert into thread ( incidentid, locid, creatorid, createdate, subject, comment)
   select '${req.body.incidentid}' as incidentid, '${req.body.locid}' as locid, 
   '${req.body.creatorid}' as creatorid, '${req.body.createdate}' as createdate, '${req.body.subject}' as title,
-  '${req.body.comment}' as comment;`
+  '${req.body.comment}' as comment
+  returning threadid;`
 
   const queryDB = async () => {
     try {
         const q = await pool.query(query);
-        console.log(q.rows);
-        res.status(201).send()
+        console.log("logging threadid: " + q.rows[0].threadid);
+        //res.status(201).send(q.rows[0].threadid);
+        res.status(201).send(q.rows[0]);
+        //res.status(201).send(q.rows);
       } catch (err) {
         console.log(err);
         res.status(500).send()
@@ -331,6 +334,7 @@ app.route(`/api/thread/getThreadID`).post((req, res) => {
     try {
       const q = await pool.query(query);
       console.log(q.rows);
+      console.log(results.insertId);
       res.status(200).send(q.rows)
     } catch (err) {
       console.log(err);
@@ -344,15 +348,16 @@ app.route(`/api/thread/getThreadID`).post((req, res) => {
 //Create new discussion thread -- Step 4: add original post to threadresponse
 app.route(`/api/threadresponse/addOriginalThread`).post((req, res) => {
 
-  console.log('--------------------------------------- TEST ---------------------------------------');
-  console.log(req.body.threadid);
-  console.log(req.body.creatorid);
+  console.log('--------------------------------------- step 4 test ---------------------------------------');
+  console.log(req.body.responseid);
+  console.log(req.body.userid);
   console.log(req.body.responsedate);
-  console.log('--------------------------------------- TEST ---------------------------------------');
+  console.log(req.body.comment);
+  console.log('--------------------------------------- step 4 test ---------------------------------------');
 
   query = `insert into threadresponse (responseid, threadid, userid, responsedate, comment)
-  select '${req.body.threadid}' as responseid, '${req.body.threadid}' as threadid, 
-  '${req.body.creatorid}' as creatorid, '${req.body.responsedate}' as responsedate, 
+  select '${req.body.responseid}' as responseid, '${req.body.responseid}' as threadid, 
+  '${req.body.userid}' as creatorid, '${req.body.responsedate}' as responsedate, 
   'Original_Thread' as comment;`
 
   const queryDB = async () => {
@@ -435,19 +440,39 @@ app.route(`/api/createThreadResponse`).post((req, res) => {
 app.route(`/api/deleteThreadResponse`).post((req, res) => {
 
   console.log('--------------------------------------- TEST ---------------------------------------');
-  console.log(req.params);
+  console.log(req.body.responseid);
+  console.log('thread id: ' + req.body.threadid);
+  console.log('--------------------------------------- TEST ---------------------------------------');
+  
+  query = ``;
+
+  if(req.body.threadid === 'REMOVE_ALL')
+    query = `DELETE FROM threadresponse WHERE threadresponse.threadid = '${req.body.responseid}';`;
+  else
+    query = `DELETE FROM threadresponse WHERE threadresponse.responseid = '${req.body.responseid}';`;
+  
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.command)
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+
+  queryDB();
+})
+
+//Delete thread
+app.route(`/api/deleteThread`).post((req, res) => {
+
+  console.log('--------------------------------------- TEST ---------------------------------------');
   console.log(req.body.responseid);
   console.log('--------------------------------------- TEST ---------------------------------------');
-
-  reqresponse = responseObj;
-
-  reqresponse.ThreadID = req.body.threadid;  
-  reqresponse.UserID = req.body.userid;
-  reqresponse.ResponseDate = req.body.responsedate;
-  reqresponse.Comment = req.body.comment;
-
-  
-  query = `DELETE FROM threadresponse WHERE threadresponse.responseid = '${req.body.responseid}';`
+ 
+  query = `delete from thread where thread.threadid = '${req.body.responseid}';`
 
   const queryDB = async () => {
     try {

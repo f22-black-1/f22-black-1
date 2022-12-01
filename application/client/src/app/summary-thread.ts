@@ -100,11 +100,22 @@ export interface ThreadInput {
     reportid: string;
   }
 
+  export interface ThreadID {
+    threadid: string;
+  }
+
  export interface NewThreadData {
     incidentid: string;
     locid: string;
     creatorid: string;
     createdate: Date;
     subject: string;
+    comment: string;
+ }
+
+ export interface NewOriginalResponse {
+    responseid: string;
+    userid: string;
+    responsedate: Date;
     comment: string;
  }

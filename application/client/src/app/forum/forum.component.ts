@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SummaryThread, SummaryThread_Prev, PestTypeFilter, ThreadInput, 
-  IncidentData, PestRepID, NewThreadData } from '../summary-thread';
+  IncidentData, PestRepID, NewThreadData, ThreadID, NewOriginalResponse } from '../summary-thread';
 import { SummaryThreadService } from '../summary-thread.service';
 import { ThreadComponent } from '../thread/thread.component';
 import { CurrentUser } from '../login'
+import { identifierName } from '@angular/compiler';
 
 @Component({
   selector: 'app-forum',
@@ -20,7 +21,8 @@ export class ForumComponent implements OnInit {
   selectedIndex: number;
   creationTimeStamp: Date;
   newIncidentID: string;
-  newThreadID: PestRepID;
+  newThreadID: ThreadID;
+  ntidString: string;
 
   stl2: SummaryThread[] = [];
   summaryThread!: SummaryThread;
@@ -35,6 +37,7 @@ export class ForumComponent implements OnInit {
   currentUser: CurrentUser;
 
   testStr: string = "";
+
   
   constructor(public summaryThreadService: SummaryThreadService, public threadCreationWindow: MatDialog) {
     this.updateTempThreadList();
@@ -68,7 +71,7 @@ export class ForumComponent implements OnInit {
     console.log("new input title" + this.newInput.title + " -- new input comment" + this.newInput.comment);
     this.createNewDiscussionThread(repID);
   });
-
+    console.log("double outside function: " + this.ntidString);
   }
 
   generateUser(): CurrentUser {
@@ -177,15 +180,6 @@ export class ForumComponent implements OnInit {
       (_err: any)=>{console.log("Error");
     };
 
-    let newPestRepID: PestRepID = {
-      reportid: this.selectedThread.reportid
-    }
-
-    this.summaryThreadService.updatePestReportID(newPestRepID).subscribe(
-      (data)=>{}), 
-      (_err: any)=>{console.log("Error");
-    };
-
     let newThreadData: NewThreadData = {
       incidentid: this.selectedThread.reportid,
       locid: this.selectedThread.locid,
@@ -196,23 +190,31 @@ export class ForumComponent implements OnInit {
     }
 
     this.summaryThreadService.addNewThread(newThreadData).subscribe(
-      (data)=>{}), 
-      (_err: any)=>{console.log("Error");
-    };
+      id => {this.createFirstThreadResponse(id);});
 
-    // this.summaryThreadService.getThreadID(newPestRepID).subscribe(
-    //   data => this.newThreadID = data),
-    //   (_err: any)=>{console.log("Error");
-    // };
 
-    // console.log("new thread id: " + this.newThreadID.reportid);
+    console.log("outside function ntidString: " + this.ntidString);
 
-    console.log("didn't break so far");
   }
 
+  createFirstThreadResponse(newID: any): void {
+    console.log("newID: " + newID.threadid);
+    this.ntidString = newID.threadid.toString();
+    console.log("function ntidString: " + this.ntidString);
 
-  printItem(tid: number): void {
-    alert(this.stl2[3].subject)
+    let firstResponse: NewOriginalResponse = {
+      responseid: this.ntidString,
+      userid: this.currentUser.userid,
+      responsedate: this.creationTimeStamp,
+      comment: "Original_Thread",
+    }
+
+    this.summaryThreadService.addFirstResponse(firstResponse).subscribe(data => this.ngOnInit());
+  }
+
+  printItem(): void {
+    console.log("threadID value: " + this.ntidString);
+    console.log("Creation timestampe: " + this.creationTimeStamp);
   }
 
   testIt(arrayId: string)
