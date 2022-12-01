@@ -70,6 +70,16 @@ export class ExpandedThreadService {
       catchError(this.handleError<newResponse>('create response')));
   }
 
+deleteResponse(response: responseTable): Observable<responseTable> {
+
+  console.log("response id: " + response.responseid);
+
+  return this.http.post<responseTable>('http://localhost:8080/api/deleteThreadResponse/', response)
+  .pipe(
+    tap(_ => this.log(`deleting response for ${response.threadid}`)), // TODO: determine which id this returns
+    catchError(this.handleError<responseTable>('delete response')));
+}
+
   getTrps(): Observable<responseTable[]> {
     
     return this.http.get<responseTable[]>(`http://localhost:8080/api/ThreadResponse/`)
