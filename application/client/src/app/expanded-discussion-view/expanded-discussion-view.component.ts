@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -61,7 +61,6 @@ export class ExpandedDiscussionViewComponent implements OnInit {
     console.log("getting responses for: " + this.getReceivedThreadItem().threadid);
 
     this.expThreadService.getThreadResponsesPOST(this.receivedThreadID)
-
     .subscribe(etr => this.responseList = etr);
 
     return this.responseList
@@ -88,6 +87,7 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   }
 
   discardResponse(): void {
+    this.textInput.reset();
     this.showTextInput = false;
   }
 
@@ -101,7 +101,42 @@ export class ExpandedDiscussionViewComponent implements OnInit {
 
     console.log("Sending: " + responseInfo.threadid + ", " + responseInfo.userid + ", " + responseInfo.responsedate + ", " + responseInfo.comment);
 
-    this.expThreadService.addResponse(responseInfo).subscribe(async data => {});
+    // this.expThreadService.addResponse(responseInfo).subscribe(async data => {});
+    // this.textInput.reset();
+    // this.ngOnInit();
+
+    this.expThreadService.addResponse(responseInfo).subscribe((data)=>{
+      console.log(data);
+      this.textInput.reset();
+      this.ngOnInit();
+      this.showTextInput = false;
+      }),
+      (_err: any)=>{
+        console.log("Error");
+      }
+  }
+
+  removeResponse(repID: string): void {
+    let repInfo: responseTable = {
+      responseid: repID,
+      threadid: '',
+      userid: '',
+      responsedate: new Date(),
+      comment: 'delete request',
+    }
+
+    console.log("Deleting response: " + repInfo.responseid);
+
+    // this.expThreadService.deleteResponse(repInfo).subscribe(async data => {});
+
+    this.expThreadService.deleteResponse(repInfo).subscribe(
+    (data)=>{
+      console.log(data);
+      this.ngOnInit();
+      }),
+      (_err: any)=>{
+        console.log("Error");
+      }
   }
 
   displaySubmittedInfo(comment: string): void {

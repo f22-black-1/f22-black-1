@@ -35,6 +35,7 @@ import { PestUpdateComponent } from './pest-update/pest-update.component'
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ActivityComponent } from './activity/activity.component'
 import { MatMenuModule } from '@angular/material/menu';
+import { ThreadComponent } from './thread/thread.component';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { MatMenuModule } from '@angular/material/menu';
     PestReportComponent,
     PestUpdateComponent,
     ActivityComponent,
+    ThreadComponent,
   ],
   exports: [
     //GoogleMapsModule
