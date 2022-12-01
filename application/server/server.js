@@ -52,17 +52,6 @@ let responseObj = {
 }
 
 
-
-// let threadObject = {
-//   threadid: number,
-//   incidentid: number,
-//   locid: number,
-//   creatorid: string,
-//   createdate: Date,
-//   subject: string,
-//   comment: string
-// }
-
 let activityObj = {
   ActivityID: String,
   ActivityType: String,
@@ -82,7 +71,7 @@ app.route(`/api/pests/`).get((req, res) => {
       const q = await pool.query(query);
       console.log(q.rowCount);
       res.status(200).send(q.rows)
-      
+
     } catch (err) {
       console.log(err);
       res.status(500).send()
@@ -193,11 +182,9 @@ app.route(`/api/summaryThreadList/`).get((req, res) => {
 
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
-      console.log(q.rows);
+      const q = await pool.query(query);
+      console.log(q.rowCount);
       res.status(200).send(q.rows)
-
     } catch (err) {
       console.log(err);
       res.status(500).send()
@@ -227,41 +214,161 @@ app.route(`/api/summaryThreadList/pestType`).post((req, res) => {
   pestreport.reportdate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, pest.pesttype, pest.pestid, users.username
   ORDER BY pestreport.reportdate DESC;`
 
-  // query = `SELECT pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username AS ReportSubmitterUsername, 
-  // pestreport.reportdate AS RepCreationDate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, 
-  // '../../assets/Incident_Report_Images/Incident_Coyote.png' AS iconPath, Count(threadfeedback.feedbackid) as Record_Count, 
-  // coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive, pest.pesttype, pest.pestid, users.username
-  // FROM (pest INNER JOIN (pestreport LEFT JOIN ((thread LEFT JOIN threadfeedback ON thread.threadid = threadfeedback.threadid) LEFT JOIN 
-  // users ON thread.creatorid = users.userid) ON pestreport.incidentid = thread.incidentid) ON pest.pestid = pestreport.pestid) LEFT JOIN 
-  // users AS users_1 ON pestreport.submitterid = users_1.userid
-  // where (((pest.pesttype)='${req.headers.pesttype}'))
-  // GROUP BY pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username, 
-  // pestreport.reportdate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, pest.pesttype, pest.pestid, users.username
-  // ORDER BY pestreport.reportdate DESC;`
-
-  // query = `select  thread.*, '../../assets/Incident_Report_Images/PestImage_Coyote.PNG' as imagePath, '../../assets/Incident_Report_Images/Incident_Coyote.png' as iconPath,
-  // Count(threadfeedback.feedbackid) as Record_Count, coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive, incident.reportdate, pest.pestid, pest.pesttype, users.username
-  // from ((pest inner join (incident inner join thread on incident.incidentid = thread.incidentid) on pest.pestid = incident.pestid) left join threadfeedback on thread.threadid = threadfeedback.threadid)
-  // left join users on thread.creatorid = users.userid
-  // where (((pest.pesttype)='${req.body.pesttype}'))
-  // group by thread.threadid, incident.reportdate, pest.pestid, pest.pesttype, users.username
-  // order by incident.reportdate desc;`
-
   const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      // const client = await pool.connect();
+      // const q = await client.query(query);
+      // console.log(q.rows);
+      // res.status(200).send(q.rows)
+      
+      const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
-      
     } catch (err) {
       console.log(err);
       res.status(500).send()
     }
 };
- 
+
 queryDB();
 })
+
+
+//Create new discussion thread -- Step 1: Add record to incident table
+app.route(`/api/incident/createNewIncident`).post((req, res) => {
+
+  console.log('--------------------------------------- step 1 test ---------------------------------------');
+  console.log(req.body.locid);
+  console.log(req.body.submitterid);
+  console.log(req.body.pestid);
+  console.log('--------------------------------------- step 1 test ---------------------------------------');
+
+  query = `INSERT INTO incident ( incidentid, locid, submitterid, pestid, reportdate )
+  SELECT '${req.body.reportid}' as incidentid, '${req.body.locid}' AS LocID, '${req.body.submitterid}' AS SubmitterID, '${req.body.pestid}' AS PestID, 
+  '${req.body.reportdate}' AS ReportDate;`
+
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.rows);
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+};
+
+queryDB();
+})
+
+//Create new discussion thread -- Step 2: update pestreport with incident id
+app.route(`/api/pestreport/updateIncidentID`).post((req, res) => {
+
+  console.log('--------------------------------------- step 2 test ---------------------------------------');
+  console.log(req.body.reportid)
+  console.log('--------------------------------------- step 2 test ---------------------------------------');
+
+  query = `UPDATE pestreport SET incidentid = '${req.body.reportid}'
+  WHERE (((reportid)='${req.body.reportid}'));`
+
+  const queryDB = async () => {
+    try {
+        const q = await pool.query(query);
+        console.log(q.rows);
+        res.status(201).send()
+      } catch (err) {
+        console.log(err);
+        res.status(500).send()
+      }
+  };
+
+queryDB();
+})
+
+//Create new discussion thread -- Step 3: add new record to thread table
+app.route(`/api/thread/addCreationThread`).post((req, res) => {
+
+  console.log('--------------------------------------- step 3 test ---------------------------------------');
+  console.log(req.body.incidentid);
+  console.log(req.body.locid);
+  console.log(req.body.creatorid);
+  console.log(req.body.createdate);
+  console.log(req.body.subject);
+  console.log(req.body.comment);
+  console.log('--------------------------------------- step 3 test ---------------------------------------');
+
+  query = `insert into thread ( incidentid, locid, creatorid, createdate, subject, comment)
+  select '${req.body.incidentid}' as incidentid, '${req.body.locid}' as locid, 
+  '${req.body.creatorid}' as creatorid, '${req.body.createdate}' as createdate, '${req.body.subject}' as title,
+  '${req.body.comment}' as comment;`
+
+  const queryDB = async () => {
+    try {
+        const q = await pool.query(query);
+        console.log(q.rows);
+        res.status(201).send()
+      } catch (err) {
+        console.log(err);
+        res.status(500).send()
+      }
+  };
+
+  queryDB();
+})
+
+//Create new discussion thread -- Step 3.5: get newly created threadid
+app.route(`/api/thread/getThreadID`).post((req, res) => {
+
+  console.log('--------------------------------------- TEST ---------------------------------------');
+  console.log(req.body.reportid);
+  console.log('--------------------------------------- TEST ---------------------------------------');
+
+  query = `select threadid
+  from thread
+  where incidentid = '${req.body.reportid}';`
+
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+
+  queryDB();
+})
+
+//Create new discussion thread -- Step 4: add original post to threadresponse
+app.route(`/api/threadresponse/addOriginalThread`).post((req, res) => {
+
+  console.log('--------------------------------------- TEST ---------------------------------------');
+  console.log(req.body.threadid);
+  console.log(req.body.creatorid);
+  console.log(req.body.responsedate);
+  console.log('--------------------------------------- TEST ---------------------------------------');
+
+  query = `insert into threadresponse (responseid, threadid, userid, responsedate, comment)
+  select '${req.body.threadid}' as responseid, '${req.body.threadid}' as threadid, 
+  '${req.body.creatorid}' as creatorid, '${req.body.responsedate}' as responsedate, 
+  'Original_Thread' as comment;`
+
+  const queryDB = async () => {
+    try {
+        const q = await pool.query(query);
+        console.log(q.rows);
+        res.status(201).send()
+      } catch (err) {
+        console.log(err);
+        res.status(500).send()
+      }
+  };
+
+queryDB();
+})
+
 
 //get expanded thread data
 app.route(`/api/expandedThread/`).post((req, res) => {
@@ -282,11 +389,13 @@ app.route(`/api/expandedThread/`).post((req, res) => {
   
     const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
-      console.log(q.rows);
+      // const client = await pool.connect();
+      // const q = await client.query(query);
+      // console.log(q.rows);
+      // res.status(200).send(q.rows)
+      const q = await pool.query(query);
+      console.log(q.rows)
       res.status(200).send(q.rows)
-      
     } catch (err) {
       console.log(err);
       res.status(500).send()
@@ -360,11 +469,14 @@ app.route(`/api/ThreadResponse`).get((req, res) => {
 
   const queryDB = async () => {
     try {
-      const client = await pool.connect();
-      const q = await client.query(query);
+      // const client = await pool.connect();
+      // const q = await client.query(query);
+      // console.log(q.rows);
+      // res.status(200).send(q.rows)
+
+      const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
-      
     } catch (err) {
       console.log(err);
       res.status(500).send()

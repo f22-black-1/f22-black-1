@@ -1,4 +1,4 @@
-<div class="footer p1 shadow defaultP">
+<div class="footer p1 shadow defaultP brightness">
     <div class="stV_label">
         <span class="p1 label_1">Following:</span>
     </div>
@@ -21,12 +21,12 @@
         <div class="stDescription p1">
             <span class="p1">{{this.getReceivedThreadItem().comment}}</span>
         </div>
-        <div class="feedback p1">
+        <div class="feedback p1 brightness">
             <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVote">
             <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVote">
         </div>
             <!-- <button class="replyButtonOT p2" (click)="this.generateResponseInputWindow()">Reply</button> -->
-            <div class="reply_op">
+            <div class="reply_op brightness">
                 <div *ngIf="this.signedInUser.userid === this.getReceivedThreadItem().creatorid; else replyOnly">
                     <button class="replyButtonOT2 p2" [matMenuTriggerFor]="menu">Action</button>
                     <mat-menu #menu="matMenu" class="mat-menu">
@@ -53,14 +53,14 @@
         <div class="response p1">
             <span class="p1">{{response.comment}}</span>
         </div>
-        <div class="feedback2 p2">
+        <div class="feedback2 p2 brightness">
             <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVote">
             <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVote">
             <span class="p1">Positive Feedback: --</span><span class="tab4"></span>
             <span class="p1">Quality Rating: --</span><span class="tab4"></span>
             <span class="p1">Submitted By: {{this.response.username}} on {{this.response.createdate}}</span>
         </div>
-        <div class="reply">
+        <div class="reply brightness">
             <div *ngIf="this.signedInUser.userid === this.response.userid; else replyOnly">
                 <button class="replyButton_ng p2" [matMenuTriggerFor]="menu">Action</button>
                 <mat-menu #menu="matMenu">

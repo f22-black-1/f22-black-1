@@ -50,7 +50,7 @@
                 <span class="tf1_Light">Reported by {{summaryThread_Prev.reportsubmitterusername}} on: {{summaryThread_Prev.repcreationdate}}</span><br>
                 <br><span class="tf1_Light">Incident report currently contains no discussion threads.</span><br>
                 <br><span class="tf1_Light">Click below to create new discussion thread.</span><br>
-                <button class="replyButtonOT2 tf1" (click)="this.openThreadCreationWindow()">Create Thread</button>
+                <button class="replyButtonOT2 tf1" (click)="this.openThreadCreationWindow(summaryThread_Prev.reportid)">Create Thread</button>
             </div>
         </div>
         <ng-template #dispThreadInfo>

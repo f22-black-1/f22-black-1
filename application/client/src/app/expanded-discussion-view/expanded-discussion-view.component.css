@@ -242,6 +242,26 @@
     margin-right: 5px;
 }
 
+.brightness {
+    display: inline-block;
+
+}
+.brightness img:hover {
+    opacity: .5;
+}
+
+.brightness button:hover {
+    opacity: .5;
+}
+/* .bglow {
+    display: inline-block;
+} */
+
+.bglow img:hover {
+    color:#00e64d;
+    box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
+}
+
 .stMeta {
     float:left;
     font-size: 12px;

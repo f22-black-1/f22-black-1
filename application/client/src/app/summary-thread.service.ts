@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { SummaryThread, SummaryThread_Prev, PestTypeFilter } from './summary-thread';
+import { SummaryThread, SummaryThread_Prev, PestTypeFilter, 
+  IncidentData, PestRepID, NewThreadData } from './summary-thread';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -112,9 +113,48 @@ export class SummaryThreadService {
         this.recoverSelectedThreadInfo();
       }
       
-      console.log('selected item id:' + this.selectedThreadItem.threadid)
+      console.log('selected item id:' + this.selectedThreadItem.threadid);
 
       return this.selectedThreadItem;
     }
 
+    addNewIncident(incItem: IncidentData): Observable<IncidentData> {
+      console.log("submitter id: " + incItem.submitterid);
+  
+      return this.http.post<IncidentData>('http://localhost:8080/api/incident/createNewIncident', incItem)
+      .pipe(
+        tap(_ => this.log(`adding incident for user: ${incItem.submitterid}`)),
+        catchError(this.handleError<IncidentData>('create response')));
+    }
+
+    updatePestReportID(pRepID: PestRepID): Observable<PestRepID> {
+      console.log("report id: " + pRepID.reportid);
+  
+      return this.http.post<PestRepID>('http://localhost:8080/api/pestreport/updateIncidentID', pRepID)
+      .pipe(
+        tap(_ => this.log(`adding incident for user: ${pRepID.reportid}`)),
+        catchError(this.handleError<PestRepID>('create response')));
+    }
+
+
+    addNewThread(newThreadData: NewThreadData): Observable<NewThreadData> {
+      console.log("incident(report) id: " + newThreadData.incidentid);
+      console.log("subject(title): " + newThreadData.subject);
+      console.log("comment: " + newThreadData.comment);
+  
+      return this.http.post<NewThreadData>('http://localhost:8080/api/thread/addCreationThread', newThreadData)
+      .pipe(
+        tap(_ => this.log(`adding thread for incident id: ${newThreadData.incidentid}`)),
+        catchError(this.handleError<NewThreadData>('create thread')));
+    }
+
+    
+    getThreadID(pRepID: PestRepID): Observable<PestRepID> {
+      console.log("report id: " + pRepID.reportid);
+  
+      return this.http.post<PestRepID>('http://localhost:8080/api/thread/addCreationThread', pRepID)
+      .pipe(
+        tap(_ => this.log(`getting thread for report id: ${pRepID.reportid}`)),
+        catchError(this.handleError<PestRepID>('get thread id')));
+    }
 }

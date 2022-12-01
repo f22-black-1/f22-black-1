@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SummaryThread, SummaryThread_Prev, PestTypeFilter, ThreadInput } from '../summary-thread';
+import { SummaryThread, SummaryThread_Prev, PestTypeFilter, ThreadInput, 
+  IncidentData, PestRepID, NewThreadData } from '../summary-thread';
 import { SummaryThreadService } from '../summary-thread.service';
 import { ThreadComponent } from '../thread/thread.component';
+import { CurrentUser } from '../login'
 
 @Component({
   selector: 'app-forum',
@@ -12,6 +14,13 @@ import { ThreadComponent } from '../thread/thread.component';
 export class ForumComponent implements OnInit {
   summaryThreadList: SummaryThread_Prev[] = [];
   summaryThread_Prev!: SummaryThread_Prev;
+
+  //For new thread discussion creation process
+  selectedThread!: SummaryThread_Prev;
+  selectedIndex: number;
+  creationTimeStamp: Date;
+  newIncidentID: string;
+  newThreadID: PestRepID;
 
   stl2: SummaryThread[] = [];
   summaryThread!: SummaryThread;
@@ -23,6 +32,8 @@ export class ForumComponent implements OnInit {
   inputTitle: string;
   inputComment: string;
 
+  currentUser: CurrentUser;
+
   testStr: string = "";
   
   constructor(public summaryThreadService: SummaryThreadService, public threadCreationWindow: MatDialog) {
@@ -30,6 +41,8 @@ export class ForumComponent implements OnInit {
   }
   
   ngOnInit(pestTypeFilter: string = ""): void {
+    this.currentUser = this.generateUser(); //temp -- be sure to replace when permanent method is developed
+
     if(pestTypeFilter.length > 0)
     {
       //forum applies pest type filter before opening
@@ -44,16 +57,27 @@ export class ForumComponent implements OnInit {
     this.generateIndexes();
   }
 
-  openThreadCreationWindow(): void {
+  openThreadCreationWindow(repID: string): void {
     const entryInt = this.threadCreationWindow.open(ThreadComponent, {
       width: '350px',
       // threadinput: {title: this.inputTitle, comment: this.inputComment}
       data: {name: this.inputTitle, animal: this.inputComment}
     });
 
-    entryInt.afterClosed().subscribe(result => {console.log('window closed -- result: ' + result); this.inputComment = result;});
+    entryInt.afterClosed().subscribe(result => {console.log("window closed"); this.newInput = result;
+    console.log("new input title" + this.newInput.title + " -- new input comment" + this.newInput.comment);
+    this.createNewDiscussionThread(repID);
+  });
+
   }
 
+  generateUser(): CurrentUser {
+    let tempUser: CurrentUser = {
+      userid: "12d09e49-2368-44d8-b21c-1b8e10c7cb2e",
+      username: "KDecker",
+    }
+    return tempUser;
+  }
 
   //this plugs into the backend
   //goes to the summary Thread service
@@ -81,7 +105,21 @@ export class ForumComponent implements OnInit {
     for(let x = 0; x < this.summaryThreadList.length; x++)
     {
       if(threadNum === this.summaryThreadList[x].threadid)
+      {
+        this.selectedIndex = x;
         return x;
+      }
+    }   
+    return 0;
+  }
+
+  getSelectedIndexRepID(reportID: string): number {
+    for(let x = 0; x < this.summaryThreadList.length; x++)
+    {
+      if(reportID === this.summaryThreadList[x].reportid)
+      {
+        return x;
+      }
     }   
     return 0;
   }
@@ -111,6 +149,67 @@ export class ForumComponent implements OnInit {
   applyPestTypeFilter(pType: string): void {
     this.ngOnInit(pType);
   }
+  
+  // getNewThreadID(incidentID: PestRepID): PestRepID {
+  //   this.summaryThreadService.getThreadID(incidentID).subscribe(
+  //     (data)=>{}),
+  //     (_err: any)=>{console.log("Error");
+  //   };
+  // } 
+
+  createNewDiscussionThread(repID: string): void {
+    this.selectedIndex = this.getSelectedIndexRepID(repID);
+    this.selectedThread = this.summaryThreadList[this.selectedIndex];
+    this.creationTimeStamp = new Date();
+
+    console.log("attempting to create new discussion thread for reportID: " + repID);
+
+    let newIncidentData: IncidentData = {
+      reportid: this.selectedThread.reportid,
+      locid: this.selectedThread.locid,
+      submitterid: this.selectedThread.submitterid,
+      pestid: this.selectedThread.pestid,
+      reportdate: this.creationTimeStamp
+    }
+
+    this.summaryThreadService.addNewIncident(newIncidentData).subscribe(
+      (data)=>{}), 
+      (_err: any)=>{console.log("Error");
+    };
+
+    let newPestRepID: PestRepID = {
+      reportid: this.selectedThread.reportid
+    }
+
+    this.summaryThreadService.updatePestReportID(newPestRepID).subscribe(
+      (data)=>{}), 
+      (_err: any)=>{console.log("Error");
+    };
+
+    let newThreadData: NewThreadData = {
+      incidentid: this.selectedThread.reportid,
+      locid: this.selectedThread.locid,
+      creatorid: this.currentUser.userid,
+      createdate: this.creationTimeStamp,
+      subject: this.newInput.title,
+      comment: this.newInput.comment
+    }
+
+    this.summaryThreadService.addNewThread(newThreadData).subscribe(
+      (data)=>{}), 
+      (_err: any)=>{console.log("Error");
+    };
+
+    // this.summaryThreadService.getThreadID(newPestRepID).subscribe(
+    //   data => this.newThreadID = data),
+    //   (_err: any)=>{console.log("Error");
+    // };
+
+    // console.log("new thread id: " + this.newThreadID.reportid);
+
+    console.log("didn't break so far");
+  }
+
 
   printItem(tid: number): void {
     alert(this.stl2[3].subject)
