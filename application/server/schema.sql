@@ -111,9 +111,9 @@ CREATE TABLE IF NOT EXISTS Activity (
   Submitter VARCHAR(100),
   PestDescription TEXT,
   ReportText TEXT
---   ThreadID UUID REFERENCES Thread(ThreadID), --TreadID NULL
---   ResponseID UUID REFERENCES ThreadResponse(ResponseID), --NULL
---   FeedbackID UUID REFERENCES ThreadFeedback(FeedbackID)--NULL
+--   ThreadID UUID, --ThreadID NULL
+--   ResponseID UUID, --NULL
+--   FeedbackID UUID--NULL
 );
 
 COPY Neighborhood FROM '/docker-entrypoint-initdb.d/csv/neighborhood.csv' CSV HEADER;
@@ -123,10 +123,31 @@ COPY Incident FROM '/docker-entrypoint-initdb.d/csv/incident.csv' CSV HEADER;
 COPY Thread FROM '/docker-entrypoint-initdb.d/csv/thread.csv' CSV HEADER;
 COPY ThreadResponse FROM '/docker-entrypoint-initdb.d/csv/threadresponse.csv' CSV HEADER;
 COPY ThreadFeedback FROM '/docker-entrypoint-initdb.d/csv/threadfeedback.csv' CSV HEADER;
-COPY Activity FROM '/docker-entrypoint-initdb.d/csv/activity.csv' CSV HEADER;
+-- COPY Activity FROM '/docker-entrypoint-initdb.d/csv/activity.csv' CSV HEADER;
 COPY PestReport FROM '/docker-entrypoint-initdb.d/csv/pestreport.csv' CSV HEADER;
 
 --Updates Activity Table with values from other tables
+
+INSERT INTO Activity(ReportID)
+SELECT ReportID FROM PestReport
+LIMIT 10;
+
+UPDATE Activity
+SET ActivityType = 'Incident'
+WHERE Activity.ActivityType IS NULL;
+
+UPDATE Activity
+SET ActivityTS = 'Some_Time'
+WHERE Activity.ActivityTS IS NULL;
+
+UPDATE Activity
+SET SubmitterID = 'Some_UserID'
+WHERE Activity.SubmitterID IS NULL;
+
+UPDATE Activity
+SET Submitter = 'Some_User'
+WHERE Activity.Submitter IS NULL;
+
 UPDATE Activity
 SET PestName = PestReport.PestName FROM PestReport
 WHERE Activity.ReportID = PestReport.ReportID AND PestReport.PestName IS NOT NULL;
