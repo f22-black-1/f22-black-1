@@ -766,4 +766,3 @@ app.route(`/api/activity/`).get((req, res) => {
 // app.route('/api/pests/update/:location').put((req, res) => {
 //     res.status(200).send(req.body)
 //   })
-
