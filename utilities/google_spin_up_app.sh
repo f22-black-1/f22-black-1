@@ -9,7 +9,7 @@
 #echo $REPO_ROOT
 
 # In order to build the front-end we need to do docker login
-docker login
+#docker login
 
 # Clean Up # Warning, these baddies will remove stuff
 #docker container prune --force
