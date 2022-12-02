@@ -37,8 +37,11 @@
             <span>Submitted by: {{summaryThread.creatorid}} on {{summaryThread.createdate}}</span>
         </div>
     </div> -->
-    <!-- <button (click)="printItem(1)">Test It!</button> -->
-    <div *ngFor="let summaryThread_Prev of summaryThreadList" class="summaryThread shadow">
+    
+    <!-- <div *ngFor="let summaryThread_Prev of summaryThreadList" class="flex-wrapper">
+    <div class="summaryThread shadow tag">     -->
+
+    <div *ngFor="let summaryThread_Prev of summaryThreadList" class="summaryThread shadow tag">
         <div class="stIncidentIcon">
             <img src={{summaryThread_Prev.iconpath}}  alt="Icon Image" class="stImageFormats">
         </div>
@@ -50,7 +53,7 @@
                 <span class="tf1_Light">Reported by {{summaryThread_Prev.reportsubmitterusername}} on: {{summaryThread_Prev.repcreationdate}}</span><br>
                 <br><span class="tf1_Light">Incident report currently contains no discussion threads.</span><br>
                 <br><span class="tf1_Light">Click below to create new discussion thread.</span><br>
-                <button class="replyButtonOT2 tf1" (click)="this.openThreadCreationWindow()">Create Thread</button>
+                <button class="replyButtonOT2 tf1" (click)="this.openThreadCreationWindow(summaryThread_Prev.reportid)">Create Thread</button>
             </div>
         </div>
         <ng-template #dispThreadInfo>
@@ -86,8 +89,9 @@
         </ng-template>
         {{this.incrementIndex()}}
     </div>
+    <!-- </div> -->
     {{this.resetIndex()}}
 </div>
 <div class="footer fhTextFormats shadow">
 </div>
-
+<button (click)="this.printItem()">Debug Print</button>

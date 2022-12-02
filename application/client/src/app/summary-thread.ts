@@ -86,3 +86,36 @@ export interface ThreadInput {
     title: string;
     comment: string;
   }
+
+//used in step 1 of discussion thread creation
+  export interface IncidentData {
+    reportid: string;
+    locid: string;
+    submitterid: string;
+    pestid: string;
+    reportdate: Date;
+  }
+
+  export interface PestRepID {
+    reportid: string;
+  }
+
+  export interface ThreadID {
+    threadid: string;
+  }
+
+ export interface NewThreadData {
+    incidentid: string;
+    locid: string;
+    creatorid: string;
+    createdate: Date;
+    subject: string;
+    comment: string;
+ }
+
+ export interface NewOriginalResponse {
+    responseid: string;
+    userid: string;
+    responsedate: Date;
+    comment: string;
+ }

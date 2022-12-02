@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SummaryThread_Prev } from '../summary-thread';
 import { SummaryThreadService } from "../summary-thread.service";
 import { responses, responseTable, newResponse } from "../expanded-thread";
@@ -14,6 +15,7 @@ import { CurrentUser } from '../login'
   styleUrls: ['./expanded-discussion-view.component.css']
 })
 export class ExpandedDiscussionViewComponent implements OnInit {
+
   private responseList: responses[] = [];
   private response!: responses;
 
@@ -32,7 +34,8 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   public signedInUser: CurrentUser;
   public menu1: MatMenuModule; //not sure if necessary yet
 
-  constructor(private sumThreadService:SummaryThreadService, private expThreadService: ExpandedThreadService) { 
+  constructor(private sumThreadService:SummaryThreadService, private expThreadService: ExpandedThreadService,
+    private router: Router) { 
     this.signedInUser = this.generateUser();
   }
 
@@ -139,14 +142,38 @@ export class ExpandedDiscussionViewComponent implements OnInit {
       }
   }
 
+  removeThread(repID: string): void {
+    let repInfo: responseTable = {
+      responseid: repID,
+      threadid: 'REMOVE_ALL',
+      userid: '',
+      responsedate: new Date(),
+      comment: 'Original_Thread',
+    }
+
+    console.log("Deleting response: " + repInfo.responseid);
+
+    // this.expThreadService.deleteResponse(repInfo).subscribe(async data => {});
+    this.expThreadService.deleteResponse(repInfo).subscribe(async data => {});
+
+    this.expThreadService.deleteThread(repInfo).subscribe(
+      async data => {
+      console.log(data);
+      }),
+      (_err: any)=>{
+        console.log("Error");
+      };
+    this.router.navigate(['../forum'])
+  }
+
   displaySubmittedInfo(comment: string): void {
     console.log("Submitted Info");
     console.log("Comment: " + comment);
   }
 
   printResponse(): void {
-    console.log(this.responseList[1].comment);
-    // console.log(this.rptl[0].comment);
+    console.log("attempting to route");
+    this.router.navigate(['../forum']);
   }
 
 }
