@@ -4,7 +4,7 @@
 
 # Please change REPO_ROOT to your ROOT
 #REPO_ROOT="/Users/ant0n/Documents/Repos/f22-black-1"
-REPO_ROOT="f22-black-1"
+REPO_ROOT="/f22-black-1"
 
 echo $REPO_ROOT
 
