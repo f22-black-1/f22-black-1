@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select'
 import { MatInputModule} from '@angular/material/input'
 import { Pest, PestType } from '../pest';
 import { MatOptionSelectionChange } from '@angular/material/core';
-import {FlexModule} from '@angular/flex-layout';
+// import {FlexModule} from '@angular/flex-layout';
 
 @Component({
   selector: 'child-component',
