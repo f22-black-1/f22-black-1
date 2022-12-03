@@ -30,6 +30,27 @@ export class ActivityComponent implements OnInit {
 
 
 //Finish CRUD operations
+createActivity(at: string, rid: string, pt: string, sid: string, sub: string, pd: Text, rt: Text){
+  this.activity.activitytype = at;
+  this.activity.reportid = rid;
+  this.activity.pesttype = pt;
+  this.activity.submitterid = sid;
+  this.activity.submitter = sub;
+  this.activity.pestdescription = pd;
+  this.activity.reporttext = rt;
+
+  console.log(this.activity);
+  this.activityService.createActivity(this.activity).subscribe(
+  async data => {});
+  alert("The Activity has been created");
+  this.activity.activitytype = "";
+  this.activity.reportid = "";
+  this.activity.pesttype = "";
+  this.activity.submitterid = "";
+  this.activity.submitter = "";
+  this.activity.pestdescription = null;
+  this.activity.reporttext = null;
+}
 /*
 createActivity(activity: Activity): Array<Activity> {
     this.activityService.createActivity(activity)

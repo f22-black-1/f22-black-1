@@ -3,7 +3,7 @@ export interface Activity {
     activitytype: string;
     activityts: Date;
     reportid: string;
-    pestname: string;
+    pesttype: string;
     submitterid: string;
     submitter: string;
     pestdescription: Text;

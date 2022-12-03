@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS Activity (
   ActivityType VARCHAR(255), -- IncidentReport, ThreadCreate, ThreadResponse, ThreedFeedback, etc.
   ActivityTS VARCHAR(25),
   ReportID UUID,
-  PestName VARCHAR(255),
+  PestType VARCHAR(255),
   SubmitterID VARCHAR(100),
   Submitter VARCHAR(100),
   PestDescription TEXT,
@@ -149,8 +149,8 @@ SET Submitter = 'Some_User'
 WHERE Activity.Submitter IS NULL;
 
 UPDATE Activity
-SET PestName = PestReport.PestName FROM PestReport
-WHERE Activity.ReportID = PestReport.ReportID AND PestReport.PestName IS NOT NULL;
+SET PestType = PestReport.PestType FROM PestReport
+WHERE Activity.ReportID = PestReport.ReportID AND PestReport.PestType IS NOT NULL;
 
 UPDATE Activity
 SET SubmitterID = PestReport.SubmitterID FROM PestReport
