@@ -275,5 +275,26 @@ export class MapComponent implements OnInit {
     
   }
 
+  // applyPestTypeFilter(pType: string): void {
+  //   this.ngOnInit(pType);
+  // }
+
+  //see pestOptionArray of filter componet for all of pest types
+  pestTypeSelected: string = "ALL";
+  
+  onRadioButtonChanged(pestType: string){
+    this.pestTypeSelected = pestType;
+    console.log(this.pestTypeSelected + " forum onRadioButtonChanged")
+
+    // if(this.pestTypeSelected === "ALL")
+    // {
+    //   this.ngOnInit();
+    // }
+    // else
+    // {
+    //   this.applyPestTypeFilter(this.pestTypeSelected);
+    // }
+  }
+
 
 }
