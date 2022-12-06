@@ -23,6 +23,7 @@ body {
 	width:100%;
 }
 
+
 /* change colors in navbar links on hover */
 /* .header h1:hover  {
 	background-color: white;
@@ -179,6 +180,15 @@ body {
 	float: none;
 	color: rgb(24, 0, 241);
 	padding: 0px 0px;
+}
+
+.container_logo {
+	width: 700px;
+	height: 700px;
+}
+
+.container_footer {
+	height: auto;
 }
 
 * {
