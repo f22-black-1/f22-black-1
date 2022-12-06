@@ -8,6 +8,7 @@ export interface Activity {
     submitter: string;
     pestdescription: Text;
     reporttext: Text;
+    threadID: string;
     // responseid: string;
     // feedbackid: string;
 }  

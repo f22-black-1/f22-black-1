@@ -535,11 +535,12 @@ app.route('/api/pest/create').post((req, res) => {
                          );`
 
   //Add pest to activity table every time it's added to pestreport
-  const query2 = `INSERT INTO Activity(ActivityType,PestType,Submitter)
+  const query2 = `INSERT INTO Activity(ActivityType,PestType,Submitter,ActivityTS)
   VALUES (
           'Incident',
           '${pestToCreate.pestType}',
-          'Some_guy'
+          'Some_guy',
+          CURRENT_TIMESTAMP
           );`
 
   const queryDB = async () => {
@@ -727,11 +728,29 @@ app.route(`/api/pests/severity`).get((req, res) => {
 
 })
 
-
-
 //Get all activities
+app.route(`/api/activity/all`).get((req, res) => {
+  query = `SELECT * FROM Activity ORDER BY ActivityTS DESC`
+
+    const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
+//Get 10 most recent activities
 app.route(`/api/activity/`).get((req, res) => {
-  query = `SELECT * FROM Activity`
+  query = `SELECT * FROM Activity ORDER BY ActivityTS DESC LIMIT 10`
 
     const queryDB = async () => {
     try {
