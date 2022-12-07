@@ -104,14 +104,14 @@ CREATE TABLE IF NOT EXISTS PestReport (
 CREATE TABLE IF NOT EXISTS Activity (
   ActivityID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
   ActivityType VARCHAR(255), -- IncidentReport, ThreadCreate, ThreadResponse, ThreedFeedback, etc.
-  ActivityTS VARCHAR(25),
+  ActivityTS TIMESTAMP,
   ReportID UUID,
-  PestName VARCHAR(255),
+  PestType VARCHAR(255),
   SubmitterID VARCHAR(100),
   Submitter VARCHAR(100),
   PestDescription TEXT,
-  ReportText TEXT
---   ThreadID UUID, --ThreadID NULL
+  ReportText TEXT,
+  ThreadID UUID
 --   ResponseID UUID, --NULL
 --   FeedbackID UUID--NULL
 );
@@ -129,15 +129,14 @@ COPY PestReport FROM '/docker-entrypoint-initdb.d/csv/pestreport.csv' CSV HEADER
 --Updates Activity Table with values from other tables
 
 INSERT INTO Activity(ReportID)
-SELECT ReportID FROM PestReport
-LIMIT 10;
+SELECT ReportID FROM PestReport;
 
 UPDATE Activity
 SET ActivityType = 'Incident'
 WHERE Activity.ActivityType IS NULL;
 
 UPDATE Activity
-SET ActivityTS = 'Some_Time'
+SET ActivityTS = NULL
 WHERE Activity.ActivityTS IS NULL;
 
 UPDATE Activity
@@ -149,8 +148,8 @@ SET Submitter = 'Some_User'
 WHERE Activity.Submitter IS NULL;
 
 UPDATE Activity
-SET PestName = PestReport.PestName FROM PestReport
-WHERE Activity.ReportID = PestReport.ReportID AND PestReport.PestName IS NOT NULL;
+SET PestType = PestReport.PestType FROM PestReport
+WHERE Activity.ReportID = PestReport.ReportID AND PestReport.PestType IS NOT NULL;
 
 UPDATE Activity
 SET SubmitterID = PestReport.SubmitterID FROM PestReport
