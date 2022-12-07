@@ -41,7 +41,8 @@ let pestObj = {
 }
 
 let tidObj = { 
-  reqThreadID: String
+  reqThreadID: String,
+  reqUserID: String
 }
 
 let responseObj = {
@@ -171,7 +172,7 @@ app.route(`/api/summaryThreadList/`).get((req, res) => {
 
     query = `SELECT pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username AS ReportSubmitterUsername, 
     pestreport.reportdate AS RepCreationDate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, 
-    '../../assets/Incident_Report_Images/Incident_Coyote.png' AS iconPath, Count(threadfeedback.feedbackid) as Record_Count, 
+    pestreport.reporttext AS iconPath, Count(threadfeedback.feedbackid) as Record_Count, 
     coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive, pest.pesttype, pest.pestid, users.username
     FROM (pest INNER JOIN (pestreport LEFT JOIN ((thread LEFT JOIN threadfeedback ON thread.threadid = threadfeedback.threadid) LEFT JOIN 
     users ON thread.creatorid = users.userid) ON pestreport.incidentid = thread.incidentid) ON pest.pestid = pestreport.pestid) LEFT JOIN 
@@ -216,11 +217,6 @@ app.route(`/api/summaryThreadList/pestType`).post((req, res) => {
 
   const queryDB = async () => {
     try {
-      // const client = await pool.connect();
-      // const q = await client.query(query);
-      // console.log(q.rows);
-      // res.status(200).send(q.rows)
-      
       const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)
@@ -378,26 +374,73 @@ queryDB();
 //get expanded thread data
 app.route(`/api/expandedThread/`).post((req, res) => {
   console.log("*******************TESTING****************");
-  console.log("njs req body: ")
+  console.log("thread id: ")
   console.log(req.body.params.updates[0].value)
+  console.log("user id: ")
+  console.log(req.body.params.updates[1].value)
+
   selectedThread = tidObj
   selectedThread.reqThreadID = req.body.params.updates[0].value
+  selectedThread.reqUserID = req.body.params.updates[1].value
 
-  query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment, users.username
-  FROM thread left join users on thread.creatorid = users.userid
+  // query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment, users.username
+  // FROM thread left join users on thread.creatorid = users.userid
+  // WHERE (((thread.threadid)='${selectedThread.reqThreadID}'))
+  // UNION ALL
+  // SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment, users.username
+  // FROM threadresponse left join users on threadresponse.userid = users.userid
+  // WHERE (((threadresponse.threadid)='${selectedThread.reqThreadID}') and ((threadresponse.responseid)<>'${selectedThread.reqThreadID}'))
+  // ORDER BY sort_order asc;`
+
+  query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid,
+  thread.createdate, thread.subject, thread.comment, users.username,
+  SUM(case threadfeedback.positive 
+    when true then 1
+    when false then 0
+  end) AS Positive_Feedback,
+  SUM(case threadfeedback.positive
+    when false then 1
+    when true then 0
+  end) as Negative_Feedback,
+  0 + sum(
+    case threadfeedback.userid 
+    when '${selectedThread.reqUserID}' then
+      case threadfeedback.positive
+      when true then 2
+      else 1
+      end
+    else 0
+    end) as CurrentUserFeedback
+  FROM (thread LEFT JOIN threadfeedback ON thread.ThreadID = threadfeedback.ResponseID) LEFT JOIN users ON thread.CreatorID = users.UserID
   WHERE (((thread.threadid)='${selectedThread.reqThreadID}'))
-  UNION ALL
-  SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment, users.username
-  FROM threadresponse left join users on threadresponse.userid = users.userid
+  GROUP BY thread.threadid, thread.incidentid, thread.creatorid, thread.createdate, thread.subject, thread.comment, users.username
+  union all 
+  SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, 
+  threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment, users.username,
+  coalesce(SUM(case threadfeedback.positive 
+    when true then 1
+    when false then 0
+  end),0) AS Positive_Feedback,
+  coalesce(SUM(case threadfeedback.positive
+    when false then 1
+    when true then 0
+  end),0) as Negative_Feedback,
+  0 + sum(
+    case threadfeedback.userid 
+    when '${selectedThread.reqUserID}' then
+      case threadfeedback.positive
+      when true then 2
+      else 1
+      end
+    else 0
+    end) as CurrentUserFeedback
+  FROM (threadresponse LEFT JOIN users ON threadresponse.userid = users.userid) LEFT JOIN threadfeedback ON threadresponse.responseid = threadfeedback.responseid
   WHERE (((threadresponse.threadid)='${selectedThread.reqThreadID}') and ((threadresponse.responseid)<>'${selectedThread.reqThreadID}'))
-  ORDER BY sort_order asc;`
+  GROUP BY threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, threadresponse.comment, users.username
+  ORDER BY sort_order asc, createdate asc;`
   
     const queryDB = async () => {
     try {
-      // const client = await pool.connect();
-      // const q = await client.query(query);
-      // console.log(q.rows);
-      // res.status(200).send(q.rows)
       const q = await pool.query(query);
       console.log(q.rows)
       res.status(200).send(q.rows)
@@ -499,6 +542,86 @@ app.route(`/api/ThreadResponse`).get((req, res) => {
       // console.log(q.rows);
       // res.status(200).send(q.rows)
 
+      const q = await pool.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+})
+
+//Update existing feedback record
+app.route(`/api/updateThreadFeedback`).post((req, res) => {
+
+  query = `UPDATE threadfeedback SET positive = ${req.body.positive}
+  WHERE (((threadfeedback.responseid)='${req.body.responseid}') AND (threadfeedback.submitterid = '${req.body.submitterid}'));`
+
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.command)
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+
+  queryDB();
+})
+
+//Add new feedback record
+app.route(`/api/addThreadFeedback`).post((req, res) => {
+
+  query = `INSERT INTO threadfeedback ( responseid, threadid, submitterid, userid, positive, inappropriate, submitdate )
+  SELECT '${req.body.responseid}' AS responseid, '${req.body.threadid}' AS threadid, '${req.body.submitterid}' as submitterid,
+  '${req.body.submitterid}' as userid, '${req.body.positive}' as positive, false as inappropriate, '${req.body.submitdate}' as submitdate;`
+
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.command)
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+
+  queryDB();
+})
+
+//Delete feedback record
+app.route(`/api/deleteFeedbackRecord`).post((req, res) => {
+
+  query = `delete FROM threadfeedback where responseid='${req.body.responseid}' 
+  AND submitterid='${req.body.submitterid}';`
+
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.command)
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+
+  queryDB();
+})
+
+
+app.route(`/api/users`).get((req, res) => {
+
+  query = `select userid, username from users;`
+
+  const queryDB = async () => {
+    try {
       const q = await pool.query(query);
       console.log(q.rows);
       res.status(200).send(q.rows)

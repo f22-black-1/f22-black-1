@@ -22,17 +22,32 @@
             <span class="p1">{{this.getReceivedThreadItem().comment}}</span>
         </div>
         <div class="feedback p1 brightness">
-            <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVote">
-            <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVote">
+            <!-- <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVote">
+            <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVote"> -->
+            <span *ngIf="this.responseList[0].currentuserfeedback == 2; else notPositive">
+                <img src="../assets/form_controls/Icon_Thumbs_Up_Blue.png" class="fcfeedback" alt="uVoteActive" (click)="this.upVote(this.responseList[0].currentuserfeedback, this.responseList[0].threadid)">
+            </span>
+            <ng-template #notPositive>
+                <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVoteInactive" (click)="this.upVote(this.responseList[0].currentuserfeedback, this.responseList[0].threadid)">
+            </ng-template>
+            <span *ngIf="this.responseList[0].currentuserfeedback == 1; else notNegative">
+                <img src="../assets/form_controls/Icon_Thumbs_Down_Red.png" class="fcfeedback" alt="dVoteActive" (click)="this.downVote(this.responseList[0].currentuserfeedback, this.responseList[0].threadid)">
+            </span>
+            <ng-template #notNegative>
+                <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVoteInactive" (click)="this.downVote(this.responseList[0].currentuserfeedback, this.responseList[0].threadid)">
+            </ng-template>
         </div>
             <!-- <button class="replyButtonOT p2" (click)="this.generateResponseInputWindow()">Reply</button> -->
             <div class="reply_op brightness">
                 <div *ngIf="this.signedInUser.userid === this.getReceivedThreadItem().creatorid; else replyOnly">
                     <button class="replyButtonOT2 p2" [matMenuTriggerFor]="menu">Action</button>
-                    <mat-menu #menu="matMenu" class="mat-menu">
-                        <button mat-menu-item class="replyButton p2" (click)="this.generateResponseInputWindow()">Reply</button>
-                        <button mat-menu-item class="replyButton p2">Edit</button>
-                        <button mat-menu-item class="replyButton p2" (click)="this.removeThread(this.getReceivedThreadItem().threadid)">Delete</button>
+                    <mat-menu #menu="matMenu" class="m1_style">
+                        <button style="width: 100px; height: 40px; border-style: solid; border-color: black; border-width: 1px;" 
+                        mat-menu-item class="replyButton p2" (click)="this.generateResponseInputWindow()">Reply</button>
+                        <button style="width: 100px; height: 40px; border-style: solid; border-color: black; border-width: 1px;" 
+                        mat-menu-item class="replyButton p2">Edit</button>
+                        <button style="width: 100px; height: 40px; border-style: solid; border-color: black; border-width: 1px;" 
+                        mat-menu-item class="replyButton p2" (click)="this.removeThread(this.getReceivedThreadItem().threadid)">Delete</button>
                     </mat-menu>
                 </div>
                 <ng-template #replyOnly>
@@ -41,9 +56,31 @@
             </div>
         
         <div class="stMeta p1">
-            <span class="p1">Positive Feedback: {{this.getReceivedThreadItem().total_positive}}</span><span class="tab4"></span>
+            <!-- <span class="p1">Positive Feedback: {{this.getReceivedThreadItem().total_positive}}</span><span class="tab4"></span>
+            <span class="p1">Total Ratings: 11</span><span class="tab4"></span>
             <span class="p1">Quality Rating: {{(this.getReceivedThreadItem().total_positive / (this.getReceivedThreadItem().record_count)) * 100 | number:'1.0-0'}}%</span><span class="tab4"></span>
-            <span class="p1">Submitted By: {{this.getReceivedThreadItem().username}} on {{this.getReceivedThreadItem().createdate}}</span>
+            <span class="p1">Submitted By: {{this.getReceivedThreadItem().username}} on {{this.getReceivedThreadItem().createdate}}</span> -->
+            <span class="p1">Positive Feedback: </span>
+            <span class="p1" *ngIf="this.responseList[0].positive_feedback > 0; else pf_default">{{this.responseList[0].positive_feedback}}</span>
+            <ng-template #pf_default>
+                <span class="p1">--</span>
+            </ng-template>
+            <span class="tab4"></span>
+            <span class="p1">Total Ratings: </span>
+            <span class="p1" *ngIf="this.responseList[0].positive_feedback > 0 || this.responseList[0].negative_feedback > 0; else tr_default">
+                {{this.addNumbers(this.responseList[0].negative_feedback, this.responseList[0].positive_feedback)}}</span>
+            <ng-template #tr_default>
+                <span class="p1">--</span>
+            </ng-template>
+            <span class="tab4"></span>
+            <span class="p1">Quality Rating: </span>
+            <span class="p1" *ngIf="this.responseList[0].positive_feedback > 0 || this.responseList[0].negative_feedback > 0; else qr_default">
+                {{(this.responseList[0].positive_feedback / this.addNumbers(this.responseList[0].negative_feedback, this.responseList[0].positive_feedback)) * 100 | number:'1.0-0'}}%</span>
+            <ng-template #qr_default>
+                <span class="p1">--</span>
+            </ng-template>
+            <span class="tab4"></span>
+            <span class="p1">Submitted By: {{this.responseList[0].username}} on {{this.responseList[0].createdate}}</span>
         </div>
     </div>
     <div class="repliesH p1 shadow defaultP">
@@ -54,19 +91,53 @@
             <span class="p1">{{response.comment}}</span>
         </div>
         <div class="feedback2 p2 brightness">
-            <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVote">
-            <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVote">
-            <span class="p1">Positive Feedback: --</span><span class="tab4"></span>
-            <span class="p1">Quality Rating: --</span><span class="tab4"></span>
+            <span *ngIf="this.response.currentuserfeedback == 2; else notPositive">
+                <img src="../assets/form_controls/Icon_Thumbs_Up_Blue.png" class="fcfeedback" alt="uVoteActive" (click)="this.upVote(this.response.currentuserfeedback, this.response.threadid)">
+            </span>
+            <ng-template #notPositive>
+                <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVoteInactive" (click)="this.upVote(this.response.currentuserfeedback, this.response.threadid)">
+            </ng-template>
+            <span *ngIf="this.response.currentuserfeedback == 1; else notNegative">
+                <img src="../assets/form_controls/Icon_Thumbs_Down_Red.png" class="fcfeedback" alt="dVoteActive" (click)="this.downVote(this.response.currentuserfeedback, this.response.threadid)">
+            </span>
+            <ng-template #notNegative>
+                <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVoteInactive" (click)="this.downVote(this.response.currentuserfeedback, this.response.threadid)">
+            </ng-template>
+            <span class="p1">Positive Feedback: </span>
+            <span class="p1" *ngIf="this.response.positive_feedback > 0; else pf_default">{{this.response.positive_feedback}}</span>
+            <ng-template #pf_default>
+                <span class="p1">--</span>
+            </ng-template>
+            <span class="tab4"></span>
+            <span class="p1">Total Ratings: </span>
+            <span class="p1" *ngIf="this.response.positive_feedback > 0 || this.response.negative_feedback > 0; else tr_default">
+                {{this.addNumbers(this.response.negative_feedback, this.response.positive_feedback)}}</span>
+            <ng-template #tr_default>
+                <span class="p1">--</span>
+            </ng-template>
+            <span class="tab4"></span>
+            <span class="p1">Quality Rating: </span>
+            <span class="p1" *ngIf="this.response.positive_feedback > 0 || this.response.negative_feedback > 0; else qr_default">
+                {{(this.response.positive_feedback / this.addNumbers(this.response.negative_feedback, this.response.positive_feedback)) * 100 | number:'1.0-0'}}%</span>
+            <ng-template #qr_default>
+                <span class="p1">--</span>
+            </ng-template>
+            <span class="tab4"></span>
+            <!-- <span class="p1">test: {{this.response.currentuserfeedback}}</span>
+            <span class="tab4"></span> -->
             <span class="p1">Submitted By: {{this.response.username}} on {{this.response.createdate}}</span>
         </div>
         <div class="reply brightness">
             <div *ngIf="this.signedInUser.userid === this.response.userid; else replyOnly">
-                <button class="replyButton_ng p2" [matMenuTriggerFor]="menu">Action</button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item class="replyButtonMenu p2" (click)="this.generateResponseInputWindow()">Reply</button>
-                    <button mat-menu-item class="replyButtonMenu p2">Edit</button>
-                    <button mat-menu-item class="replyButtonMenu p2" (click)="this.removeResponse(this.response.threadid)">Delete</button>
+                <button class="replyButton_ng p2" [matMenuTriggerFor]="menu1">Action</button>
+                <mat-menu #menu1="matMenu" class="m1_style">
+                    <button style="width: 82px; height: 40px; border-style: solid; border-color: black; border-width: 1px;" 
+                    mat-menu-item class="m1_button p2" (click)="this.generateResponseInputWindow()">Reply</button>
+                    <!-- <button mat-raised-button [color]="color" (mouseover)="color = 'warn'" (mouseout)="color = 'accent'">Test</button> -->
+                    <button style="width: 82px; height: 40px; border-style: solid; border-color: black; border-width: 1px;"
+                    mat-menu-item class="m1_button p2">Edit</button>
+                    <button style="width: 82px; height: 40px; border-style: solid; border-color: black; border-width: 1px;" 
+                    mat-menu-item class="m1_button p2" (click)="this.removeResponse(this.response.threadid)">Delete</button>
                 </mat-menu>
             </div>
             <ng-template #replyOnly>
@@ -90,7 +161,9 @@
     </div>
 </div>
 <div class="footer p1 shadow defaultP">
-
+    <div style="margin-top: 14px; margin-left: 4px;">
+        <span class="p2" style="font-weight: bold;">Signed in as: {{this.signedInUser.username}}</span>
+    </div>
 </div>
 
 <p>expanded-discussion-view works!</p>

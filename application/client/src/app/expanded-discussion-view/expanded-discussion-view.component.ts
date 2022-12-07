@@ -5,7 +5,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SummaryThread_Prev } from '../summary-thread';
 import { SummaryThreadService } from "../summary-thread.service";
-import { responses, responseTable, newResponse } from "../expanded-thread";
+import { responses, responseTable, newResponse, feedback } from "../expanded-thread";
 import { ExpandedThreadService } from "../expanded-thread.service";
 import { CurrentUser } from '../login'
 
@@ -16,7 +16,7 @@ import { CurrentUser } from '../login'
 })
 export class ExpandedDiscussionViewComponent implements OnInit {
 
-  private responseList: responses[] = [];
+  public responseList: responses[] = [];
   private response!: responses;
 
   private rptl: responseTable[] = [];
@@ -33,7 +33,7 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   public userResponse!: newResponse;
   public signedInUser: CurrentUser;
   public menu1: MatMenuModule; //not sure if necessary yet
-
+  
   constructor(private sumThreadService:SummaryThreadService, private expThreadService: ExpandedThreadService,
     private router: Router) { 
     this.signedInUser = this.generateUser();
@@ -60,10 +60,22 @@ export class ExpandedDiscussionViewComponent implements OnInit {
     return tempUser;
   }
 
+  
+  addNumbers(firstNumber: number, secondNumber: number): number {
+    // console.log("first number: " + firstNumber);
+    // console.log("second number: " + secondNumber);
+
+    var numSum = Number(Number(firstNumber) + Number(secondNumber));
+
+    // console.log("number sum: " + numSum);
+
+    return numSum;
+  }
+
   getResponses(): Array<responses> {
     console.log("getting responses for: " + this.getReceivedThreadItem().threadid);
 
-    this.expThreadService.getThreadResponsesPOST(this.receivedThreadID)
+    this.expThreadService.getThreadResponsesPOST(this.receivedThreadID, this.signedInUser.userid)
     .subscribe(etr => this.responseList = etr);
 
     return this.responseList
@@ -75,7 +87,7 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   
   getRps(): Array<responseTable> {
 
-    this.expThreadService.getThreadResponsesPOST(this.receivedThreadID)
+    this.expThreadService.getThreadResponsesPOST(this.receivedThreadID, this.signedInUser.userid)
     .subscribe(etr => this.responseList = etr);
 
     return this.rptl;
@@ -166,14 +178,106 @@ export class ExpandedDiscussionViewComponent implements OnInit {
     this.router.navigate(['../forum'])
   }
 
+  upVote(currentRating: number, responseID: string): void {
+    console.log("up voting...");
+    console.log("number received: " + currentRating);
+    console.log("rep id: " + responseID);
+
+    let feedbackRecord: feedback = {
+      responseid: responseID,
+      threadid: this.receivedThreadItem.threadid,
+      submitterid: this.signedInUser.userid,
+      userid: this.signedInUser.userid,
+      positive: true,
+      inappropriate: false,
+      submitdate: new Date(),
+    }
+
+    var updateExisting = false;
+
+    if(currentRating != 2)
+    {
+      if(currentRating == 1)
+        updateExisting =true;
+
+        console.log("updating/adding record");
+        this.expThreadService.updateFeedback(feedbackRecord, updateExisting).subscribe(
+          (data)=>{
+            console.log(data);
+            this.ngOnInit();
+            }),
+            (_err: any)=>{
+              console.log("Error");
+            }
+    }
+    else
+    {
+      console.log("deleting existing record");
+      this.expThreadService.deleteFeedback(feedbackRecord).subscribe(
+        (data)=>{
+          console.log(data);
+          this.ngOnInit();
+          }),
+          (_err: any)=>{
+            console.log("Error");
+          }
+    }
+  }
+
+  downVote(currentRating: number, responseID: string): void {
+    console.log("down voting...");
+    console.log("number received: " + currentRating);
+    console.log("rep id: " + responseID);
+
+    let feedbackRecord: feedback = {
+      responseid: responseID,
+      threadid: this.receivedThreadItem.threadid,
+      submitterid: this.signedInUser.userid,
+      userid: this.signedInUser.userid,
+      positive: false,
+      inappropriate: false,
+      submitdate: new Date(),
+    }
+
+    var updateExisting = false;
+
+    if(currentRating != 1) //Response either has no feedback or positive feedback
+    {
+      if(currentRating == 2) //Positive feedback record exists so function will look for existing record to update 
+        updateExisting = true;                //instead of creating a new one   
+
+        console.log("updating/adding record");
+        this.expThreadService.updateFeedback(feedbackRecord, updateExisting).subscribe(
+          (data)=>{
+            console.log(data);
+            this.ngOnInit();
+            }),
+            (_err: any)=>{
+              console.log("Error");
+            }
+    }
+    else
+    {
+      console.log("deleting existing record");
+      this.expThreadService.deleteFeedback(feedbackRecord).subscribe(
+        (data)=>{
+          console.log(data);
+          this.ngOnInit();
+          }),
+          (_err: any)=>{
+            console.log("Error");
+          }
+    }
+  }
+
+
   displaySubmittedInfo(comment: string): void {
     console.log("Submitted Info");
     console.log("Comment: " + comment);
   }
-
+  
   printResponse(): void {
-    console.log("attempting to route");
-    this.router.navigate(['../forum']);
+    console.log("click even triggered");
   }
 
 }
