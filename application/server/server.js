@@ -56,10 +56,12 @@ let activityObj = {
   ActivityID: String,
   ActivityType: String,
   ActivityTS: Date,
-  IncidentID: String,
-  // ThreadID: String,
-  // ResponseID: String,
-  // FeedbackID: String,
+  ReportID: String,
+  PestType: String,
+  SubmitterID: String,
+  Submitter: String,
+  PestDescription: String,
+  ReportText: String,
 }
 
 // Get all pests
@@ -532,6 +534,15 @@ app.route('/api/pest/create').post((req, res) => {
                           '${pestToCreate.yCoord}'
                          );`
 
+  //Add pest to activity table every time it's added to pestreport
+  const query2 = `INSERT INTO Activity(ActivityType,PestType,Submitter,ActivityTS)
+  VALUES (
+          'Incident',
+          '${pestToCreate.pestType}',
+          'Some_guy',
+          CURRENT_TIMESTAMP
+          );`
+
   const queryDB = async () => {
     try {
       const q = await pool.query(query);
@@ -542,8 +553,19 @@ app.route('/api/pest/create').post((req, res) => {
       res.status(500).send()
     }
   };
+  const queryDB2 = async () => {
+    try {
+      const q2 = await pool.query(query2);
+      console.log(q2.command)
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
   
   queryDB();
+  queryDB2();
 
 })
 
@@ -706,11 +728,9 @@ app.route(`/api/pests/severity`).get((req, res) => {
 
 })
 
-
-
 //Get all activities
-app.route(`/api/activity/`).get((req, res) => {
-  query = `SELECT * FROM Activity`
+app.route(`/api/activity/all`).get((req, res) => {
+  query = `SELECT * FROM Activity ORDER BY ActivityTS DESC`
 
     const queryDB = async () => {
     try {
@@ -724,6 +744,74 @@ app.route(`/api/activity/`).get((req, res) => {
     }
   };
    
+  queryDB();
+
+})
+
+//Get 10 most recent activities
+app.route(`/api/activity/`).get((req, res) => {
+  query = `SELECT * FROM Activity ORDER BY ActivityTS DESC LIMIT 10`
+
+    const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows)
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+
+})
+
+//Add a new activity
+app.route('/api/activity/create').post((req, res) => {
+    
+  console.log(req.body);
+
+  activityToCreate = activityObj;
+
+  activityToCreate.ActivityType = req.body.ActivityType;
+  activityToCreate.ReportID = req.body.ReportID;
+  activityToCreate.PestName = req.body.PestType;
+  activityToCreate.SubmitterID = req.body.SubmitterID;
+  activityToCreate.Submitter = req.body.Submitter;
+  activityToCreate.PestDescription = req.body.PestDescription
+  activityToCreate.ReportText = req.body.ReportText
+
+
+  console.log(activityToCreate)
+
+
+
+  const query = `INSERT INTO Activity(ActivityType, ReportID, PestName, SubmitterID, Submitter, PestDescription, ReportText) 
+                  VALUES (
+                          'Incident',
+                          '${activityToCreate.ReportId}',
+                          '${activityToCreate.PestType}',
+                          '${activityToCreate.SubmitterID}',
+                          '${activityToCreate.Submitter}',
+                          '${activityToCreate.PestDescription}',
+                          '${activityToCreate.ReportText}'
+                                         );`
+
+
+
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.command)
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+  
   queryDB();
 
 })
