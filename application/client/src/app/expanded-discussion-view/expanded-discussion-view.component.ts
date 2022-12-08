@@ -5,6 +5,8 @@ import { SummaryThread_Prev } from '../summary-thread';
 import { SummaryThreadService } from "../summary-thread.service";
 import { responses, responseTable, newResponse } from "../expanded-thread";
 import { ExpandedThreadService } from "../expanded-thread.service";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { PestInfoComponent } from '../pest-info/pest-info.component';
 
 @Component({
   selector: 'app-expanded-discussion-view',
@@ -31,7 +33,11 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   //Temp - User Profile Data
   public userID: string = "12d09e49-2368-44d8-b21c-1b8e10c7cb2e";
 
-  constructor(private sumThreadService:SummaryThreadService, private expThreadService: ExpandedThreadService) { }
+  constructor(
+    private sumThreadService:SummaryThreadService, 
+    private expThreadService: ExpandedThreadService,
+    private  dialogRef: MatDialog
+    ) { }
 
   ngOnInit(): void {
     this.receivedThreadItem = this.sumThreadService.getSelectedThreadItem();
@@ -104,7 +110,11 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   }
 
   doSomething(): void {
-    console.log("This button is doing something!")
+    this.dialogRef.open(PestInfoComponent, {
+      height: '33%',
+      width: '33%',
+      data: {incidentID: this.receivedThreadItem.incidentid}
+    });
   }
 
 }

@@ -44,6 +44,10 @@ let tidObj = {
   reqThreadID: String
 }
 
+let iidObj = {
+  reqIncidentID: String
+}
+
 let responseObj = {
   ThreadID: String,
   UserID: String,
@@ -410,6 +414,32 @@ app.route(`/api/pest/apest`).post((req, res) => {
       res.status(500).send()
     }
   };
+  queryDB();
+})
+
+// Get a pest by incident ID
+app.route(`/api/pest/incidentpest/`).post((req, res) => {
+  console.log(req.body.params.updates[0].value)
+
+  selectedIncident = iidObj
+  selectedIncident.reqIncidentID = req.body.params.updates[0].value
+
+  query = `SELECT * 
+  FROM pest 
+  WHERE pestid = (SELECT PestID FROM PestReport WHERE IncidentID = '${selectedIncident.reqIncidentID}')`
+
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows[0])
+      
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+  
   queryDB();
 })
 
