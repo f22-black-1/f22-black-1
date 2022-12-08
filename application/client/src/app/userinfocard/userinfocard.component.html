@@ -1,0 +1,48 @@
+<!-- <h1 mat-dialog-title>User Info</h1> -->
+<div mat-dialog-content>
+    <div class="container_userInfo">
+        <div class="userName fs_1_header">
+            User: {{selectedUser.username}}
+        </div>
+        <div class="userPicture">
+            <img src="../assets/user/user_default.svg">
+        </div>
+        <div class="userRating fs_1_header">
+            Quality Score: {{this.currentUserInfo.positive_feedback / this.addNumbers(this.currentUserInfo.positive_feedback, this.currentUserInfo.negative_feedback) * 100 | number:'1.0-0'}}%
+        </div>
+    </div>
+    <div class="container_UserThreads">
+        <div class="info_headers">
+            <div class="threadSubject">
+                <span class="fs_1_header">Thread Title</span>
+            </div>
+            <div class="threadMessageCount">
+                <span class="fs_1_header">#Messages</span>
+            </div>
+            <div class="threadQuality">
+                <span class="fs_1_header">Qlty Score by Thread</span>
+            </div>
+            <div class="threadTotRatings">
+                <span class="fs_1_header">#Ratings</span>
+            </div>
+        </div>
+        <div *ngFor="let uiThread of uiThreadList" class="info_rows">
+            <div class="threadSubject">
+                <span class="fs_1 fs_1_link" (click)="this.openNewDiscussionThread(this.uiThread.threadid)">{{this.uiThread.subject}}</span>
+            </div>
+            <div class="threadMessageCount">
+                <span class="fs_1">{{this.uiThread.message_count}}</span>
+            </div>
+            <div class="threadQuality">
+                <!-- <span class="fs_1">{{this.uiThread.total_positive / this.addNumbers(this.uiThread.total_positive, this.uiThread.total_negative) * 100 | number:'1.0-0'}}%</span> -->
+                <span class="fs_1">{{this.qualityScore(this.uiThread.total_positive, this.uiThread.total_negative)}}</span>
+            </div>
+            <div class="threadTotRatings">
+                <span class="fs_1">{{this.addNumbers(this.uiThread.total_positive, this.uiThread.total_negative)}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+</div>

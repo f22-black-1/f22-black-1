@@ -56,10 +56,6 @@
             </div>
         
         <div class="stMeta p1">
-            <!-- <span class="p1">Positive Feedback: {{this.getReceivedThreadItem().total_positive}}</span><span class="tab4"></span>
-            <span class="p1">Total Ratings: 11</span><span class="tab4"></span>
-            <span class="p1">Quality Rating: {{(this.getReceivedThreadItem().total_positive / (this.getReceivedThreadItem().record_count)) * 100 | number:'1.0-0'}}%</span><span class="tab4"></span>
-            <span class="p1">Submitted By: {{this.getReceivedThreadItem().username}} on {{this.getReceivedThreadItem().createdate}}</span> -->
             <span class="p1">Positive Feedback: </span>
             <span class="p1" *ngIf="this.responseList[0].positive_feedback > 0; else pf_default">{{this.responseList[0].positive_feedback}}</span>
             <ng-template #pf_default>
@@ -80,7 +76,9 @@
                 <span class="p1">--</span>
             </ng-template>
             <span class="tab4"></span>
-            <span class="p1">Submitted By: {{this.responseList[0].username}} on {{this.responseList[0].createdate}}</span>
+            <span class="p1">Submitted By: <span class="p1_hl" (click)="this.openUserInfoCard(this.responseList[0].userid, this.responseList[0].username)">
+                {{this.responseList[0].username}}</span>
+                 on {{this.responseList[0].createdate}}</span>
         </div>
     </div>
     <div class="repliesH p1 shadow defaultP">
@@ -125,7 +123,10 @@
             <span class="tab4"></span>
             <!-- <span class="p1">test: {{this.response.currentuserfeedback}}</span>
             <span class="tab4"></span> -->
-            <span class="p1">Submitted By: {{this.response.username}} on {{this.response.createdate}}</span>
+            <span class="p1">Submitted By: <span class="p1_hl" (click)="this.openUserInfoCard(this.response.userid, this.response.username)">
+                {{this.response.username}}</span>
+                 on {{this.response.createdate}}</span>
+
         </div>
         <div class="reply brightness">
             <div *ngIf="this.signedInUser.userid === this.response.userid; else replyOnly">

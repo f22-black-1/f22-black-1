@@ -617,6 +617,83 @@ app.route(`/api/deleteFeedbackRecord`).post((req, res) => {
   queryDB();
 })
 
+//get all user ratings and message count
+app.route(`/api/userInfoRating`).post((req, res) => {
+
+  console.log("requested user id: " + req.body.userid);
+
+  query = `SELECT users.userid, Count(threadresponse.responseid) AS total_messages, 
+  coalesce(Sum(case threadfeedback.positive 
+    when true then 1
+    when false then 0
+  end), 0) AS positive_feedback, 
+  coalesce(Sum(case threadfeedback.positive
+      when false then 1
+      when true then 0
+    end), 0) as negative_feedback
+  FROM (users LEFT JOIN threadresponse ON users.userid = threadresponse.userid) LEFT JOIN threadfeedback ON threadresponse.responseid = threadfeedback.responseid
+  where users.userid='${req.body.userid}'
+  GROUP BY users.userid;`
+
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log("row: " + q.rows[0].userid);
+      res.status(200).send(q.rows[0]);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+})
+
+//get all threads user has posted a message and message count/rating within thread
+app.route(`/api/userThreadMetrics`).post((req, res) => {
+
+  console.log("requested user id: " + req.body.userid);
+
+  query = `select trepCount.threadid, trepCount.userid, thread.subject, trepCount.message_count, 
+  coalesce(sum(details.total_positive), 0) as total_positive, coalesce(sum(details.total_negative), 0) as total_negative
+  from ((select threadresponse.threadid, threadresponse.userid, coalesce(count(threadresponse.userid),0) as message_count
+    from threadresponse
+    where threadresponse.userid = '${req.body.userid}'
+    group by threadresponse.threadid, threadresponse.userid) 
+  as trepCount
+  left join 
+  (select threadfeedback.responseid, threadfeedback.threadid, 
+    case threadfeedback.positive 
+    when true then 1
+    when false then 0
+    end as total_positive,
+    case threadfeedback.positive 
+    when false then 1
+    when true then 0
+    end as total_negative,
+    threadresponse.userid 
+    from threadfeedback left join threadresponse on threadfeedback.responseid = threadresponse.responseid) 
+  as details
+  on details.userid = trepCount.userid and 
+     details.threadid = trepCount.threadid)
+  left join 
+    thread on trepCount.threadid = thread.threadid
+  group by trepCount.threadid, trepCount.userid, trepCount.message_count, thread.subject;`
+
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log("row count: " + q.rowCount);
+      res.status(200).send(q.rows);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+   
+  queryDB();
+})
+
 
 app.route(`/api/users`).get((req, res) => {
 

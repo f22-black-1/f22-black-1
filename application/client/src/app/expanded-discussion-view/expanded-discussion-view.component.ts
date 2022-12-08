@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,6 +9,8 @@ import { SummaryThreadService } from "../summary-thread.service";
 import { responses, responseTable, newResponse, feedback } from "../expanded-thread";
 import { ExpandedThreadService } from "../expanded-thread.service";
 import { CurrentUser } from '../login'
+import { UserinfocardComponent } from '../userinfocard/userinfocard.component';
+import { UserInfo, CurrentUser_t } from '../userinfo';
 
 @Component({
   selector: 'app-expanded-discussion-view',
@@ -33,9 +36,12 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   public userResponse!: newResponse;
   public signedInUser: CurrentUser;
   public menu1: MatMenuModule; //not sure if necessary yet
+
+  public modalThread: string;
+  public mtData: CurrentUser_t;
   
   constructor(private sumThreadService:SummaryThreadService, private expThreadService: ExpandedThreadService,
-    private router: Router) { 
+    private router: Router, public infoCard: MatDialog) { 
     this.signedInUser = this.generateUser();
   }
 
@@ -50,6 +56,21 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   public getReceivedThreadItem(): SummaryThread_Prev {
     // console.log(this.receivedThreadItem);
     return this.receivedThreadItem;
+  }
+
+  openUserInfoCard(uID: string, uName: string): void {
+    let selectedUser: CurrentUser = {
+      userid: uID,
+      username: uName,
+    }
+    const userInfo = this.infoCard.open(UserinfocardComponent, {
+      data: {userid: selectedUser.userid, username: selectedUser.username, 
+        modalThread: this.modalThread}
+    });
+
+    userInfo.afterClosed().subscribe(result => this.mtData = result);
+
+    console.log("Selected comp thread: " + this.mtData.threadid);
   }
 
   generateUser(): CurrentUser {

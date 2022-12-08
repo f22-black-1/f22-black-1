@@ -2,6 +2,12 @@
     font-family: "Lucida Console", "Courier New", monospace;
 }
 
+.p1_hl {
+    font-family: "Lucida Console", "Courier New", monospace;
+    color: blue;
+    cursor: pointer;
+}
+
 .p2 {
     font-family: "Lucida Console", "Courier New", monospace;
     font-size: 12px;
