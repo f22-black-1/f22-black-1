@@ -305,16 +305,24 @@ app.route(`/api/thread/addCreationThread`).post((req, res) => {
   '${req.body.comment}' as comment
   returning threadid;`
 
-  query2 = `INSERT INTO activity(submitterid,submitter,reporttext,activitytype,activityts)
+  query2 = `INSERT INTO activity(submitterid,submitter,reporttext,activitytype,activityts,pestid,pesttype)
   VALUES('${req.body.creatorid}',
          '${req.body.creatorid}',
          '${req.body.comment}',
          'Thread',
-         CURRENT_TIMESTAMP  
+         CURRENT_TIMESTAMP,
+         null,
+         null 
          );
          UPDATE Activity
          SET Submitter = Users.UserName FROM Users
-         WHERE Activity.SubmitterID = Users.UserID::VARCHAR;`
+         WHERE Activity.SubmitterID = Users.UserID::VARCHAR;
+         UPDATE Activity
+         SET PestID = Incident.PestID FROM Incident
+         WHERE '${req.body.incidentid}' = Incident.IncidentID;
+         UPDATE Activity
+         SET PestType = Pest.PestType FROM Pest
+         WHERE Activity.PestID = Pest.PestID;`
 
 
   const queryDB = async () => {
@@ -589,7 +597,7 @@ app.route('/api/pest/create').post((req, res) => {
   VALUES (
           'Incident',
           '${pestToCreate.pestType}',
-          'Some_guy',
+          'User_name',
           CURRENT_TIMESTAMP
           );`
 
