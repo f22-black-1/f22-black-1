@@ -2,45 +2,6 @@
     <app-filter (filterSelectedChanged)="onRadioButtonChanged($event)"></app-filter>
 </div>
 <div class="summaryThreadContainer">
-    <!-- <div *ngFor="let summaryThread of stl2" class="summaryThread shadow">
-        <div class="stIncidentIcon">
-            <img src={{summaryThread.iconPath}}  alt="Icon Image" class="stImageFormats">
-        </div>
-        <div class="stPestImage">
-            <img src={{summaryThread.imagePath}}  alt="Icon Image" class="stPestImageFormats">
-        </div>
-        <div class="stTitle">
-            <a routerLink="/expanded-discussion-view" class="stTitleLink">{{summaryThread.subject}}</a>
-        </div>
-        <div class="stDescription">
-            <span>{{summaryThread.comment}}</span>
-        </div>
-        <div class="stActivity">
-            <span>Views: {{summaryThread.views}} / Responses: {{summaryThread.responses}}</span>
-        </div>
-        <div class="stRating">
-            <span>Positive Feedback: {{summaryThread.positiveFeedback}} <span class="tab4"></span>Quality Rating: 
-                {{(summaryThread.positiveFeedback / (summaryThread.positiveFeedback + summaryThread.negativeFeedback)) * 100 | number:'1.0-0'}}%</span>
-        </div>
-        <div class="stVerification">
-            <div class="stV_label tf1">
-                Following:
-            </div>
-            <div class="stV_slider">
-                <label class="switch">
-                    <input type="checkbox" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-        </div>
-        <div class="stUserInfo">
-            <span>Submitted by: {{summaryThread.creatorid}} on {{summaryThread.createdate}}</span>
-        </div>
-    </div> -->
-    
-    <!-- <div *ngFor="let summaryThread_Prev of summaryThreadList" class="flex-wrapper">
-    <div class="summaryThread shadow tag">     -->
-
     <div *ngFor="let summaryThread_Prev of summaryThreadList" class="summaryThread shadow tag">
         <div class="stIncidentIcon">
             <img src={{summaryThread_Prev.iconpath}}  alt="Icon Image" class="stImageFormats">
@@ -50,7 +11,10 @@
         </div>
         <div *ngIf="this.summaryThread_Prev.threadid === null || this.summaryThread_Prev.threadid === ''; else dispThreadInfo">
             <div class="stDNE defaultContainerFormats">
-                <span class="tf1_Light">Reported by {{summaryThread_Prev.reportsubmitterusername}} on: {{summaryThread_Prev.repcreationdate}}</span><br>
+                <span class="tf1_Light">Reported by 
+                    <span class="tf1_hl" (click)="this.openUserInfoCard(this.summaryThread_Prev.submitterid, this.summaryThread_Prev.reportsubmitterusername)">
+                        {{summaryThread_Prev.reportsubmitterusername}}</span>
+                    on: {{summaryThread_Prev.repcreationdate}}</span><br>
                 <br><span class="tf1_Light">Incident report currently contains no discussion threads.</span><br>
                 <br><span class="tf1_Light">Click below to create new discussion thread.</span><br>
                 <button class="replyButtonOT2 tf1" (click)="this.openThreadCreationWindow(summaryThread_Prev.reportid)">Create Thread</button>
@@ -84,7 +48,9 @@
                     </div>
             </div>
             <div class="stUserInfo">
-                <span>Submitted by: {{summaryThread_Prev.username}} on {{summaryThread_Prev.createdate}}</span>
+                <span>Submitted by: <span class="tf1_hl" (click)="this.openUserInfoCard(this.summaryThread_Prev.creatorid, this.summaryThread_Prev.username)">
+                    {{summaryThread_Prev.username}}</span>
+                     on {{summaryThread_Prev.createdate}}</span>
             </div>
         </ng-template>
         {{this.incrementIndex()}}

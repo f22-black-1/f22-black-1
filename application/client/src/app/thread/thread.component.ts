@@ -16,8 +16,8 @@ export class ThreadComponent implements OnInit {
   }
 
   onNoClick(): void {
-    console.log("thread input" + this.threadinput.title);
-    console.log("thread input" + this.threadinput.comment);
+    // console.log("thread input" + this.threadinput.title);
+    // console.log("thread input" + this.threadinput.comment);
     this.entryInt.close();
   }
 

@@ -5,7 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { responses, responseTable, newResponse } from './expanded-thread';
+import { responses, responseTable, newResponse, feedback } from './expanded-thread';
 import { UniqueSelectionDispatcher } from '@angular/cdk/collections';
 
 @Injectable({
@@ -43,12 +43,13 @@ export class ExpandedThreadService {
     };
   }
 
-  getThreadResponsesPOST(tid: string): Observable<any> {
+  getThreadResponsesPOST(tid: string, userid: string): Observable<any> {
   
     // This log will bew useful when adding front-end code
     console.log(`Getting THREAD: ${tid}`)
     let queryParams = new HttpParams();
-    queryParams = queryParams.append('threadid', tid);   
+    queryParams = queryParams.append('threadid', tid);
+    queryParams = queryParams.append('userid', userid);
 
     return this.http.post<any>(`http://localhost:8080/api/expandedThread/`, {params:queryParams})
     .pipe(
@@ -89,6 +90,43 @@ deleteThread(response: responseTable): Observable<responseTable> {
     tap(_ => this.log(`deleting response for ${response.responseid}`)), // TODO: determine which id this returns
     catchError(this.handleError<responseTable>('delete response')));
 }
+
+updateFeedback(feedbackInfo: feedback, updateExisting: boolean): Observable<feedback> {
+  
+  console.log("tid: " + feedbackInfo.threadid);
+  console.log("repID: " + feedbackInfo.responseid);
+  console.log("submit date: " + feedbackInfo.submitdate);
+  console.log("positive rating: " + feedbackInfo.positive);
+
+  if(updateExisting == true)
+  {
+    return this.http.post<feedback>('http://localhost:8080/api/updateThreadFeedback', feedbackInfo)
+    .pipe(
+      tap(_ => this.log(`updating response for ${feedbackInfo.responseid}`)), 
+      catchError(this.handleError<feedback>('update feedback')));
+  }
+  else
+  {
+    return this.http.post<feedback>('http://localhost:8080/api/addThreadFeedback', feedbackInfo)
+    .pipe(
+      tap(_ => this.log(`adding response for ${feedbackInfo.responseid}`)), 
+      catchError(this.handleError<feedback>('update feedback')));
+  }
+}
+
+deleteFeedback(feedbackInfo: feedback): Observable<feedback> {
+  
+  console.log("tid: " + feedbackInfo.threadid);
+  console.log("repID: " + feedbackInfo.responseid);
+  console.log("submit date: " + feedbackInfo.submitdate);
+  console.log("positive rating: " + feedbackInfo.positive);
+
+    return this.http.post<feedback>('http://localhost:8080/api/deleteFeedbackRecord', feedbackInfo)
+    .pipe(
+      tap(_ => this.log(`deleting response for ${feedbackInfo.responseid}`)), 
+      catchError(this.handleError<feedback>('delete feedback')));
+}
+
 
   getTrps(): Observable<responseTable[]> {
     

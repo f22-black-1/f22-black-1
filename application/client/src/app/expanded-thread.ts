@@ -7,6 +7,9 @@ export interface responses {
     subject: string,
     comment: string,
     username: string,
+    positive_feedback: number,
+    negative_feedback: number,
+    currentuserfeedback: number,
 }
 
 export interface responseTable {
@@ -22,4 +25,15 @@ export interface newResponse {
     userid: string,
     responsedate: Date,
     comment: string,
+}
+
+
+export interface feedback {
+    responseid: string,
+    threadid: string,
+    submitterid: string,
+    userid: string,
+    positive: boolean,
+    inappropriate: boolean,
+    submitdate: Date,
 }

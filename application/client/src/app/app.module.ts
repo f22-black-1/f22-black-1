@@ -36,6 +36,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ActivityComponent } from './activity/activity.component'
 import { MatMenuModule } from '@angular/material/menu';
 import { ThreadComponent } from './thread/thread.component';
+import { UserinfocardComponent } from './userinfocard/userinfocard.component';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { ThreadComponent } from './thread/thread.component';
     PestUpdateComponent,
     ActivityComponent,
     ThreadComponent,
+    UserinfocardComponent,
   ],
   exports: [
     //GoogleMapsModule

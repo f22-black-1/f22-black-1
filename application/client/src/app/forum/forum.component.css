@@ -13,6 +13,16 @@
     font-weight: bold;
 }
 
+.tf1_hl {
+    /* font-family: "Lucida Console", "Courier New", monospace; */
+    font-family: Arial, 'Franklin Gothic Medium', 'Arial Narrow', sans-serif;
+    color: blue;
+    text-underline-position: below;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
 .switch {
     position: relative;
     display: inline-block;
@@ -312,9 +322,11 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10%;
-    width:90px;
-    height:144px;
+    margin-top: 65%;
+    width:35px;
+    height:35px;
+    /* width:90px;
+    height:144px; */
 } 
 
 .stPestImageFormats {
