@@ -2,13 +2,16 @@
   <tr>
     <th>Recent Activity</th>
   </tr>
-  <tr *ngFor="let activity of activities">
-    <a routerLink="/detail/{{activity.activityid}}">
-      <td>{{activity.submitter}} reported a(n) {{activity.pestname}} at {{activity.activityts}}</td>
-    </a>
-  </tr>
+  <div *ngFor="let activity of activities">
+    <tr>
+      <!-- <a routerLink="/detail/{{activity.activityid}}"> -->
+      <a routerLink="/expanded-discussion-view">
+        <td>New {{activity.activitytype}}: {{activity.submitter}} reported a(n) {{activity.pesttype}}</td>
+      </a>
+    </tr>
+  </div>  
 </table>
-
+ 
 
 
 <!-- Use with http://localhost:4200/activity_crud_test to test info from database-->

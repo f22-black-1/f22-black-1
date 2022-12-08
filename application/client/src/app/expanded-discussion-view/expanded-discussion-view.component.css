@@ -7,6 +7,11 @@
     font-size: 12px;
 }
 
+.label_1 {
+    font-size: 14px;
+    font-weight:bold;
+}
+
 .head1 {
     font-family: "Lucida Console", "Courier New", monospace;
     font-size: 16px;
@@ -31,6 +36,22 @@
     margin-top: 0px;
     padding-top: 4px;
     border: black;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.replyButtonOT2 {
+    background-color: #009933;
+    width: 80px;
+    height: 30px;
+    color: white;
+    position: relative;
+    float: right;
+    margin-top: 4px;
+    padding-top: 4px;
+    border: black;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .replyButton {
@@ -43,23 +64,94 @@
     margin-top: 4px;
     margin-left: 11%;
     padding-top: 4px;
+    border: black;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.replyButtonMenu {
+    background-color: #009933;
+    width: 82px;
+    height: 30px;
+    color: white;
+    position: relative;
+    /* display: inline-block; */
+    margin-left: 0px;
+    /* padding-top: 5px; */
+    border: black;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.replyButton_ng {
+    background-color: #009933;
+    width: 75%;
+    height: 29px;
+    color: white;
+    position: relative;
+    display: inline-block;
+    margin-top: 4px;
+    margin-left: 11%;
+    padding-top: 4px;
+    border: black;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.dropdown {
+    height: 100px;
+    width: 200px;
+    float:right;
+    margin-top: 0px;
+}
+
+.responseControlPanelButton{
+    background-color: #009933;
+    width: 7%;
+    height: 80%;
+    color: white;
+    position: relative;
+    display: inline-block;
+    margin-top: 2px;
+    /* margin-left: 11%; */
+    padding-top: 4px;
+    border: black;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .returnToForumButton {
     background-color: #009933;
     width: 100px;
-    height: 50px;
+    height: 35px;
     color: white;
     position: relative;
     float: right;
-    margin-top: 4px;
-    padding-top: 13px;
+    margin-top: 11px;
+    padding-top: 7px;
     border: black;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.returnToForumButton {
+    background-color: #009933;
+    width: 100px;
+    height: 35px;
+    color: white;
+    position: relative;
+    float: right;
+    margin-top: 11px;
+    padding-top: 7px;
+    border: black;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
 }
 
 .Container_Main {
-    /* height: 1200px; */
-    min-height: 1050px;
+    height: 1000px;
+    /* min-height: 1050px; */
     width: 1230px;
     /*border-color: black;*/
     border-style: solid;
@@ -138,7 +230,7 @@
     border-width: thin;
     height: 41px;
     /* width: 850px; */
-    width: 72%;
+    width: 60%;
     padding: 5px;
     margin-left: 5px;
     margin-top: 5px;
@@ -155,6 +247,26 @@
     width: 25px;
     margin-right: 5px;
     cursor: pointer;
+}
+
+.brightness {
+    display: inline-block;
+
+}
+.brightness img:hover {
+    opacity: .5;
+}
+
+.brightness button:hover {
+    opacity: .5;
+}
+/* .bglow {
+    display: inline-block;
+} */
+
+.bglow img:hover {
+    color:#00e64d;
+    box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
 }
 
 .stMeta {
@@ -198,19 +310,16 @@
 .footer {
     height: 60px;
     width: 1230px;
-    background-color: #98d7ad;
+    background-color: #8a9f60;
     border-style: solid;
     border-color: black;
     border-width: thin;
     position: relative;
-    /* bottom: 0; */
     font-size: 20px;
     font-style: bold;
     color: black;
     font-style: bold;
-    /* padding-top: 0.75%; */
     padding-left: 5px;
-    
     float: left;
 }
 
@@ -238,6 +347,7 @@
     min-height: 50px;
     height: auto;
     float: left;
+    overflow-wrap: break-word;
 }
 
 .feedback2 {
@@ -254,6 +364,17 @@
     margin-bottom: 5px
 }
 
+.reply_op {
+    margin-top: 5px;
+    color: black;
+    float:left;
+    /* border-style: solid;
+    border-color: black;
+    border-width: thin; */
+    height: 41px;
+    width: 12%;
+}
+
 .reply {
     margin-top: 5px;
     color: black;
@@ -265,7 +386,13 @@
     width: 9%;
 }
 
-
+.responseControlPanel {
+    margin-top: 5px;
+    color: black;
+    float:left;
+    height: 35px;
+    width: 100%;
+}
 
 .menuButton {
     border:2px solid #000000;
@@ -340,3 +467,105 @@
     overflow: auto;
     resize: none;
 }
+
+.mat-select-panel {
+    background: blue;
+}
+
+.mat-menu-content {
+    width: 50px;
+    height: 25px;
+}
+
+.mat-menu {
+    background: blue;
+}
+
+
+/* Toggle Slider Properties */
+.stV_label {
+    width: 2%;
+    height: 100%;
+    padding-top: 15px;
+    padding-left: 5px;
+    float: left;
+    /* border-style: solid;
+    border-color: black;
+    border-width: thin; */
+}
+
+.stV_slider {
+    width: 45%;
+    height: 100%;
+    float: left;
+    padding-top: 3px;
+    padding-left: 6%;
+    /* border-style: solid;
+    border-color: black;
+    border-width: thin; */
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #009933;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #009933;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+
+  }

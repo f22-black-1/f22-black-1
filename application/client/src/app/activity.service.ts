@@ -62,4 +62,16 @@ export class ActivityService {
   }
 
   //TODO: finish CRUD operations
+  //Create a new activity and post to the DB
+  createActivity(activity: Activity): Observable<any> {
+    
+    // This log will be useful when adding front-end code
+    console.log(`Creating ACTIVITY: ${activity.activitytype}`)
+
+    return this.http.post<Activity>(`http://localhost:8080/api/activity/create`, activity)
+    .pipe(
+      tap(_ => this.log(`created new ${activity.activitytype}`)), // TODO: determine which id this returns
+      catchError(this.handleError<Activity>('createPest')));
+
+  }
 }

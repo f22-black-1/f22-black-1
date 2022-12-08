@@ -6,6 +6,7 @@ export interface responses {
     createdate: Date,
     subject: string,
     comment: string,
+    username: string,
 }
 
 export interface responseTable {

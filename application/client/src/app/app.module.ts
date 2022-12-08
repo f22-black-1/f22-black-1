@@ -35,7 +35,8 @@ import { PestUpdateComponent } from './pest-update/pest-update.component'
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ActivityComponent } from './activity/activity.component';
 import { PestInfoComponent } from './pest-info/pest-info.component'
-
+import { MatMenuModule } from '@angular/material/menu';
+import { ThreadComponent } from './thread/thread.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { PestInfoComponent } from './pest-info/pest-info.component'
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatMenuModule
   ],
   declarations: [
     AppComponent,
@@ -75,6 +77,7 @@ import { PestInfoComponent } from './pest-info/pest-info.component'
     PestUpdateComponent,
     ActivityComponent,
     PestInfoComponent,
+    ThreadComponent,
   ],
   exports: [
     //GoogleMapsModule

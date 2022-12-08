@@ -1,16 +1,42 @@
+// export interface SummaryThread_Prev {
+//     threadid: string; 
+//     incidentid: number;
+//     locid: number;
+//     creatorid: string;
+//     createdate: Date;
+//     subject: string;
+//     comment: string;
+//     imagepath: string;
+//     iconpath: string;
+//     record_count: number;
+//     total_positive: number;
+//     reportdate: Date;
+//     pestid: string;
+//     pesttype: string;
+//     username: string;
+// }
+
 export interface SummaryThread_Prev {
-    threadid: string; 
-    incidentid: number;
-    locid: number;
+    reportid: string;
+    incidentid: string;
+    threadid: string;
+    locid: string;
+    submitterid: string;
+    reportsubmitterusername: string;
+    repcreationdate: Date;
     creatorid: string;
     createdate: Date;
     subject: string;
     comment: string;
-    imagepath: string;
+    pestimage: string;
     iconpath: string;
     record_count: number;
     total_positive: number;
+    pesttype: string;
+    pestid: string;
+    username: string;
 }
+
 
 export interface SummaryThread {
     threadid: number;
@@ -29,3 +55,67 @@ export interface SummaryThread {
     locVerified: boolean; //comment out
     imgVerified: boolean; //comment out
 }
+
+export interface PestTypeFilter {
+    pesttype: string;
+}
+
+
+export interface SummaryThreadwPestReport {
+    reportid: string;
+    incidentid: string;
+    threadid: string;
+    locid: string;
+    submitterid: string;
+    reportsubmitterusername: string;
+    repcreationdate: Date;
+    creatorid: string;
+    createdate: Date;
+    subject: string;
+    comment: string;
+    pestimage: string;
+    iconpath: string;
+    record_count: number;
+    total_positive: number;
+    pesttype: string;
+    pestid: string;
+    username: string;
+}
+
+export interface ThreadInput {
+    title: string;
+    comment: string;
+  }
+
+//used in step 1 of discussion thread creation
+  export interface IncidentData {
+    reportid: string;
+    locid: string;
+    submitterid: string;
+    pestid: string;
+    reportdate: Date;
+  }
+
+  export interface PestRepID {
+    reportid: string;
+  }
+
+  export interface ThreadID {
+    threadid: string;
+  }
+
+ export interface NewThreadData {
+    incidentid: string;
+    locid: string;
+    creatorid: string;
+    createdate: Date;
+    subject: string;
+    comment: string;
+ }
+
+ export interface NewOriginalResponse {
+    responseid: string;
+    userid: string;
+    responsedate: Date;
+    comment: string;
+ }
