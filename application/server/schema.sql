@@ -128,45 +128,45 @@ COPY PestReport FROM '/docker-entrypoint-initdb.d/csv/pestreport.csv' CSV HEADER
 
 --Updates Activity Table with values from other tables
 
-INSERT INTO Activity(ReportID)
-SELECT ReportID FROM PestReport;
+-- INSERT INTO Activity(ReportID)
+-- SELECT ReportID FROM PestReport;
 
-UPDATE Activity
-SET ActivityType = 'Incident'
-WHERE Activity.ActivityType IS NULL;
+-- UPDATE Activity
+-- SET ActivityType = 'Incident'
+-- WHERE Activity.ActivityType IS NULL;
 
-UPDATE Activity
-SET ActivityTS = NULL
-WHERE Activity.ActivityTS IS NULL;
+-- UPDATE Activity
+-- SET ActivityTS = NULL
+-- WHERE Activity.ActivityTS IS NULL;
 
-UPDATE Activity
-SET SubmitterID = 'Some_UserID'
-WHERE Activity.SubmitterID IS NULL;
+-- UPDATE Activity
+-- SET SubmitterID = 'Some_UserID'
+-- WHERE Activity.SubmitterID IS NULL;
 
-UPDATE Activity
-SET Submitter = 'Some_User'
-WHERE Activity.Submitter IS NULL;
+-- UPDATE Activity
+-- SET Submitter = 'Some_User'
+-- WHERE Activity.Submitter IS NULL;
 
-UPDATE Activity
-SET PestType = PestReport.PestType FROM PestReport
-WHERE Activity.ReportID = PestReport.ReportID AND PestReport.PestType IS NOT NULL;
+-- UPDATE Activity
+-- SET PestType = PestReport.PestType FROM PestReport
+-- WHERE Activity.ReportID = PestReport.ReportID AND PestReport.PestType IS NOT NULL;
 
-UPDATE Activity
-SET SubmitterID = PestReport.SubmitterID FROM PestReport
-WHERE Activity.ReportID = PestReport.ReportID AND PestReport.SubmitterID IS NOT NULL;
+-- UPDATE Activity
+-- SET SubmitterID = PestReport.SubmitterID FROM PestReport
+-- WHERE Activity.ReportID = PestReport.ReportID AND PestReport.SubmitterID IS NOT NULL;
 
-UPDATE Activity
-SET Submitter = Users.UserName FROM Users
-WHERE Activity.SubmitterID = Users.UserID::VARCHAR AND Activity.SubmitterID IS NOT NULL;
+-- UPDATE Activity
+-- SET Submitter = Users.UserName FROM Users
+-- WHERE Activity.SubmitterID = Users.UserID::VARCHAR AND Activity.SubmitterID IS NOT NULL;
 
-UPDATE Activity
-SET PestDescription = PestReport.PestDescription FROM PestReport
-WHERE Activity.ReportID = PestReport.ReportID AND PestReport.PestDescription IS NOT NULL;
+-- UPDATE Activity
+-- SET PestDescription = PestReport.PestDescription FROM PestReport
+-- WHERE Activity.ReportID = PestReport.ReportID AND PestReport.PestDescription IS NOT NULL;
 
-UPDATE Activity
-SET ReportText = PestReport.ReportText FROM PestReport
-WHERE Activity.ReportID = PestReport.ReportID AND PestReport.ReportText IS NOT NULL;
+-- UPDATE Activity
+-- SET ReportText = PestReport.ReportText FROM PestReport
+-- WHERE Activity.ReportID = PestReport.ReportID AND PestReport.ReportText IS NOT NULL;
 
-UPDATE Activity
-SET ActivityTS = PestReport.ReportDate FROM PestReport
-WHERE Activity.ReportID = PestReport.ReportID AND PestReport.ReportDate IS NOT NULL;
+-- UPDATE Activity
+-- SET ActivityTS = PestReport.ReportDate FROM PestReport
+-- WHERE Activity.ReportID = PestReport.ReportID AND PestReport.ReportDate IS NOT NULL;

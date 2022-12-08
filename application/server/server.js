@@ -305,11 +305,12 @@ app.route(`/api/thread/addCreationThread`).post((req, res) => {
   '${req.body.comment}' as comment
   returning threadid;`
 
-  query2 = `INSERT INTO activity(submitterid,submitter,reporttext,activitytype)
+  query2 = `INSERT INTO activity(submitterid,submitter,reporttext,activitytype,activityts)
   VALUES('${req.body.creatorid}',
          '${req.body.creatorid}',
          '${req.body.comment}',
-         'Thread'  
+         'Thread',
+         CURRENT_TIMESTAMP  
          );
          UPDATE Activity
          SET Submitter = Users.UserName FROM Users
@@ -448,13 +449,14 @@ app.route(`/api/createThreadResponse`).post((req, res) => {
   query = `insert into threadresponse (threadid, userid, responsedate, comment)
   SELECT '${reqresponse.ThreadID}' as threadid, '${reqresponse.UserID}' as userid, '${reqresponse.ResponseDate}' as responsedate, '${reqresponse.Comment}' as comment;`
 
-  query2 = `INSERT INTO activity(threadid,submitterid,submitter,reporttext,activitytype)
+  query2 = `INSERT INTO activity(threadid,submitterid,submitter,reporttext,activitytype,activityts)
            VALUES(
             '${reqresponse.ThreadID}',
             '${reqresponse.UserID}',
             'PestPatrolUser',
             '${reqresponse.Comment}',
-            'Thread Response'
+            'Thread Response',
+             CURRENT_TIMESTAMP
            );
            UPDATE Activity
            SET Submitter = Users.UserName FROM Users
