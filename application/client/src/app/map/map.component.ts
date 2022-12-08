@@ -11,6 +11,11 @@ import * as mapStyle from "./map.component.style.json";
 // TODO: Merge Pest and Incident Data Structures
 import { Pest, PestMin, Incident, PestReport} from '../pest';
 
+//added for filter
+import { SummaryThread, SummaryThread_Prev, PestTypeFilter, ThreadInput, 
+  IncidentData, PestRepID, NewThreadData, ThreadID, NewOriginalResponse } from '../summary-thread';
+import { SummaryThreadService } from '../summary-thread.service';
+
 
 // See: https://github.com/angular/components/blob/main/src/google-maps/README.md
 
@@ -42,11 +47,17 @@ let InProgressPestList: InProgressPest[] = []
 
 export class MapComponent implements OnInit {
   constructor(
+    //added for filter, but appears to break things
+    // public summaryThreadService: SummaryThreadService,
     private  dialogRef : MatDialog,
     private pestService: PestService
     ) {}
   @ViewChild(GoogleMap, { static: false }) GoogleMap!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) infoWindow!: MapInfoWindow;
+
+  //added for filter
+  summaryThreadService: SummaryThreadService;
+  summaryThreadList: SummaryThread_Prev[] = [];
 
   mapHeight = "900px";
   mapWidth = "1720px"
@@ -275,26 +286,39 @@ export class MapComponent implements OnInit {
     
   }
 
-  // applyPestTypeFilter(pType: string): void {
-  //   this.ngOnInit(pType);
-  // }
-
+  //Filter button stuff, onRadioButtonChanged should trigger whenever filter button changes
+  //if not "ALL" getThreadsWithFilter, else if "All" getThreads. Both functions return Array<SummaryThread_Prev>
   //see pestOptionArray of filter componet for all of pest types
   pestTypeSelected: string = "ALL";
   
   onRadioButtonChanged(pestType: string){
     this.pestTypeSelected = pestType;
-    console.log(this.pestTypeSelected + " forum onRadioButtonChanged")
+    console.log(this.pestTypeSelected + " map onRadioButtonChanged")
 
-    // if(this.pestTypeSelected === "ALL")
-    // {
-    //   this.ngOnInit();
-    // }
-    // else
-    // {
-    //   this.applyPestTypeFilter(this.pestTypeSelected);
-    // }
+    if(this.pestTypeSelected != "ALL"){
+      this.getThreadsWithFilter(this.pestTypeSelected);
+    }else if(this.pestTypeSelected == "ALL"){
+      this.getThreads();
+    }
   }
 
+  getThreadsWithFilter(pType: string): Array<SummaryThread_Prev> {
+    let pTypeFilter: PestTypeFilter = {
+      pesttype: pType,
+    }
 
+    this.summaryThreadService.getThreadsWithFilter(pTypeFilter)
+    .subscribe(stlp => this.summaryThreadList = stlp);
+
+    console.log(this.summaryThreadList)
+    return this.summaryThreadList
+  }
+  
+  getThreads(): Array<SummaryThread_Prev> {
+    this.summaryThreadService.getThreads()
+    .subscribe(stlp => this.summaryThreadList = stlp);
+
+    console.log(this.summaryThreadList)
+    return this.summaryThreadList
+  }
 }
