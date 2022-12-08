@@ -178,10 +178,8 @@ export class ExpandedDiscussionViewComponent implements OnInit {
     this.router.navigate(['../forum']);
   }
 
-  doSomething(): void {
+  openPestInfoWindow(): void {
     this.dialogRef.open(PestInfoComponent, {
-      height: '33%',
-      width: '33%',
       data: {incidentID: this.receivedThreadItem.incidentid}
     });
   }

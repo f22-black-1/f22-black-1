@@ -1,0 +1,63 @@
+.content {
+    background-color: #49693f;
+    padding: 15px 15px;
+}
+
+img {
+    float:left;
+    width: 30%;
+    height: auto;
+    padding-right: 10px;
+}
+
+.info img {
+    float: right;
+    width: auto;
+    height: 24px;
+    margin: 0px 5px;
+}
+
+.info h2 {
+    display: inline-block;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li p {
+    display: inline;
+    margin: 0px 5px;
+    word-wrap: break-word;
+}
+
+li div {
+    font-family:'Courier New', Courier, monospace;
+    text-transform: uppercase;
+    display: inline-block;
+    margin: 0px 5px;
+    padding: 6px 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: justify;
+}
+
+.severity-low {
+    background-color: #f5bb3e;
+}
+
+.severity-medium {
+    background-color: #e98d58;
+}
+
+.severity-high {
+    background-color: #f73720;
+}
+
+.severity-venomous {
+    background-color: #7b1fa2;
+}
+
+.severity-poisonous {
+    background-color: #7b1fa2;
+}

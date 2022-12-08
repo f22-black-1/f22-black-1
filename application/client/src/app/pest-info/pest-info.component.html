@@ -1,3 +1,29 @@
-<h1>The pest is: {{pest.pestname}}</h1>
+<h1 mat-dialog-title>Pest Info</h1>
 
-<p>pest-info works!</p>
+<div mat-dialog-content *ngIf="pest" class="content">
+    <img src="{{pest.pestimage}}" onerror="this.onerror=null; this.src='../../assets/Incident_Report_Images/PestImage_Unknown.PNG'">
+    
+    <div class="info">
+        <h2>{{pest.pestname}}<img src="../../assets/icons/{{pest.pesttype | lowercase}}.png" onerror="this.style.display='none'"></h2>
+        
+        <ul>
+            <li><h2>Type:</h2><p>{{pest.pesttype}}</p></li>
+            <li>
+                <h2>Severity:</h2>
+                <div [ngSwitch]="true">
+                    <div *ngSwitchCase="pest.severity.toLowerCase().startsWith('low')" class="severity-low">{{pest.severity}}</div>
+                    <div *ngSwitchCase="pest.severity.toLowerCase().startsWith('medium')" class="severity-medium">{{pest.severity}}</div>
+                    <div *ngSwitchCase="pest.severity.toLowerCase().startsWith('high')" class="severity-high">{{pest.severity}}</div>
+                    <div *ngSwitchCase="pest.severity.toLowerCase().startsWith('venomous')" class="severity-venomous">{{pest.severity}}</div>
+                    <div *ngSwitchCase="pest.severity.toLowerCase().startsWith('poisonous')" class="severity-poisonous">{{pest.severity}}</div>
+                    <div *ngSwitchDefault>{{pest.severity}}</div>
+                </div>
+            </li>
+            <li><h2>Description:</h2><p>{{pest.pestdescription}}</p></li>
+        </ul>
+    </div>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</div>
