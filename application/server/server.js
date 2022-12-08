@@ -305,6 +305,17 @@ app.route(`/api/thread/addCreationThread`).post((req, res) => {
   '${req.body.comment}' as comment
   returning threadid;`
 
+  query2 = `INSERT INTO activity(submitterid,submitter,reporttext,activitytype)
+  VALUES('${req.body.creatorid}',
+         '${req.body.creatorid}',
+         '${req.body.comment}',
+         'Thread'  
+         );
+         UPDATE Activity
+         SET Submitter = Users.UserName FROM Users
+         WHERE Activity.SubmitterID = Users.UserID::VARCHAR;`
+
+
   const queryDB = async () => {
     try {
         const q = await pool.query(query);
@@ -317,8 +328,21 @@ app.route(`/api/thread/addCreationThread`).post((req, res) => {
         res.status(500).send()
       }
   };
+  const queryDB2 = async () => {
+    try {
+        const q = await pool.query(query2);
+        console.log("logging activity: ");
+        //res.status(201).send(q.rows[0].threadid);
+        res.status(201).send(q.rows[0]);
+        //res.status(201).send(q.rows);
+      } catch (err) {
+        console.log(err);
+        res.status(500).send()
+      }
+  };
 
   queryDB();
+  queryDB2();
 })
 
 //Create new discussion thread -- Step 3.5: get newly created threadid
@@ -424,6 +448,18 @@ app.route(`/api/createThreadResponse`).post((req, res) => {
   query = `insert into threadresponse (threadid, userid, responsedate, comment)
   SELECT '${reqresponse.ThreadID}' as threadid, '${reqresponse.UserID}' as userid, '${reqresponse.ResponseDate}' as responsedate, '${reqresponse.Comment}' as comment;`
 
+  query2 = `INSERT INTO activity(threadid,submitterid,submitter,reporttext,activitytype)
+           VALUES(
+            '${reqresponse.ThreadID}',
+            '${reqresponse.UserID}',
+            'PestPatrolUser',
+            '${reqresponse.Comment}',
+            'Thread Response'
+           );
+           UPDATE Activity
+           SET Submitter = Users.UserName FROM Users
+           WHERE Activity.SubmitterID = Users.UserID::VARCHAR;`
+
   const queryDB = async () => {
     try {
       const q = await pool.query(query);
@@ -435,7 +471,19 @@ app.route(`/api/createThreadResponse`).post((req, res) => {
     }
   };
 
+  const queryDB2 = async () => {
+    try {
+      const q = await pool.query(query2);
+      console.log(q.command)
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+
   queryDB();
+  queryDB2();
 })
 
 //Delete response
@@ -769,52 +817,52 @@ app.route(`/api/activity/`).get((req, res) => {
 })
 
 //Add a new activity
-app.route('/api/activity/create').post((req, res) => {
+// app.route('/api/activity/create').post((req, res) => {
     
-  console.log(req.body);
+//   console.log(req.body);
 
-  activityToCreate = activityObj;
+//   activityToCreate = activityObj;
 
-  activityToCreate.ActivityType = req.body.ActivityType;
-  activityToCreate.ReportID = req.body.ReportID;
-  activityToCreate.PestName = req.body.PestType;
-  activityToCreate.SubmitterID = req.body.SubmitterID;
-  activityToCreate.Submitter = req.body.Submitter;
-  activityToCreate.PestDescription = req.body.PestDescription
-  activityToCreate.ReportText = req.body.ReportText
-
-
-  console.log(activityToCreate)
+//   activityToCreate.ActivityType = req.body.ActivityType;
+//   activityToCreate.ReportID = req.body.ReportID;
+//   activityToCreate.PestName = req.body.PestType;
+//   activityToCreate.SubmitterID = req.body.SubmitterID;
+//   activityToCreate.Submitter = req.body.Submitter;
+//   activityToCreate.PestDescription = req.body.PestDescription
+//   activityToCreate.ReportText = req.body.ReportText
 
 
-
-  const query = `INSERT INTO Activity(ActivityType, ReportID, PestName, SubmitterID, Submitter, PestDescription, ReportText) 
-                  VALUES (
-                          'Incident',
-                          '${activityToCreate.ReportId}',
-                          '${activityToCreate.PestType}',
-                          '${activityToCreate.SubmitterID}',
-                          '${activityToCreate.Submitter}',
-                          '${activityToCreate.PestDescription}',
-                          '${activityToCreate.ReportText}'
-                                         );`
+//   console.log(activityToCreate)
 
 
 
-  const queryDB = async () => {
-    try {
-      const q = await pool.query(query);
-      console.log(q.command)
-      res.status(201).send()
-    } catch (err) {
-      console.log(err);
-      res.status(500).send()
-    }
-  };
+//   const query = `INSERT INTO Activity(ActivityType, ReportID, PestName, SubmitterID, Submitter, PestDescription, ReportText) 
+//                   VALUES (
+//                           'Incident',
+//                           '${activityToCreate.ReportId}',
+//                           '${activityToCreate.PestType}',
+//                           '${activityToCreate.SubmitterID}',
+//                           '${activityToCreate.Submitter}',
+//                           '${activityToCreate.PestDescription}',
+//                           '${activityToCreate.ReportText}'
+//                                          );`
+
+
+
+//   const queryDB = async () => {
+//     try {
+//       const q = await pool.query(query);
+//       console.log(q.command)
+//       res.status(201).send()
+//     } catch (err) {
+//       console.log(err);
+//       res.status(500).send()
+//     }
+//   };
   
-  queryDB();
+//   queryDB();
 
-})
+// })
 
 // // Get pest by id
 // // app.route(`/api/pest/id`).get((req, res) => {
