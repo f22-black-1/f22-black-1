@@ -43,13 +43,10 @@ let pestObj = {
 let tidObj = { 
   reqThreadID: String,
   reqUserID: String
-<<<<<<< HEAD
-=======
 }
 
 let iidObj = {
   reqIncidentID: String
->>>>>>> 6c14382dc02a88c0193bf029595562e668a5be7f
 }
 
 let responseObj = {
