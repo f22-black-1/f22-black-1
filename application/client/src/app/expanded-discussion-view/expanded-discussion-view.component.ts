@@ -8,6 +8,7 @@ import { SummaryThread_Prev } from '../summary-thread';
 import { SummaryThreadService } from "../summary-thread.service";
 import { responses, responseTable, newResponse, feedback } from "../expanded-thread";
 import { ExpandedThreadService } from "../expanded-thread.service";
+import { PestInfoComponent } from '../pest-info/pest-info.component';
 import { CurrentUser } from '../login'
 import { UserinfocardComponent } from '../userinfocard/userinfocard.component';
 import { UserInfo, CurrentUser_t } from '../userinfo';
@@ -41,7 +42,11 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   public mtData: CurrentUser_t;
   
   constructor(private sumThreadService:SummaryThreadService, private expThreadService: ExpandedThreadService,
+<<<<<<< HEAD
     private router: Router, public infoCard: MatDialog) { 
+=======
+    private  dialogRef: MatDialog, private router: Router, public infoCard: MatDialog) { 
+>>>>>>> 6c14382dc02a88c0193bf029595562e668a5be7f
     this.signedInUser = this.generateUser();
   }
 
@@ -299,6 +304,15 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   
   printResponse(): void {
     console.log("click even triggered");
+<<<<<<< HEAD
+=======
+  }
+
+  openPestInfoWindow(): void {
+    this.dialogRef.open(PestInfoComponent, {
+      data: {incidentID: this.receivedThreadItem.incidentid}
+    });
+>>>>>>> 6c14382dc02a88c0193bf029595562e668a5be7f
   }
 
 }

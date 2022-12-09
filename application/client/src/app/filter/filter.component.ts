@@ -15,7 +15,7 @@ export class FilterComponent implements OnInit {
   }
 
   radioSelected:string="ALL";
-  pestOptionArray:string[] = ["ALL", "Ant", "Bee", "Canine", "Feline", "Racoon", "Snake", "Wasp", "Unknown"];
+  pestOptionArray:string[] = ["ALL", "Ant", "Bear", "Bee", "Canine", "Caterpillar", "Feline", "Fox", "Pig", "Plant","Racoon", "Rodent", "Snake", "Tick", "Wasp", "Unknown"];
 
   @Output()
   filterSelectedChanged: EventEmitter<string> = new EventEmitter<string>();

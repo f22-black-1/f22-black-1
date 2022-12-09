@@ -33,7 +33,8 @@ import { MatInputModule} from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select';
 import { PestUpdateComponent } from './pest-update/pest-update.component'
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { ActivityComponent } from './activity/activity.component'
+import { ActivityComponent } from './activity/activity.component';
+import { PestInfoComponent } from './pest-info/pest-info.component'
 import { MatMenuModule } from '@angular/material/menu';
 import { ThreadComponent } from './thread/thread.component';
 import { UserinfocardComponent } from './userinfocard/userinfocard.component';
@@ -76,6 +77,7 @@ import { UserinfocardComponent } from './userinfocard/userinfocard.component';
     PestReportComponent,
     PestUpdateComponent,
     ActivityComponent,
+    PestInfoComponent,
     ThreadComponent,
     UserinfocardComponent,
   ],
