@@ -5,7 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Pest, Incident, PestReport, PestType, PestMin } from './pest';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { NONE_TYPE } from '@angular/compiler';
 
 @Injectable({ providedIn: 'root' })
@@ -69,6 +69,19 @@ export class PestService {
       catchError(this.handleError<Pest>(`getAPest`)));
   }
 
+  // Get a single pest by incident ID
+  getAPestByIncidentID(incidentID: string): Observable<Pest> {
+    
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('incidentid', incidentID);   
+    console.log(`fetched pest from DB`);
+
+    return this.http.post<Pest>('http://localhost:8080/api/pest/incidentpest', {params:queryParams})
+    .pipe(
+      tap(_=> this.log(`fetched a pest`)),
+      catchError(this.handleError<Pest>(`getAPestReportByIncidentID`)));
+  }
+
   /** PUT (update) a pest in the DB with a given id */
   updatePest(pest: Pest): Observable<any> {
 
@@ -109,7 +122,7 @@ export class PestService {
       this.log('fetched incidents from DB');
   
   
-      return this.http.get<PestReport[]>(`http://localhost:8080/api/pestreports/`)  
+    return this.http.get<PestReport[]>(`http://localhost:8080/api/pestreports/`)  
       .pipe(
         tap(_ => this.log(`fetched all pestreports`)),
         catchError(this.handleError<PestReport[]>('getPestReports', []))
