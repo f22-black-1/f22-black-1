@@ -1,6 +1,20 @@
 <form>
-    <label for="PestID">Pest ID</label><br>
-    <input type="text" id="PestID" name="id" size="50" #id>
+    <label for="PestID">Select Pest Name from dropdown box for more pest info</label><br>
+    <mat-form-field appearance="fill">
+        <mat-select [(ngModel)]="pest" name="pest" (selectionChange)="splitString()">
+            <mat-option *ngFor="let pest of pests" [value]="pest">
+                {{pest.pestname}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <p>Selected Pest Type: {{pest.pesttype}}</p>
+    <p>Selected Pest Severity: {{pest.severity}}</p>
+    <p>Description: {{pest.pestdescription}}</p>
+    <a href="https://en.wikipedia.org/wiki/{{test2}}">Link to more info</a><br><br>
+    <img src="{{pest.pestimage}}" alt="A picture of {{pest.pestname}}" width="500" height="500">
+   
+
+    <!-- <input type="text" id="PestID" name="id" size="50" #id>
     <mat-list-item><button (click)="getPestDetails(id.value)">Search</button></mat-list-item><br><br>
     
     <label for="PestName">Pest Name</label><br>
@@ -11,5 +25,5 @@
     <input type="text" id="severity" name="severity" value={{pest.severity}} size="50" #psev><br><br>
     <label for="Pest Description">Pest Description</label><br>
     <input type="text" id="pdesc" name="pdesc" value={{pest.pestdescription}} size="75" #pdesc>
-    <mat-list-item><button (click)="updatePest(pname.value, ptype.value, psev.value, pdesc.value)">Update</button></mat-list-item><br><br>
+    <mat-list-item><button (click)="updatePest(pname.value, ptype.value, psev.value, pdesc.value)">Update</button></mat-list-item><br><br> -->
 </form>

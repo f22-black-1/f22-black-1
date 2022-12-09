@@ -18,13 +18,38 @@ export class PestUpdateComponent implements OnInit {
     pestdescription: "",
     pestimage: ""
   }
+  pests: Pest[] = []
+
+  test: string [] = []
+  test2: string = ""
 
   constructor(private pestService: PestService) { }
 
-
- 
   ngOnInit(): void {
+    this.pestService.getPests().subscribe(pests => this.pests = pests)
   }
+
+  splitString(){
+    this.test = this.pest.pestname.split(" ");
+    console.log(this.test);
+    this.test.push("(");
+    this.test2 = "";
+    let str1: string = "";
+    let str: string = "";
+    let i: number = 0;
+    console.log(this.test.length);
+    while(!(this.test[i].includes("("))){
+      console.log(i);
+      str = this.test[i];
+      str1 += str + "_";
+      i++;
+    }
+    let c: number =0;
+    this.test2 = str1.substring(0,str1.length-1);
+    console.log(this.test2);
+    
+  }
+  
 
   getPestDetails(val: string){
     this.pest.pestid = val;
