@@ -3,8 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
+import { Router, Route } from '@angular/router';
+
 import { SummaryThread, SummaryThread_Prev, PestTypeFilter, 
   IncidentData, PestRepID, NewThreadData, ThreadID, NewOriginalResponse } from './summary-thread';
+
+import { ExpandedThreadService } from './expanded-thread.service';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -13,7 +17,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class SummaryThreadService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router, 
+    private expThreadService: ExpandedThreadService) {
    }
 
   private summaryThreadsUrl = 'api/forum';  // URL to web  
@@ -97,6 +102,18 @@ export class SummaryThreadService {
          catchError(this.handleError<SummaryThread_Prev[]>('getThreads', [])));
     }
 
+    getThreadByID(tid: string): Observable<SummaryThread_Prev> {
+      let tidInt: ThreadID = {
+        threadid: tid,
+      }
+      console.log('fetched thread: ' + tid);
+
+      return this.http.post<SummaryThread_Prev>('http://localhost:8080/api/summaryThreadList/threadid', tidInt)
+       .pipe(
+         tap(_ => this.log(`fetched thread id: ${tidInt.threadid}`)),
+         catchError(this.handleError<SummaryThread_Prev>('getThread')));
+    }
+
     updateSelectedThread(tid: string) {
       this.selectedThreadID.next(tid);
     }
@@ -106,7 +123,28 @@ export class SummaryThreadService {
       this.saveToLocalStorage(this.selectedThreadItem);
     }
 
+    expandThread(threadid: string, inExpComp: boolean = false): void {
+      this.getThreadByID(threadid).subscribe(data => this.selectedThreadItem = data);
+      this.expThreadService.selectedThread = this.selectedThreadItem;
+
+      if(inExpComp == true)
+      {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['./expanded-discussion-view']);
+      }
+      else(inExpComp == false)
+      {
+        this.router.navigate(['../expanded-discussion-view']);
+      }
+
+      //Update selected thread with new thread
+      this.updateSelectedThread(threadid);
+      this.updateSelectedThreadItem(this.selectedThreadItem);
+    }
+
     getSelectedThreadItem(): SummaryThread_Prev {
+      // console.log("thread id before eval: " + this.selectedThreadItem.threadid);
       if(this.selectedThreadItem === undefined || this.selectedThreadItem === null )
       {
         console.log('value not found. Retrieving last selected thread data');

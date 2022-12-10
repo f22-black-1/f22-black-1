@@ -6,12 +6,14 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { responses, responseTable, newResponse, feedback } from './expanded-thread';
+import { SummaryThread_Prev } from './summary-thread';
 import { UniqueSelectionDispatcher } from '@angular/cdk/collections';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExpandedThreadService {
+  public selectedThread: SummaryThread_Prev;
 
   constructor(private http: HttpClient) { }
 

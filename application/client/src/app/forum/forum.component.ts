@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { SummaryThread, SummaryThread_Prev, PestTypeFilter, ThreadInput, 
   IncidentData, PestRepID, NewThreadData, ThreadID, NewOriginalResponse } from '../summary-thread';
 import { SummaryThreadService } from '../summary-thread.service';
+import { ExpandedThreadService} from '../expanded-thread.service';
 import { ThreadComponent } from '../thread/thread.component';
 import { CurrentUser } from '../login'
 import { UserinfocardComponent } from '../userinfocard/userinfocard.component';
@@ -39,11 +40,13 @@ export class ForumComponent implements OnInit {
   currentUser: CurrentUser;
 
   modalThread: string;
-  mtData: CurrentUser_t;
+
+  iconPathDefault: string = "";
+  imgPathDefault: string = "../../assets/logo/Pest_Patrol_Logo.svg";
 
   
-  constructor(public summaryThreadService: SummaryThreadService, public threadCreationWindow: MatDialog,
-    public infoCard: MatDialog) {}
+  constructor(public summaryThreadService: SummaryThreadService, public expThreadService: ExpandedThreadService,
+    public threadCreationWindow: MatDialog, public infoCard: MatDialog) {}
   
   ngOnInit(pestTypeFilter: string = ""): void {
     this.currentUser = this.generateUser(); //temp -- be sure to replace when permanent method is developed
@@ -58,7 +61,7 @@ export class ForumComponent implements OnInit {
       //forum opens with no pest type filter
       this.getThreads();
     }
-
+  
     this.generateIndexes();
   }
 
@@ -68,26 +71,31 @@ export class ForumComponent implements OnInit {
       username: uName,
     }
     const userInfo = this.infoCard.open(UserinfocardComponent, {
-      data: {userid: selectedUser.userid, username: selectedUser.username, 
-        modalThread: this.modalThread}
+      data: {userid: selectedUser.userid, username: selectedUser.username}
     });
 
-    userInfo.afterClosed().subscribe(result => this.mtData = result);
+    userInfo.afterClosed().subscribe(result => {this.modalThread = result;
+      if(this.modalThread != undefined)
+        this.summaryThreadService.expandThread(this.modalThread);
+      else
+        console.log("matdialog error");
+    });
 
-    console.log("Selected comp thread: " + this.mtData.threadid);
+    console.log("Selected comp thread: " + this.modalThread);
   }
 
   openThreadCreationWindow(repID: string): void {
     const entryInt = this.threadCreationWindow.open(ThreadComponent, {
       width: '350px',
       // threadinput: {title: this.inputTitle, comment: this.inputComment}
-      data: {name: this.inputTitle, animal: this.inputComment}
+      data: {subject: this.inputTitle, comment: this.inputComment}
     });
 
-    entryInt.afterClosed().subscribe(result => {console.log("window closed"); this.newInput = result;
-    console.log("new input title" + this.newInput.title + " -- new input comment" + this.newInput.comment);
-    this.createNewDiscussionThread(repID);
-  });
+    // entryInt.afterClosed().subscribe(result => {console.log("window closed"); this.newInput = result;
+    // console.log("new input title" + this.newInput.title + " -- new input comment" + this.newInput.comment);
+    // this.createNewDiscussionThread(repID);
+    entryInt.afterClosed().subscribe(result => {this.newInput = result; this.createNewDiscussionThread(repID);});
+
     console.log("double outside function: " + this.ntidString);
   }
 
@@ -162,6 +170,7 @@ export class ForumComponent implements OnInit {
   sendSelectedIndex(tid: string): void {
     var selectedIndex = this.getSelectedIndex(tid);
     this.summaryThreadService.updateSelectedThread(tid); //temp -- remove later
+    this.expThreadService.selectedThread = this.summaryThreadList[selectedIndex];
     console.log('selected thread id: ' + this.summaryThreadList[selectedIndex].threadid);
     this.summaryThreadService.updateSelectedThreadItem(this.summaryThreadList[selectedIndex]);
   }
@@ -192,6 +201,8 @@ export class ForumComponent implements OnInit {
       reportdate: this.creationTimeStamp
     }
 
+    console.log("on step 1 - adding incident");
+
     this.summaryThreadService.addNewIncident(newIncidentData).subscribe(
       (data)=>{}), 
       (_err: any)=>{console.log("Error");
@@ -205,6 +216,8 @@ export class ForumComponent implements OnInit {
       subject: this.newInput.title,
       comment: this.newInput.comment
     }
+
+    console.log("on step 2 - adding thread");
 
     this.summaryThreadService.addNewThread(newThreadData).subscribe(
       id => {this.createFirstThreadResponse(id);});
@@ -230,8 +243,11 @@ export class ForumComponent implements OnInit {
   }
 
   printItem(): void {
-    console.log("threadID value: " + this.ntidString);
-    console.log("Creation timestampe: " + this.creationTimeStamp);
+    // console.log("threadID value: " + this.ntidString);
+    // console.log("Creation timestampe: " + this.creationTimeStamp);
+    //var temp = 'a2954011-5a55-4548-a162-d0f61b2f1ad7'; //test 6
+    var temp = '6e3da37a-78d7-4cd0-9f6b-31fba6371cf5'; //test 8
+    this.summaryThreadService.expandThread(temp.toString());
   }
 
   testIt(arrayId: string)

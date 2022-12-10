@@ -41,13 +41,15 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   public modalThread: string;
   public mtData: CurrentUser_t;
   
-  constructor(private sumThreadService:SummaryThreadService, private expThreadService: ExpandedThreadService,
+  constructor(private sumThreadService:SummaryThreadService, public expThreadService: ExpandedThreadService,
     private  dialogRef: MatDialog, private router: Router, public infoCard: MatDialog) { 
     this.signedInUser = this.generateUser();
   }
 
   ngOnInit(): void {
     this.receivedThreadItem = this.sumThreadService.getSelectedThreadItem();
+    // console.log("exp service thread id: " + this.expThreadService.selectedThread.threadid);
+    // this.receivedThreadItem = this.expThreadService.selectedThread;
     this.sumThreadService.currentThreadID.subscribe(idNum => this.receivedThreadID = idNum)
 
     this.getRps();
@@ -65,13 +67,17 @@ export class ExpandedDiscussionViewComponent implements OnInit {
       username: uName,
     }
     const userInfo = this.infoCard.open(UserinfocardComponent, {
-      data: {userid: selectedUser.userid, username: selectedUser.username, 
-        modalThread: this.modalThread}
+      data: {userid: selectedUser.userid, username: selectedUser.username}
     });
 
-    userInfo.afterClosed().subscribe(result => this.mtData = result);
+    userInfo.afterClosed().subscribe(result => {this.modalThread = result;
+      if(this.modalThread != undefined)
+        this.sumThreadService.expandThread(this.modalThread, true);
+      else
+        console.log("matdialog error");
+    });
 
-    console.log("Selected comp thread: " + this.mtData.threadid);
+    console.log("Selected comp thread: " + this.modalThread);
   }
 
   generateUser(): CurrentUser {
@@ -81,17 +87,16 @@ export class ExpandedDiscussionViewComponent implements OnInit {
     }
     return tempUser;
   }
-
   
   addNumbers(firstNumber: number, secondNumber: number): number {
-    // console.log("first number: " + firstNumber);
-    // console.log("second number: " + secondNumber);
 
     var numSum = Number(Number(firstNumber) + Number(secondNumber));
 
-    // console.log("number sum: " + numSum);
-
     return numSum;
+  }
+
+  updateReceivedThreadItem(threadItem: SummaryThread_Prev): void {
+    this.receivedThreadItem = threadItem;
   }
 
   getResponses(): Array<responses> {
