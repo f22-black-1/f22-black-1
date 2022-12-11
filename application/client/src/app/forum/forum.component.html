@@ -4,10 +4,10 @@
 <div class="summaryThreadContainer">
     <div *ngFor="let summaryThread_Prev of summaryThreadList" class="summaryThread shadow tag">
         <div class="stIncidentIcon">
-            <img src={{summaryThread_Prev.iconpath}}  alt="Icon Image" class="stImageFormats">
+            <img src={{this.imgPathDefault}} alt="Icon Image" class="stImageFormats">
         </div>
         <div class="stPestImage">
-            <img src={{summaryThread_Prev.pestimage}}  alt="Image Path" class="stPestImageFormats">
+            <img src={{summaryThread_Prev.pestimage}} onerror="this.onerror=null; src=this.imgPathDefault" alt="Image Path" class="stPestImageFormats">
         </div>
         <div *ngIf="this.summaryThread_Prev.threadid === null || this.summaryThread_Prev.threadid === ''; else dispThreadInfo">
             <div class="stDNE defaultContainerFormats">

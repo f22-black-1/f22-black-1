@@ -236,6 +236,39 @@ queryDB();
 })
 
 
+//filter by thread id
+app.route(`/api/summaryThreadList/threadid`).post((req, res) => {
+
+  console.log('--------------------------------------- TEST ---------------------------------------');
+  console.log(req.body.threadid);
+  console.log('--------------------------------------- TEST ---------------------------------------');
+
+  query = `SELECT pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username AS ReportSubmitterUsername, 
+  pestreport.reportdate AS RepCreationDate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, 
+  '../../assets/Incident_Report_Images/Incident_Coyote.png' AS iconPath, Count(threadfeedback.feedbackid) as Record_Count, 
+  coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive, pest.pesttype, pest.pestid, users.username
+  FROM (pest INNER JOIN (pestreport LEFT JOIN ((thread LEFT JOIN threadfeedback ON thread.threadid = threadfeedback.threadid) LEFT JOIN 
+  users ON thread.creatorid = users.userid) ON pestreport.incidentid = thread.incidentid) ON pest.pestid = pestreport.pestid) LEFT JOIN 
+  users AS users_1 ON pestreport.submitterid = users_1.userid
+  where (((thread.threadid)='${req.body.threadid}'))
+  GROUP BY pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username, 
+  pestreport.reportdate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, pest.pesttype, pest.pestid, users.username
+  ORDER BY pestreport.reportdate DESC;`
+
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.rows);
+      res.status(200).send(q.rows[0])
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+};
+
+queryDB();
+})
+
 //Create new discussion thread -- Step 1: Add record to incident table
 app.route(`/api/incident/createNewIncident`).post((req, res) => {
 
@@ -422,15 +455,6 @@ app.route(`/api/expandedThread/`).post((req, res) => {
   selectedThread.reqThreadID = req.body.params.updates[0].value
   selectedThread.reqUserID = req.body.params.updates[1].value
 
-  // query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid, thread.createdate, thread.subject, thread.comment, users.username
-  // FROM thread left join users on thread.creatorid = users.userid
-  // WHERE (((thread.threadid)='${selectedThread.reqThreadID}'))
-  // UNION ALL
-  // SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment, users.username
-  // FROM threadresponse left join users on threadresponse.userid = users.userid
-  // WHERE (((threadresponse.threadid)='${selectedThread.reqThreadID}') and ((threadresponse.responseid)<>'${selectedThread.reqThreadID}'))
-  // ORDER BY sort_order asc;`
-
   query = `SELECT 1 AS sort_order, thread.incidentid, thread.threadid, thread.creatorid as userid,
   thread.createdate, thread.subject, thread.comment, users.username,
   SUM(case threadfeedback.positive 
@@ -449,10 +473,12 @@ app.route(`/api/expandedThread/`).post((req, res) => {
       else 1
       end
     else 0
-    end) as CurrentUserFeedback
-  FROM (thread LEFT JOIN threadfeedback ON thread.ThreadID = threadfeedback.ResponseID) LEFT JOIN users ON thread.CreatorID = users.UserID
+    end) as CurrentUserFeedback,
+    pRep.pestimage
+  FROM ((thread LEFT JOIN threadfeedback ON thread.ThreadID = threadfeedback.ResponseID) LEFT JOIN users ON thread.CreatorID = users.UserID)
+  left join (select pestreport.reportid, pestreport.pestimage from pestreport) as pRep on thread.incidentid = pRep.reportid
   WHERE (((thread.threadid)='${selectedThread.reqThreadID}'))
-  GROUP BY thread.threadid, thread.incidentid, thread.creatorid, thread.createdate, thread.subject, thread.comment, users.username
+  GROUP BY thread.threadid, thread.incidentid, thread.creatorid, thread.createdate, thread.subject, thread.comment, users.username, pRep.pestimage
   union all 
   SELECT 2 AS Sort_Order, null AS incidentid, threadresponse.responseid, threadresponse.userid, 
   threadresponse.responsedate, 'Sub_Thread' AS subject, threadresponse.comment, users.username,
@@ -472,7 +498,8 @@ app.route(`/api/expandedThread/`).post((req, res) => {
       else 1
       end
     else 0
-    end) as CurrentUserFeedback
+    end) as CurrentUserFeedback,
+    '' as pestimage
   FROM (threadresponse LEFT JOIN users ON threadresponse.userid = users.userid) LEFT JOIN threadfeedback ON threadresponse.responseid = threadfeedback.responseid
   WHERE (((threadresponse.threadid)='${selectedThread.reqThreadID}') and ((threadresponse.responseid)<>'${selectedThread.reqThreadID}'))
   GROUP BY threadresponse.responseid, threadresponse.userid, threadresponse.responsedate, threadresponse.comment, users.username
@@ -711,7 +738,7 @@ app.route(`/api/userInfoRating`).post((req, res) => {
   queryDB();
 })
 
-//get all threads user has posted a message and message count/rating within thread
+//get all threads where user has posted a message and message count/rating within thread
 app.route(`/api/userThreadMetrics`).post((req, res) => {
 
   console.log("requested user id: " + req.body.userid);

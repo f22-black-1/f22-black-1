@@ -14,9 +14,11 @@ export class UserinfocardComponent implements OnInit {
   public currentUserInfo: UserInfo;
   public uiThreadList: UserInfoThread[] = [];
   public uiThread: UserInfoThread;
+  public output: string;
   
   constructor(public userInfo: MatDialogRef<UserinfocardComponent>, @Inject(MAT_DIALOG_DATA) public selectedUser: CurrentUser,
-  @Inject(MAT_DIALOG_DATA) public modalThread: string, private uiService: UserinfoService) {
+  private uiService: UserinfoService) {
+  // @Inject(MAT_DIALOG_DATA) public modalThread: string, private uiService: UserinfoService) {
     this.getUserInfo();
     this.getUserInfoByThread();
   }
@@ -25,8 +27,11 @@ export class UserinfocardComponent implements OnInit {
   }
 
   openNewDiscussionThread(tid: string): void {
-    this.modalThread = tid;
-    this.userInfo.close();
+    console.log("selecting thread id: " + tid);
+    // this.userInfo.close(tid);
+    this.output = tid;
+
+    this.userInfo.close(this.output);
   }
 
   getUserInfoByThread(): void {
@@ -57,7 +62,11 @@ export class UserinfocardComponent implements OnInit {
     return percent + "%";
   }
 
+  onClose(): void {
+    this.userInfo.close(this.output);
+  }
+
   onNoClick(): void {
-    this.userInfo.close();
+    this.onClose();
   }
 }

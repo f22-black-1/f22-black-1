@@ -10,6 +10,7 @@ export interface responses {
     positive_feedback: number,
     negative_feedback: number,
     currentuserfeedback: number,
+    pestimage: string,
 }
 
 export interface responseTable {

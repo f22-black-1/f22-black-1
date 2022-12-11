@@ -46,11 +46,13 @@
 .container_UserThreads {
     background-color: #98d7ad;
     height: 500px;
-    width: 852px;
+    width: 860px;
     border-width:thin;
     border-style:solid;
     border-color:black;
     text-align: center;
+    overflow:scroll;
+    overflow-x: hidden;
 }
 
 .info_headers {
