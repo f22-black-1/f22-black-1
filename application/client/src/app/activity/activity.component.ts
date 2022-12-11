@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Activity } from '../activity';
 import { ActivityService } from '../activity.service';
+import { SummaryThreadService } from '../summary-thread.service';
 
 @Component({
   selector: 'app-activity',
@@ -12,7 +13,7 @@ export class ActivityComponent implements OnInit {
   activities: Activity[] = [];
   activity!: Activity;
 
-  constructor(private activityService: ActivityService) { }
+  constructor(public summaryThreadService: SummaryThreadService, private activityService: ActivityService) { }
 
   ngOnInit(): void {
     this.getActivities();
@@ -26,6 +27,11 @@ export class ActivityComponent implements OnInit {
 
     return this.activities
 
+  }
+
+  printItem(): void {
+    var temp = 'b981e06d-fdc2-48ac-ba21-06c29bbd6e64';
+    this.summaryThreadService.expandThread(temp.toString());
   }
 
 

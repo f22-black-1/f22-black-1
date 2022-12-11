@@ -2,12 +2,14 @@
   <tr>
     <th>Recent Activity</th>
   </tr>
+  <!-- <tr><button (click)="this.printItem()">Debug Print</button></tr> -->
   <div *ngFor="let activity of activities">
     <tr>
       <!-- <a routerLink="/detail/{{activity.activityid}}"> -->
-      <a routerLink="/expanded-discussion-view">
+      <!-- <a routerLink="/expanded-discussion-view"> -->
+      <div class="clicker" (click)="this.printItem()">
         <td>New {{activity.activitytype}}: {{activity.submitter}} reported a(n) {{activity.pesttype}}</td>
-      </a>
+      </div>
     </tr>
   </div>  
 </table>
