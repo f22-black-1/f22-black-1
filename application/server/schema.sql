@@ -103,18 +103,20 @@ CREATE TABLE IF NOT EXISTS PestReport (
 
 CREATE TABLE IF NOT EXISTS Activity (
   ActivityID UUID UNIQUE PRIMARY KEY DEFAULT uuid_generate_v4 (),
-  ActivityType VARCHAR(255), -- IncidentReport, ThreadCreate, ThreadResponse, ThreedFeedback, etc.
+  ActivityType VARCHAR(255),
   ActivityTS TIMESTAMP,
   ReportID UUID,
   PestID UUID,
   PestType VARCHAR(255),
-  SubmitterID VARCHAR(100),
+  SubmitterID UUID,
   Submitter VARCHAR(100),
-  PestDescription TEXT,
   ReportText TEXT,
-  ThreadID UUID
---   ResponseID UUID, --NULL
---   FeedbackID UUID--NULL
+  IncidentID UUID,
+  ThreadID UUID,
+  ThreadSubject TEXT,
+  LocID UUID,
+  XCoord FLOAT,
+  YCoord FLOAT
 );
 
 COPY Neighborhood FROM '/docker-entrypoint-initdb.d/csv/neighborhood.csv' CSV HEADER;
