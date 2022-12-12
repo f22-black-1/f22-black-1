@@ -110,10 +110,10 @@ CREATE TABLE IF NOT EXISTS Activity (
   PestType VARCHAR(255),
   SubmitterID UUID,
   Submitter VARCHAR(100),
-  ReportText TEXT,
+  OutMessage VARCHAR(500),
   IncidentID UUID,
   ThreadID UUID,
-  ThreadSubject TEXT,
+  ThreadSubject VARCHAR(100),
   LocID UUID,
   XCoord FLOAT,
   YCoord FLOAT

@@ -65,7 +65,7 @@ let activityObj = {
   PestType: String,
   SubmitterID: String,
   Submitter: String,
-  ReportText: String,
+  OutMessage: String,
   IncidentID: String,
   ThreadID: String,
   ThreadSubject: String,
@@ -343,8 +343,8 @@ app.route(`/api/thread/addCreationThread`).post((req, res) => {
   '${req.body.comment}' as comment
   returning threadid;`
 
-  query2 = `INSERT INTO Activity(ReportID,IncidentID,LocID,SubmitterID,ActivityTS,ActivityType)
-  VALUES('${req.body.incidentid}','${req.body.incidentid}','${req.body.locid}','${req.body.creatorid}',CURRENT_TIMESTAMP,'Thread');
+  const query2 = `INSERT INTO Activity(ReportID,IncidentID,LocID,SubmitterID,ActivityTS,ActivityType,OutMessage)
+  VALUES('${req.body.incidentid}','${req.body.incidentid}','${req.body.locid}','${req.body.creatorid}',CURRENT_TIMESTAMP,'Thread',' created a new Thread: ${req.body.subject}');
   UPDATE Activity SET PestID = PestReport.PestID FROM PestReport WHERE Activity.ReportID = PestReport.ReportID;
   UPDATE Activity SET PestType = Pest.PestType FROM Pest WHERE Activity.PestID = Pest.PestID;
   UPDATE Activity SET Submitter = Users.Username FROM Users WHERE Activity.SubmitterID = Users.UserID;
@@ -527,9 +527,9 @@ app.route(`/api/createThreadResponse`).post((req, res) => {
   query = `insert into threadresponse (threadid, userid, responsedate, comment)
   SELECT '${reqresponse.ThreadID}' as threadid, '${reqresponse.UserID}' as userid, '${reqresponse.ResponseDate}' as responsedate, '${reqresponse.Comment}' as comment;`
 
-  query2 = `INSERT INTO Activity(ThreadID,SubmitterID,ActivityTS,ThreadSubject,ActivityType)
-            VALUES('${reqresponse.ThreadID}','${reqresponse.UserID}',CURRENT_TIMESTAMP,'${reqresponse.Comment}','Thread Response');
-            UPDATE Activity Set Submitter = Users.Username FROM Users WHERE Activity.SubmitterID = Users.UserID;`
+  query2 = `INSERT INTO Activity(ThreadID,SubmitterID,ActivityTS,ThreadSubject,ActivityType,OutMessage)
+            VALUES('${reqresponse.ThreadID}','${reqresponse.UserID}',CURRENT_TIMESTAMP,'${reqresponse.Comment}','Thread Response',CONCAT(' responded to a Thread: ', LEFT('${reqresponse.Comment}', 30), '...'));
+            UPDATE Activity SET Submitter = Users.Username FROM Users WHERE Activity.SubmitterID = Users.UserID;`
 
   const queryDB = async () => {
     try {
@@ -811,8 +811,8 @@ app.route('/api/pest/create').post((req, res) => {
                          );`
 
 
-const query2 = `INSERT INTO Activity(PestType, XCoord, YCoord, ActivityType, ActivityTS, Submitter)
-                VALUES ('${pestToCreate.pestType}', '${pestToCreate.xCoord}', '${pestToCreate.yCoord}', 'Incident', CURRENT_TIMESTAMP, 'Guest');
+const query2 = `INSERT INTO Activity(PestType, XCoord, YCoord, ActivityType, ActivityTS, Submitter, OutMessage)
+                VALUES ('${pestToCreate.pestType}', '${pestToCreate.xCoord}', '${pestToCreate.yCoord}', 'Pest Report', CURRENT_TIMESTAMP, 'Guest', ' reported a new ${pestToCreate.pestType}!');
                 UPDATE Activity SET SubmitterID = PestReport.SubmitterID FROM PestReport WHERE Activity.ReportID = PestReport.ReportID AND PestReport.SubmitterID IS NOT NULL;
                 UPDATE Activity SET Submitter = Users.Username FROM Users WHERE Activity.SubmitterID = Users.UserID AND Activity.SubmitterID IS NOT NULL;`
 
@@ -1030,21 +1030,10 @@ app.route(`/api/pests/severity`).get((req, res) => {
 
 //Get all activities
 app.route(`/api/activity/all`).get((req, res) => {
-  query0 = `UPDATE Activity
-            SET ThreadID = Thread.ThreadID FROM Thread WHERE Activity.ReportID = Thread.IncidentID;`         
+     
   query = `SELECT * FROM Activity ORDER BY ActivityTS DESC`
 
-  const queryDB0 = async () => {
-    try {
-      const q = await pool.query(query0);
-      console.log(q.rows);
-      res.status(200).send(q.rows)
-      
-    } catch (err) {
-      console.log(err);
-      res.status(500).send()
-    }
-  };  
+
   
   const queryDB = async () => {
     try {
@@ -1058,14 +1047,12 @@ app.route(`/api/activity/all`).get((req, res) => {
     }
   };
    
-  // queryDB0();
   queryDB();
 })
 
 //Get 10 most recent activities
 app.route(`/api/activity/`).get((req, res) => {
-  query0 = `UPDATE Activity
-            SET ThreadID = Thread.ThreadID FROM Thread WHERE Activity.ReportID = Thread.IncidentID;`
+  
   query = `SELECT * FROM Activity ORDER BY ActivityTS DESC LIMIT 10`
   
 
@@ -1080,20 +1067,8 @@ app.route(`/api/activity/`).get((req, res) => {
       res.status(500).send()
     }
   };
-
-  const queryDB0 = async () => {
-    try {
-      const q = await pool.query(query0);
-      console.log(q.rows);
-      res.status(200).send(q.rows)
-      
-    } catch (err) {
-      console.log(err);
-      res.status(500).send()
-    }
-  };  
    
-  queryDB0();
+
   queryDB();
 
 })

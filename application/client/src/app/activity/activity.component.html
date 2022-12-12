@@ -8,7 +8,7 @@
       <!-- <a routerLink="/detail/{{activity.activityid}}"> -->
       <div class="clicker" (click)="this.printItem(activity.threadid)">
         <a routerLink="/forum">
-        <td>New {{activity.activitytype}}: {{activity.submitter}} reported a(n) {{activity.pesttype}}</td>
+        <td>{{activity.submitter}} {{activity.outmessage}}</td>
       </a>
       </div>
     </tr>
