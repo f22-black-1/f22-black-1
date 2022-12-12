@@ -29,34 +29,35 @@ export class ActivityComponent implements OnInit {
 
   }
 
-  printItem(): void {
-    var temp = 'b981e06d-fdc2-48ac-ba21-06c29bbd6e64';
-    this.summaryThreadService.expandThread(temp.toString());
+  printItem(thread_id: string): void {
+    //var temp = 'b981e06d-fdc2-48ac-ba21-06c29bbd6e64'; //test
+    // this.summaryThreadService.expandThread(temp.toString()); //test
+    this.summaryThreadService.expandThread(thread_id.toString());
   }
 
 
 //Finish CRUD operations
-createActivity(at: string, rid: string, pt: string, sid: string, sub: string, pd: Text, rt: Text){
-  this.activity.activitytype = at;
-  this.activity.reportid = rid;
-  this.activity.pesttype = pt;
-  this.activity.submitterid = sid;
-  this.activity.submitter = sub;
-  this.activity.pestdescription = pd;
-  this.activity.reporttext = rt;
+// createActivity(at: string, rid: string, pt: string, sid: string, sub: string, pd: Text, rt: Text){
+//   this.activity.activitytype = at;
+//   this.activity.reportid = rid;
+//   this.activity.pesttype = pt;
+//   this.activity.submitterid = sid;
+//   this.activity.submitter = sub;
+//   this.activity.reporttext = rt;
 
-  console.log(this.activity);
-  this.activityService.createActivity(this.activity).subscribe(
-  async data => {});
-  alert("The Activity has been created");
-  this.activity.activitytype = "";
-  this.activity.reportid = "";
-  this.activity.pesttype = "";
-  this.activity.submitterid = "";
-  this.activity.submitter = "";
-  this.activity.pestdescription = null;
-  this.activity.reporttext = null;
-}
+//   console.log(this.activity);
+//   this.activityService.createActivity(this.activity).subscribe(
+//   async data => {});
+//   alert("The Activity has been created");
+//   this.activity.activitytype = "";
+//   this.activity.reportid = "";
+//   this.activity.pesttype = "";
+//   this.activity.submitterid = "";
+//   this.activity.submitter = "";
+//   this.activity.reporttext = null;
+// }
+
+
 /*
 createActivity(activity: Activity): Array<Activity> {
     this.activityService.createActivity(activity)

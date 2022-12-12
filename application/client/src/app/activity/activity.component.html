@@ -7,7 +7,7 @@
     <tr>
       <!-- <a routerLink="/detail/{{activity.activityid}}"> -->
       <!-- <a routerLink="/expanded-discussion-view"> -->
-      <div class="clicker" (click)="this.printItem()">
+      <div class="clicker" (click)="this.printItem(activity.threadid)">
         <td>New {{activity.activitytype}}: {{activity.submitter}} reported a(n) {{activity.pesttype}}</td>
       </div>
     </tr>
