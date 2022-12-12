@@ -6,9 +6,8 @@ export interface Activity {
     pesttype: string;
     submitterid: string;
     submitter: string;
-    pestdescription: Text;
     reporttext: Text;
-    threadID: string;
-    // responseid: string;
-    // feedbackid: string;
+    incidentid: string;
+    threadid: string;
+    threadsubject: Text;
 }  
