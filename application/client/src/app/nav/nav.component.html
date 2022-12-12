@@ -5,6 +5,10 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list class="activity-box">
+      <div class="currentUser">
+        <mat-label id="user_name" name="username" [formControl]="user_name">User: {{this.user_name.value}}</mat-label>
+      </div>
+
       <!-- Activity:
       <mat-list-item class="activity-item">Welcome to Pest Patrol user!</mat-list-item> -->
       <app-activity></app-activity>
@@ -20,7 +24,8 @@
       <mat-list-item><button class="side-button" routerLink="/forum">Forum</button></mat-list-item>
       <mat-list-item><button class="side-button" routerLink="/filter">Map Filter</button></mat-list-item>
       <mat-list-item><button class="side-button" routerLink="/pest-update">Update Pest</button></mat-list-item>
-    </mat-nav-list>  
+    </mat-nav-list>
+
   </mat-sidenav>
 
   <mat-toolbar color="primary">
@@ -34,11 +39,17 @@
       </button> -->
       <span>Pest Patrol</span>
       <div class="top-buttons">
+        <button mat-button [matMenuTriggerFor]="menu">Select Another User</button>
+        <mat-menu #menu="matMenu">
+          <button *ngFor="let listItem of this.userList" (click)="this.signInUser(this.listItem)" mat-menu-item>{{this.listItem.username}}</button>
+        </mat-menu>
       <mat-list-item><button routerLink="/login">Login</button></mat-list-item>
       <mat-list-item><button routerLink="/register">Register</button></mat-list-item>
       </div>
+
     </mat-toolbar>
-    
+
    <!-- The map -->
    <router-outlet></router-outlet>
 </mat-sidenav-container>
+

@@ -10,6 +10,7 @@ import { responses, responseTable, newResponse, feedback } from "../expanded-thr
 import { ExpandedThreadService } from "../expanded-thread.service";
 import { PestInfoComponent } from '../pest-info/pest-info.component';
 import { CurrentUser } from '../login'
+import { UserinfoService } from '../userinfo.service';
 import { UserinfocardComponent } from '../userinfocard/userinfocard.component';
 import { UserInfo, CurrentUser_t } from '../userinfo';
 
@@ -42,11 +43,11 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   public mtData: CurrentUser_t;
   
   constructor(private sumThreadService:SummaryThreadService, public expThreadService: ExpandedThreadService,
-    private  dialogRef: MatDialog, private router: Router, public infoCard: MatDialog) { 
-    this.signedInUser = this.generateUser();
+    private dialogRef: MatDialog, private router: Router, public infoCard: MatDialog, public uiService: UserinfoService) { 
   }
 
   ngOnInit(): void {
+    this.signedInUser = this.uiService.activeUser();
     this.receivedThreadItem = this.sumThreadService.getSelectedThreadItem();
     // console.log("exp service thread id: " + this.expThreadService.selectedThread.threadid);
     // this.receivedThreadItem = this.expThreadService.selectedThread;
@@ -78,6 +79,10 @@ export class ExpandedDiscussionViewComponent implements OnInit {
     });
 
     console.log("Selected comp thread: " + this.modalThread);
+  }
+
+  originalMessage(): responses {
+    return this.responseList[0];
   }
 
   generateUser(): CurrentUser {
@@ -304,12 +309,12 @@ export class ExpandedDiscussionViewComponent implements OnInit {
   }
   
   printResponse(): void {
-    console.log("click even triggered");
+    console.log("image value: " + this.responseList[0].pestimage);
   }
 
   openPestInfoWindow(): void {
     this.dialogRef.open(PestInfoComponent, {
-      data: {incidentID: this.receivedThreadItem.incidentid}
+      data: {incidentID: this.originalMessage().incidentid}
     });
   }
 
