@@ -26,7 +26,10 @@ export class PestUpdateComponent implements OnInit {
   constructor(private pestService: PestService) { }
 
   ngOnInit(): void {
-    this.pestService.getPests().subscribe(pests => this.pests = pests)
+    this.pestService.getPests().subscribe(async data =>{
+      const Pests = await data;
+      this.pests = Pests;
+    });
   }
 
   splitString(){
@@ -40,6 +43,9 @@ export class PestUpdateComponent implements OnInit {
     console.log(this.test.length);
     while(!(this.test[i].includes("("))){
       console.log(i);
+      if(i > 0)
+        str = this.test[i].toLowerCase();
+      else
       str = this.test[i];
       str1 += str + "_";
       i++;
