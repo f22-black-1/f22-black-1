@@ -1,4 +1,10 @@
-<form>
+    
+   
+   <div class="content">
+    <div class="cake">
+   <img src="{{pest.pestimage}}" width="25px" height="25px" onerror="this.onerror=null ; this.src='../../assets/Incident_Report_Images/PestImage_Unknown.PNG'" >
+    </div>
+        <div class="info">
     <label for="PestID">Select Pest Name from dropdown box for more pest info</label><br>
     <mat-form-field appearance="fill">
         <mat-select [(ngModel)]="pest" name="pest" (selectionChange)="splitString()">
@@ -7,12 +13,32 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <p>Selected Pest Type: {{pest.pesttype}}</p>
-    <p>Selected Pest Severity: {{pest.severity}}</p>
-    <p>Description: {{pest.pestdescription}}</p>
-    <a href="https://en.wikipedia.org/wiki/{{test2}}">Link to more info</a><br><br>
-    <img src="{{pest.pestimage}}" alt="A picture of {{pest.pestname}}" width="500" height="500">
-   
+    <div>
+    <div class="info">
+       <h2><img src="../../assets/icons/{{pest.pesttype | lowercase}}.png" onerror="this.style.display='none'"></h2>
+       
+       <ul>
+           <li><h2>Type:</h2><p>{{pest.pesttype}}</p></li>
+           <li>
+               <h2>Severity:</h2>
+               <div [ngSwitch]="true">
+                   <div *ngSwitchCase="pest.severity.toLowerCase().startsWith('low')" class="severity-low">{{pest.severity}}</div>
+                   <div *ngSwitchCase="pest.severity.toLowerCase().startsWith('medium')" class="severity-medium">{{pest.severity}}</div>
+                   <div *ngSwitchCase="pest.severity.toLowerCase().startsWith('high')" class="severity-high">{{pest.severity}}</div>
+                   <div *ngSwitchCase="pest.severity.toLowerCase().startsWith('venomous')" class="severity-venomous">{{pest.severity}}</div>
+                   <div *ngSwitchCase="pest.severity.toLowerCase().startsWith('poisonous')" class="severity-poisonous">{{pest.severity}}</div>
+                   <div *ngSwitchDefault>{{pest.severity}}</div>
+               </div>
+           </li>
+           <li><h2>Description:</h2><p>{{pest.pestdescription}}</p></li>
+           <h2><a href="https://en.wikipedia.org/wiki/{{test2}}" target="_blank">Link to Wikipedia Page with more info</a></h2>
+       </ul>
+       </div>
+    </div>
+   </div>
+
+
+
 
     <!-- <input type="text" id="PestID" name="id" size="50" #id>
     <mat-list-item><button (click)="getPestDetails(id.value)">Search</button></mat-list-item><br><br>
@@ -26,4 +52,4 @@
     <label for="Pest Description">Pest Description</label><br>
     <input type="text" id="pdesc" name="pdesc" value={{pest.pestdescription}} size="75" #pdesc>
     <mat-list-item><button (click)="updatePest(pname.value, ptype.value, psev.value, pdesc.value)">Update</button></mat-list-item><br><br> -->
-</form>
+
