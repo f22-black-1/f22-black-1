@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS CurrentUser;
 DROP TABLE IF EXISTS Neighborhood;
 DROP TABLE IF EXISTS Incident;
 DROP TABLE IF EXISTS Thread;
@@ -32,6 +33,11 @@ CREATE TABLE IF NOT EXISTS Users(
   FilterPest VARCHAR(50),
   FilterIncidentAge VARCHAR(255),
   FilterUser VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS CurrentUser(
+CurrentUserName VARCHAR(50),
+LoggedIn BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS Pest (
@@ -129,6 +135,9 @@ COPY ThreadFeedback FROM '/docker-entrypoint-initdb.d/csv/threadfeedback.csv' CS
 -- COPY Activity FROM '/docker-entrypoint-initdb.d/csv/activity.csv' CSV HEADER;
 COPY PestReport FROM '/docker-entrypoint-initdb.d/csv/pestreport.csv' CSV HEADER;
 
+
+INSERT INTO CurrentUser(CurrentUserName,LoggedIn)
+Values('Guest',TRUE);
 --Updates Activity Table with values from other tables
 
 -- INSERT INTO Activity(ReportID)

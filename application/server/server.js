@@ -56,6 +56,11 @@ let responseObj = {
   Comment: String,
 }
 
+currentUserObj = {
+   CurrentUserName: String,
+  LoggedIn: Boolean,
+}
+
 
 let activityObj = {
   ActivityID: String,
@@ -878,6 +883,53 @@ app.route(`/api/users`).get((req, res) => {
 })
 
 
+//update current user
+app.route(`/api/CurrentUser/update`).post((req,res) => {
+
+  console.log(req.body);
+
+  userToUpdate = currentUserObj;
+  userToUpdate.username = req.body.currentusername;
+
+  console.log(userToUpdate);
+
+  const query = `UPDATE CurrentUser
+                 SET CurrentUserName = '${userToUpdate.username}'
+                 WHERE CurrentUser.LoggedIn = TRUE;`
+
+  const queryDB = async () => {
+  try {
+    const q = await pool.query(query);
+    console.log(q.command)
+    res.status(201).send()
+  } catch (err) {
+    console.log(err);
+    res.status(500).send()
+  }
+};
+queryDB();
+})
+
+//get current user
+app.route(`/api/CurrentUser`).get((req,res) => {
+
+  query = `SELECT * FROM CurrentUser`
+
+  const queryDB = async () => {
+  try {
+    const q = await pool.query(query);
+    console.log(q.command)
+    res.status(200).send(q.rows)
+  } catch (err) {
+    console.log(err);
+    res.status(500).send()
+  }
+};
+
+queryDB();
+
+})
+
 // Add a new pest
 app.route('/api/pest/create').post((req, res) => {
     
@@ -901,9 +953,8 @@ app.route('/api/pest/create').post((req, res) => {
 
 
 const query2 = `INSERT INTO Activity(PestType, XCoord, YCoord, ActivityType, ActivityTS, Submitter, OutMessage)
-                VALUES ('${pestToCreate.pestType}', '${pestToCreate.xCoord}', '${pestToCreate.yCoord}', 'Pest Report', CURRENT_TIMESTAMP, 'Guest', ' reported a new ${pestToCreate.pestType}!');
-                UPDATE Activity SET SubmitterID = PestReport.SubmitterID FROM PestReport WHERE Activity.ReportID = PestReport.ReportID AND PestReport.SubmitterID IS NOT NULL;
-                UPDATE Activity SET Submitter = Users.Username FROM Users WHERE Activity.SubmitterID = Users.UserID AND Activity.SubmitterID IS NOT NULL;`
+                VALUES ('${pestToCreate.pestType}', '${pestToCreate.xCoord}', '${pestToCreate.yCoord}', 'Pest Report', CURRENT_TIMESTAMP, 'temp_username', ' reported a new ${pestToCreate.pestType}!');
+                UPDATE Activity SET Submitter = CurrentUser.CurrentUserName FROM CurrentUser WHERE Activity.Submitter = 'temp_username' AND CurrentUser.LoggedIn = TRUE;`
 
 
   const queryDB = async () => {
