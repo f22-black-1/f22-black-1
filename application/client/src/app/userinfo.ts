@@ -19,3 +19,14 @@ export class CurrentUser_t {
     username: string;
     threadid: string;
   }
+
+  export class UserAccountInfo {
+    userid: string;
+    locid: string;
+    username: string;
+    email: string;
+    usertype: string;
+    firstname: string;
+    lastname: string;
+    password: string;
+  }

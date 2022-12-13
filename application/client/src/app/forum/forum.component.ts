@@ -7,6 +7,7 @@ import { ExpandedThreadService} from '../expanded-thread.service';
 import { ThreadComponent } from '../thread/thread.component';
 import { CurrentUser } from '../login'
 import { UserinfocardComponent } from '../userinfocard/userinfocard.component';
+import { UserinfoService } from '../userinfo.service';
 import { UserInfo, CurrentUser_t } from '../userinfo';
 import { identifierName } from '@angular/compiler';
 
@@ -46,10 +47,10 @@ export class ForumComponent implements OnInit {
 
   
   constructor(public summaryThreadService: SummaryThreadService, public expThreadService: ExpandedThreadService,
-    public threadCreationWindow: MatDialog, public infoCard: MatDialog) {}
+    public threadCreationWindow: MatDialog, public infoCard: MatDialog, public uiService: UserinfoService) {}
   
   ngOnInit(pestTypeFilter: string = ""): void {
-    this.currentUser = this.generateUser(); //temp -- be sure to replace when permanent method is developed
+    this.currentUser = this.uiService.activeUser(); //temp -- be sure to replace when permanent method is developed
 
     if(pestTypeFilter.length > 0)
     {
@@ -223,6 +224,11 @@ export class ForumComponent implements OnInit {
       id => {this.createFirstThreadResponse(id);});
 
 
+    console.log("on step 2 - adding activity");
+
+    this.summaryThreadService.addNewActivity(newThreadData).subscribe(
+      (data)=>{});
+
     console.log("outside function ntidString: " + this.ntidString);
 
   }
@@ -243,11 +249,8 @@ export class ForumComponent implements OnInit {
   }
 
   printItem(): void {
-    // console.log("threadID value: " + this.ntidString);
-    // console.log("Creation timestampe: " + this.creationTimeStamp);
-    //var temp = 'a2954011-5a55-4548-a162-d0f61b2f1ad7'; //test 6
-    var temp = '6e3da37a-78d7-4cd0-9f6b-31fba6371cf5'; //test 8
-    this.summaryThreadService.expandThread(temp.toString());
+    console.log("current user: " + this.currentUser.username);
+    console.log("current user (service): " + this.uiService.activeUser().username);
   }
 
   testIt(arrayId: string)

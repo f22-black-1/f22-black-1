@@ -176,15 +176,34 @@ app.route(`/api/Thread/`).get((req, res) => {
 //get summary thread list
 app.route(`/api/summaryThreadList/`).get((req, res) => {
 
+    // query = `SELECT pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username AS ReportSubmitterUsername, 
+    // pestreport.reportdate AS RepCreationDate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, 
+    // pestreport.reporttext AS iconPath, Count(threadfeedback.feedbackid) as Record_Count, 
+    // coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive, pest.pesttype, pest.pestid, users.username
+    // FROM (pest INNER JOIN (pestreport LEFT JOIN ((thread LEFT JOIN threadfeedback ON thread.threadid = threadfeedback.threadid) LEFT JOIN 
+    // users ON thread.creatorid = users.userid) ON pestreport.incidentid = thread.incidentid) ON pest.pestid = pestreport.pestid) LEFT JOIN 
+    // users AS users_1 ON pestreport.submitterid = users_1.userid
+    // GROUP BY pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username, 
+    // pestreport.reportdate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, pest.pesttype, pest.pestid, users.username
+    // ORDER BY pestreport.reportdate DESC;`
+
     query = `SELECT pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username AS ReportSubmitterUsername, 
     pestreport.reportdate AS RepCreationDate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, 
     pestreport.reporttext AS iconPath, Count(threadfeedback.feedbackid) as Record_Count, 
-    coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive, pest.pesttype, pest.pestid, users.username
-    FROM (pest INNER JOIN (pestreport LEFT JOIN ((thread LEFT JOIN threadfeedback ON thread.threadid = threadfeedback.threadid) LEFT JOIN 
+    coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive, pest.pesttype, pest.pestid, users.username, reply_count.response_count
+    FROM ((pest INNER JOIN (pestreport LEFT JOIN ((thread LEFT JOIN threadfeedback ON thread.threadid = threadfeedback.threadid) LEFT JOIN 
     users ON thread.creatorid = users.userid) ON pestreport.incidentid = thread.incidentid) ON pest.pestid = pestreport.pestid) LEFT JOIN 
-    users AS users_1 ON pestreport.submitterid = users_1.userid
+    users AS users_1 ON pestreport.submitterid = users_1.userid) LEFT JOIN
+    (select threadresponse.threadid, 
+      coalesce(Sum(case threadresponse.comment
+          when 'Original_Thread' then 0
+          else 1
+          end),0) as response_count
+      from threadresponse
+      group by threadresponse.threadid) as reply_count on thread.threadid = reply_count.threadid
     GROUP BY pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username, 
-    pestreport.reportdate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, pest.pesttype, pest.pestid, users.username
+    pestreport.reportdate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, pest.pesttype, pest.pestid, users.username,
+    reply_count.response_count
     ORDER BY pestreport.reportdate DESC;`
 
     const queryDB = async () => {
@@ -209,16 +228,36 @@ app.route(`/api/summaryThreadList/pestType`).post((req, res) => {
   console.log(req.headers.pesttype);
   console.log('--------------------------------------- TEST ---------------------------------------');
 
+  // query = `SELECT pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username AS ReportSubmitterUsername, 
+  // pestreport.reportdate AS RepCreationDate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, 
+  // '../../assets/Incident_Report_Images/Incident_Coyote.png' AS iconPath, Count(threadfeedback.feedbackid) as Record_Count, 
+  // coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive, pest.pesttype, pest.pestid, users.username
+  // FROM (pest INNER JOIN (pestreport LEFT JOIN ((thread LEFT JOIN threadfeedback ON thread.threadid = threadfeedback.threadid) LEFT JOIN 
+  // users ON thread.creatorid = users.userid) ON pestreport.incidentid = thread.incidentid) ON pest.pestid = pestreport.pestid) LEFT JOIN 
+  // users AS users_1 ON pestreport.submitterid = users_1.userid
+  // where (((pest.pesttype)='${req.body.pesttype}'))
+  // GROUP BY pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username, 
+  // pestreport.reportdate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, pest.pesttype, pest.pestid, users.username
+  // ORDER BY pestreport.reportdate DESC;`
+
   query = `SELECT pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username AS ReportSubmitterUsername, 
   pestreport.reportdate AS RepCreationDate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, 
-  '../../assets/Incident_Report_Images/Incident_Coyote.png' AS iconPath, Count(threadfeedback.feedbackid) as Record_Count, 
-  coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive, pest.pesttype, pest.pestid, users.username
-  FROM (pest INNER JOIN (pestreport LEFT JOIN ((thread LEFT JOIN threadfeedback ON thread.threadid = threadfeedback.threadid) LEFT JOIN 
+  pestreport.reporttext AS iconPath, Count(threadfeedback.feedbackid) as Record_Count, 
+  coalesce(Sum(abs(threadfeedback.positive::int)),0) as Total_Positive, pest.pesttype, pest.pestid, users.username, reply_count.response_count
+  FROM ((pest INNER JOIN (pestreport LEFT JOIN ((thread LEFT JOIN threadfeedback ON thread.threadid = threadfeedback.threadid) LEFT JOIN 
   users ON thread.creatorid = users.userid) ON pestreport.incidentid = thread.incidentid) ON pest.pestid = pestreport.pestid) LEFT JOIN 
-  users AS users_1 ON pestreport.submitterid = users_1.userid
-  where (((pest.pesttype)='${req.body.pesttype}'))
+  users AS users_1 ON pestreport.submitterid = users_1.userid) LEFT JOIN
+  (select threadresponse.threadid, 
+    coalesce(Sum(case threadresponse.comment
+        when 'Original_Thread' then 0
+        else 1
+        end),0) as response_count
+    from threadresponse
+    group by threadresponse.threadid) as reply_count on thread.threadid = reply_count.threadid
+  WHERE (((pest.pesttype)='${req.body.pesttype}'))
   GROUP BY pestreport.reportid, pestreport.incidentid, thread.threadid, pestreport.locid, pestreport.submitterid, users_1.username, 
-  pestreport.reportdate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, pest.pesttype, pest.pestid, users.username
+  pestreport.reportdate, thread.creatorid, thread.createdate, thread.subject, thread.comment, pestreport.pestimage, pest.pesttype, pest.pestid, users.username,
+  reply_count.response_count
   ORDER BY pestreport.reportdate DESC;`
 
   const queryDB = async () => {
@@ -321,6 +360,29 @@ queryDB();
 })
 
 //Create new discussion thread -- Step 3: add new record to thread table
+app.route(`/api/thread/addNewThread`).post((req, res) => {
+
+  query = `insert into thread ( incidentid, locid, creatorid, createdate, subject, comment)
+  select '${req.body.incidentid}' as incidentid, '${req.body.locid}' as locid, 
+  '${req.body.creatorid}' as creatorid, '${req.body.createdate}' as createdate, '${req.body.subject}' as title,
+  '${req.body.comment}' as comment
+  returning threadid;`
+
+  const queryDB = async () => {
+    try {
+        const q = await pool.query(query);
+        console.log("logging threadid: " + q.rows[0].threadid);
+        res.status(201).send(q.rows[0]); //returns thread id of newly created thread record
+      } catch (err) {
+        console.log(err);
+        res.status(500).send()
+      }
+  };
+
+  queryDB();
+})
+
+//Create new thread activity record -- Step 3: add new record to activity table
 app.route(`/api/thread/addCreationThread`).post((req, res) => {
 
   console.log('--------------------------------------- step 3 test ---------------------------------------');
@@ -331,12 +393,6 @@ app.route(`/api/thread/addCreationThread`).post((req, res) => {
   console.log(req.body.subject);
   console.log(req.body.comment);
   console.log('--------------------------------------- step 3 test ---------------------------------------');
-
-  query = `insert into thread ( incidentid, locid, creatorid, createdate, subject, comment)
-  select '${req.body.incidentid}' as incidentid, '${req.body.locid}' as locid, 
-  '${req.body.creatorid}' as creatorid, '${req.body.createdate}' as createdate, '${req.body.subject}' as title,
-  '${req.body.comment}' as comment
-  returning threadid;`
 
   query2 = `INSERT INTO activity(submitterid,submitter,reporttext,activitytype,activityts,pestid,pesttype)
   VALUES('${req.body.creatorid}',
@@ -358,24 +414,12 @@ app.route(`/api/thread/addCreationThread`).post((req, res) => {
          WHERE Activity.PestID = Pest.PestID;`
 
 
-  const queryDB = async () => {
-    try {
-        const q = await pool.query(query);
-        console.log("logging threadid: " + q.rows[0].threadid);
-        //res.status(201).send(q.rows[0].threadid);
-        res.status(201).send(q.rows[0]);
-        //res.status(201).send(q.rows);
-      } catch (err) {
-        console.log(err);
-        res.status(500).send()
-      }
-  };
   const queryDB2 = async () => {
     try {
         const q = await pool.query(query2);
         console.log("logging activity: ");
         //res.status(201).send(q.rows[0].threadid);
-        res.status(201).send(q.rows[0]);
+        res.status(201).send();
         //res.status(201).send(q.rows);
       } catch (err) {
         console.log(err);
@@ -383,7 +427,6 @@ app.route(`/api/thread/addCreationThread`).post((req, res) => {
       }
   };
 
-  queryDB();
   queryDB2();
 })
 
@@ -808,9 +851,12 @@ app.route(`/api/userThreadMetrics`).post((req, res) => {
 })
 
 
+//get user data
 app.route(`/api/users`).get((req, res) => {
 
-  query = `select userid, username from users;`
+  query = `select users.userid, users.locid, users.username, users.email, 
+  users.usertype, users.firstname, users.lastname, users.password
+  from users;`
 
   const queryDB = async () => {
     try {
@@ -825,6 +871,7 @@ app.route(`/api/users`).get((req, res) => {
    
   queryDB();
 })
+
 
 // Add a new pest
 app.route('/api/pest/create').post((req, res) => {

@@ -180,12 +180,22 @@ export class SummaryThreadService {
       console.log("subject(title): " + newThreadData.subject);
       console.log("comment: " + newThreadData.comment);
       
-      return this.http.post<ThreadID>('http://localhost:8080/api/thread/addCreationThread', newThreadData)
+      return this.http.post<ThreadID>('http://localhost:8080/api/thread/addNewThread', newThreadData)
       .pipe(
         tap(_ => this.log(`adding thread for incident id: ${newThreadData.incidentid}`)),
         catchError(this.handleError<ThreadID>('create thread')));
     }
 
+    addNewActivity(newThreadData: NewThreadData): Observable<ThreadID> {
+      console.log("incident(report) id: " + newThreadData.incidentid);
+      console.log("subject(title): " + newThreadData.subject);
+      console.log("comment: " + newThreadData.comment);
+      
+      return this.http.post<ThreadID>('http://localhost:8080/api/thread/addCreationThread', newThreadData)
+      .pipe(
+        tap(_ => this.log(`adding thread for incident id: ${newThreadData.incidentid}`)),
+        catchError(this.handleError<ThreadID>('create thread')));
+    }
     
     getThreadID(pRepID: PestRepID): Observable<PestRepID> {
       console.log("report id: " + pRepID.reportid);

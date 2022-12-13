@@ -14,30 +14,31 @@
     <div class="originalThread shadow">
         <div class="stPestImage">
             <!-- <img src={{this.getReceivedThreadItem().pestimage}} alt="Pest Icon" class="stPestImageFormats"> -->
-            <img src={{this.responseList[0].pestimage}} alt="Pest Icon" class="stPestImageFormats">
+            <!-- <img src={{this.responseList[0].pestimage}} alt="Pest Icon" class="stPestImageFormats"> -->
+            <img src={{this.originalMessage().pestimage}} alt="Pest Icon" class="stPestImageFormats">
         </div>
         <div class="stTitle p1">
             <!-- <span class="head1">{{this.getReceivedThreadItem().subject}}</span> -->
-            <span class="head1">{{this.responseList[0].subject}}</span>
+            <span class="head1">{{this.originalMessage().subject}}</span>
         </div>
         <div class="stDescription p1">
             <!-- <span class="p1">{{this.getReceivedThreadItem().comment}}</span> -->
-            <span class="p1">{{this.responseList[0].comment}}</span>
+            <span class="p1">{{this.originalMessage().comment}}</span>
         </div>
         <div class="feedback p1 brightness">
             <!-- <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVote">
             <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVote"> -->
-            <span *ngIf="this.responseList[0].currentuserfeedback == 2; else notPositive">
-                <img src="../assets/form_controls/Icon_Thumbs_Up_Blue.png" class="fcfeedback" alt="uVoteActive" (click)="this.upVote(this.responseList[0].currentuserfeedback, this.responseList[0].threadid)">
+            <span *ngIf="this.originalMessage().currentuserfeedback == 2; else notPositive">
+                <img src="../assets/form_controls/Icon_Thumbs_Up_Blue.png" class="fcfeedback" alt="uVoteActive" (click)="this.upVote(this.originalMessage().currentuserfeedback, this.originalMessage().threadid)">
             </span>
             <ng-template #notPositive>
-                <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVoteInactive" (click)="this.upVote(this.responseList[0].currentuserfeedback, this.responseList[0].threadid)">
+                <img src="../assets/form_controls/Icon_Thumbs_Up_Gray.png" class="fcfeedback" alt="uVoteInactive" (click)="this.upVote(this.originalMessage().currentuserfeedback, this.originalMessage().threadid)">
             </ng-template>
-            <span *ngIf="this.responseList[0].currentuserfeedback == 1; else notNegative">
-                <img src="../assets/form_controls/Icon_Thumbs_Down_Red.png" class="fcfeedback" alt="dVoteActive" (click)="this.downVote(this.responseList[0].currentuserfeedback, this.responseList[0].threadid)">
+            <span *ngIf="this.originalMessage().currentuserfeedback == 1; else notNegative">
+                <img src="../assets/form_controls/Icon_Thumbs_Down_Red.png" class="fcfeedback" alt="dVoteActive" (click)="this.downVote(this.originalMessage().currentuserfeedback, this.originalMessage().threadid)">
             </span>
             <ng-template #notNegative>
-                <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVoteInactive" (click)="this.downVote(this.responseList[0].currentuserfeedback, this.responseList[0].threadid)">
+                <img src="../assets/form_controls/Icon_Thumbs_Down_Gray.png" class="fcfeedback" alt="dVoteInactive" (click)="this.downVote(this.originalMessage().currentuserfeedback, this.originalMessage().threadid)">
             </ng-template>
             <img src="../assets/form_controls/Icon_Pest_Info.png" class="fcfeedbackbutton" alt="pestInfo" (click)="this.openPestInfoWindow()">
         </div>

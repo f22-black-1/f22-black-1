@@ -37,3 +37,13 @@
 .example-spacer{
   flex: 1 1 auto;
 }
+
+.currentUser {
+  width: 100%;
+  height: 25px;
+  font-weight: bold;
+  text-align: center;
+  /* margin-left: 15px; */
+  /* margin-top: 8px; */
+
+}

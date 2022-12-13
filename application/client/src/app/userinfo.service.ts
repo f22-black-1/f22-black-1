@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CurrentUser } from './login';
-import { UserInfo, UserInfoThread } from './userinfo';
+import { UserInfo, UserInfoThread, UserAccountInfo } from './userinfo';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
@@ -11,16 +11,28 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class UserinfoService {
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {
+      // if(this.activeUser() == null || this.activeUser() == undefined)
+      // {
+      //   console.log("No users signed-in.  Setting current user to readonly");
+      //   this.signedInUser = this.notSignedIn();
+      // }
+      // else
+      // {
+      //   console.log("Existing user session found.  Restoring user...");
+      //   this.signedInUser = this.activeUser();
+      // }
+      
+   }
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-
   /** Log a SummaryThreadService message with the MessageService */
   private log(message: string) {
-    console.log(`SummaryThreadService: ${message}`);
+    console.log(`UserInfo: ${message}`);
   }
 
     /**
@@ -42,6 +54,36 @@ export class UserinfoService {
         return of(result as T);
       };
     }
+
+  notSignedIn(): CurrentUser {
+    let temp: CurrentUser = {
+      userid: "00000000-0000-0000-0000-000000000000",
+      username: "Not_Signed_In",
+    }
+
+    return temp;
+  }
+
+  saveToLocalStorage(currentSessionUser: CurrentUser): void {
+    localStorage.setItem('activeUser', JSON.stringify(currentSessionUser));
+  }
+
+  activeUser(): CurrentUser {
+    let user: CurrentUser = JSON.parse(localStorage.getItem('activeUser'));
+
+    if(user == null || user == undefined)
+      return this.notSignedIn();
+    else
+      return user;
+  }
+
+  getRegisteredUsers(): Observable<UserAccountInfo[]> {
+  
+    return this.http.get<UserAccountInfo[]>('http://localhost:8080/api/users')
+    .pipe(
+      tap(_ => this.log(`getting list of registered users`)),
+      catchError(this.handleError<UserAccountInfo[]>('getting user data')));
+  }
 
 
   getUserInfo(selectedUser: CurrentUser): Observable<UserInfo> {
