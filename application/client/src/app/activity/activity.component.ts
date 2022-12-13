@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Activity } from '../activity';
 import { ActivityService } from '../activity.service';
 import { SummaryThreadService } from '../summary-thread.service';
+import { UserinfoService } from '../userinfo.service';
+import { CurrentUser } from '../login';
 
 @Component({
   selector: 'app-activity',
@@ -12,8 +14,10 @@ import { SummaryThreadService } from '../summary-thread.service';
 export class ActivityComponent implements OnInit {
   activities: Activity[] = [];
   activity!: Activity;
+  public activeUser: CurrentUser;
 
-  constructor(public summaryThreadService: SummaryThreadService, private activityService: ActivityService) { }
+  constructor(public summaryThreadService: SummaryThreadService, public uiService: UserinfoService,
+    private activityService: ActivityService) { this.activeUser = uiService.activeUser();}
 
   ngOnInit(): void {
     this.getActivities();

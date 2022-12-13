@@ -35,6 +35,7 @@ export class NavComponent {
   ngOnInit() {
     this.getUserList();
     this.user_name.setValue(this.activeUser.username);
+    this.uiService.updateCurrentUser(this.activeUser.username);
   }
 
   signInUser(newUser: UserAccountInfo): void {

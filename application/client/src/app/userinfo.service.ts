@@ -77,6 +77,16 @@ export class UserinfoService {
       return user;
   }
 
+  /** PUT (update) a current user in the DB*/
+  updateCurrentUser(cUser: string): Observable<any> {
+
+    console.log(`Updating Current User: ${cUser}`)
+
+    return this.http.post<string>('http://localhost:8080/api/CurrentUser/update', cUser).pipe(
+        tap(_ => this.log(`updated CurrentUser`)),
+        catchError(this.handleError<string>('updating CurrentUser')));
+  }
+
   getRegisteredUsers(): Observable<UserAccountInfo[]> {
   
     return this.http.get<UserAccountInfo[]>('http://localhost:8080/api/users')
