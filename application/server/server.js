@@ -599,6 +599,30 @@ app.route(`/api/deleteThreadResponse`).post((req, res) => {
   queryDB();
 })
 
+//Clear feedback data
+app.route(`/api/deleteFeedbackRecordMulti`).post((req, res) => {
+
+  console.log('--------------------------------------- Delete Response Feedback Test ---------------------------------------');
+  console.log(req.body.responseid);
+  console.log('--------------------------------------- Delete Response Feedback Test ---------------------------------------');
+  
+  query = `delete from threadfeedback where threadfeedback.responseid = '${req.body.responseid}';`;
+  
+  const queryDB = async () => {
+    try {
+      const q = await pool.query(query);
+      console.log(q.command)
+      res.status(201).send()
+    } catch (err) {
+      console.log(err);
+      res.status(500).send()
+    }
+  };
+
+  queryDB();
+})
+
+
 //Delete thread
 app.route(`/api/deleteThread`).post((req, res) => {
 

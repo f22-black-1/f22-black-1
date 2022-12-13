@@ -83,6 +83,16 @@ deleteResponse(response: responseTable): Observable<responseTable> {
     catchError(this.handleError<responseTable>('delete response')));
 }
 
+deleteResponseFeedback(response: responseTable): Observable<responseTable> {
+
+  console.log("response id: " + response.responseid);
+
+  return this.http.post<responseTable>('http://localhost:8080/api/deleteFeedbackRecordMulti/', response)
+  .pipe(
+    tap(_ => this.log(`deleting response for ${response.threadid}`)), // TODO: determine which id this returns
+    catchError(this.handleError<responseTable>('delete response')));
+}
+
 deleteThread(response: responseTable): Observable<responseTable> {
 
   console.log("response id: " + response.responseid);

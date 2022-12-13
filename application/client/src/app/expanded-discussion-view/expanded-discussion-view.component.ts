@@ -167,10 +167,10 @@ export class ExpandedDiscussionViewComponent implements OnInit {
       comment: 'delete request',
     }
 
+    console.log("Deleting response feedback for: " + repInfo.responseid);
+    this.expThreadService.deleteResponseFeedback(repInfo).subscribe(async data => {});
+
     console.log("Deleting response: " + repInfo.responseid);
-
-    // this.expThreadService.deleteResponse(repInfo).subscribe(async data => {});
-
     this.expThreadService.deleteResponse(repInfo).subscribe(
     (data)=>{
       console.log(data);
