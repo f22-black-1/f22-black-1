@@ -26,7 +26,10 @@ export class PestUpdateComponent implements OnInit {
   constructor(private pestService: PestService) { }
 
   ngOnInit(): void {
-    this.pestService.getPests().subscribe(pests => this.pests = pests)
+    this.pestService.getPests().subscribe(async data =>{
+      const Pests = await data;
+      this.pests = Pests;
+    });
   }
 
   splitString(){
