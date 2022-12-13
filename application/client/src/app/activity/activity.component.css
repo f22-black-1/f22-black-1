@@ -3,6 +3,10 @@
 table, th, td {
   border: 1px solid;
 }
+
+.clicker {
+  cursor: pointer;
+}
 /* .activities {
     margin: 0 0 2em 0;
     list-style-type: none;
